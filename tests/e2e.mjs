@@ -170,8 +170,8 @@ ok('تب آلبوم فعال شد', $('#view-album').classList.contains('is-hidd
 ok('حالت خالی آلبوم نمایش داده می‌شود', $('#album-empty').classList.contains('is-hidden') === false);
 $('#tab-learn').click();
 ok('تب آموزش فعال شد', $('#view-learn').classList.contains('is-hidden') === false);
-ok('۵ کارت آموزش رندر شد', $$('.lesson-card').length === 5);
-ok('۶ ترفند رندر شد', $$('.tip-card').length === 6);
+ok('۸ کارت آموزش رندر شد', $$('.lesson-card').length === 8);
+ok('۹ ترفند رندر شد', $$('.tip-card').length === 9);
 $('#tab-draw').click();
 
 console.log('\n■ سناریو ۳: ابزارها، رنگ و اندازه');

@@ -26,6 +26,7 @@
   <!-- فونت‌ها — آفلاین محلی، بدون CDN -->
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/about.css">
 </head>
 <body>
 
@@ -41,6 +42,7 @@
       <button class="tab" id="tab-learn" role="tab" aria-selected="false" aria-controls="view-learn">📚 آموزش</button>
     </nav>
     <button id="sound-toggle" class="sound-btn" aria-label="قطع صدا" aria-pressed="false">🔊</button>
+    <button id="about-btn" class="about-btn" type="button" aria-label="دربارهٔ ما" title="دربارهٔ ما">ℹ️</button>
   </header>
 
   <main id="app">
@@ -238,6 +240,48 @@
     </div>
   </div>
 
+  <!-- ============ مودال «دربارهٔ ما / پارسا اپس» ============ -->
+  <div class="modal-backdrop is-hidden" id="about-modal">
+    <div class="about-modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+      <button id="about-close" class="about-close-btn" type="button" aria-label="بستن">✕</button>
+      <p class="about-pre-title">ساخته‌شده با 🌰 توسط</p>
+      <h3 id="about-title">گروه برنامه‌نویسی پارسا اپس</h3>
+      <p class="about-subtitle">هر اپ، یک قدم به‌سوی آیندهٔ دیجیتال کودکان ایران 🌟</p>
+
+      <div class="parsa-logo-wrap" aria-hidden="true">
+        <span class="about-mascot-glow"></span>
+        <span class="about-shimmer-ring"></span>
+        <span class="parsa-logo">Parsa<br/>Apps</span>
+      </div>
+
+      <p class="about-author">فرشاد پارسا</p>
+
+      <div class="about-credit-card">
+        <div class="row"><span class="label">گروه</span><span class="value">Parsa Apps</span></div>
+        <div class="row"><span class="label">سازنده</span><span class="value">فرشاد پارسا</span></div>
+        <div class="row"><span class="label">پروژه</span><span class="value">استودیو نقاشی فندوقی 🌰</span></div>
+      </div>
+
+      <a id="about-telegram" class="about-telegram-btn" href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">
+        <span aria-hidden="true">💬</span>
+        <span>پشتیبانی در تلگرام: @Parsaappsadmin</span>
+      </a>
+
+      <p class="about-footer-note">
+        فندوقی یک پروژهٔ آفلاین برای کودکان ایران است؛ حتی در روستا، سفر و هواپیما هم کار می‌کند 🌲✈️
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ دستاورد (Achievement Pop) ============ -->
+  <div id="achievement-pop" class="achievement-pop" role="status" aria-live="polite">
+    <span class="ach-ico" id="ach-ico">⭐</span>
+    <div class="ach-body">
+      <p class="ach-title" id="ach-title">دستاورد تازه!</p>
+      <p class="ach-sub" id="ach-sub">یک قدم دیگر به سوی استادی</p>
+    </div>
+  </div>
+
   <div id="toasts" class="toasts" aria-live="polite"></div>
 
   <!-- اسکریپت‌ها — ۱۰۰٪ آفلاین، بدون وابستگی خارجی -->
@@ -245,9 +289,11 @@
   <script src="js/utils.js"></script>
   <script src="js/offline.js"></script>
   <script src="js/sound.js"></script>
+  <script src="js/achievements.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/album.js"></script>
   <script src="js/tutorials.js"></script>
+  <script src="js/about.js"></script>
   <script src="js/app.js"></script>
 
   <!-- ثبت آفلاین — کوچک و کودک‌پسند -->

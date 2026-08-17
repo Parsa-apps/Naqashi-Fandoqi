@@ -111,6 +111,8 @@ const T = (await import(pathToFileURL(join(ROOT, 'js/tutorials.js')).href)).defa
 
 ok('حداقل ۵ آموزش وجود دارد (FR-8)', T.TUTORIALS.length >= 5);
 ok('حداقل ۶ ترفند وجود دارد (FR-9)', T.TIPS.length >= 6);
+ok('۸ آموزش فراهم است (۵ اصلی + ۳ با متد جدید)', T.TUTORIALS.length === 8);
+ok('۹ ترفند فراهم است (۶ اصلی + ۳ متد جدید)', T.TIPS.length === 9);
 
 const idsSet = new Set(T.TUTORIALS.map((t) => t.id));
 ok('شناسهٔ آموزش‌ها یکتاست', idsSet.size === T.TUTORIALS.length);

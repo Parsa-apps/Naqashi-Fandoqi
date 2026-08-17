@@ -156,6 +156,10 @@
         hideModal('save-modal');
         Sound.save();
         U.toast('شاهکارت در آلبوم ثبت شد! 🌟', 'success');
+        // دستاورد بر اساس تعداد نقاشی‌های آلبوم
+        if (g.Achievements && g.Achievements.checkAlbumSize && g.Album && typeof g.Album.list === 'function') {
+          g.Achievements.checkAlbumSize(g.Album.list().length);
+        }
       } else if (res.reason === 'full') {
         Sound.error();
         U.toast('آلبوم پر است! چند نقاشی قدیمی را حذف کن 🗑️', 'error');
@@ -416,6 +420,12 @@
     });
 
     g.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });
+
+    // فعال‌سازی «دربارهٔ ما» + دستاوردها
+    if (g.About && g.About.init) g.About.init();
+    if (g.Achievements && g.Achievements.checkInstalled && matchMedia('(display-mode: standalone)').matches) {
+      g.Achievements.checkInstalled();
+    }
 
     // بازگرداندن پیش‌نویس نیمه‌کاره
     const restored = Engine.tryRestoreDraft();
