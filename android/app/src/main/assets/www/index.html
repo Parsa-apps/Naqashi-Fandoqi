@@ -33,8 +33,22 @@
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/stickers.css">
   <link rel="stylesheet" href="css/save-anim.css">
+  <link rel="stylesheet" href="css/onboarding.css">
 </head>
 <body>
+
+  <!-- ============ خوش‌آمدگویی (Onboarding) ============ -->
+  <div id="onboarding" role="dialog" aria-modal="true" aria-labelledby="onb-title" aria-hidden="true">
+    <div class="onb-wrap">
+      <div class="onb-card-wrap"></div>
+      <div class="onb-dots" aria-hidden="true"></div>
+      <div class="onb-buttons">
+        <button class="onb-back" type="button" aria-label="کارت قبلی">‹ قبلی</button>
+        <button class="onb-skip" type="button" aria-label="رد کردن">رد کن</button>
+        <button class="act-btn primary onb-next" type="button">بعدی ▶</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============ لایهٔ انیمیشن موفقیت ذخیره ============ -->
   <div id="save-success" role="status" aria-live="polite" aria-hidden="true">
@@ -366,6 +380,7 @@
   <script src="js/about.js"></script>
   <script src="js/stickers.js"></script>
   <script src="js/save-anim.js"></script>
+  <script src="js/onboarding.js"></script>
   <script src="js/app.js"></script>
 
   <!-- ثبت آفلاین — کوچک و کودک‌پسند -->

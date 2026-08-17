@@ -1,0 +1,135 @@
+/* ============================================================
+   onboarding.css — تور خوش‌آمدگویی فندوقی
+   - ۴ کارت رنگی با ایموجی + عنوان + متن فارسی
+   - حس جشن برای کاربر اولین‌بار
+   ============================================================ */
+
+#onboarding {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 16, 32, 0.6);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  padding: 16px;
+}
+#onboarding.is-show { opacity: 1; visibility: visible; }
+
+.onb-wrap {
+  position: relative;
+  background: linear-gradient(160deg, #fff, #fff6dc);
+  border-radius: 28px;
+  padding: 36px 28px 24px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow:
+    0 22px 60px rgba(255, 167, 38, 0.4),
+    0 0 0 4px rgba(255, 215, 0, 0.35);
+  border: 2px solid #f6c97a;
+  text-align: center;
+  transform: translateY(20px) scale(0.9);
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#onboarding.is-show .onb-wrap { transform: translateY(0) scale(1); }
+
+/* محتوای کارت */
+.onb-card-wrap {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.onb-card {
+  width: 100%;
+}
+.onb-emoji {
+  font-size: 3.6rem;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 2px 6px rgba(74, 59, 82, 0.4));
+  opacity: 0;
+  transition: opacity 0.32s ease;
+}
+.onb-card.is-in .onb-emoji { opacity: 1; }
+
+.onb-title {
+  margin: 4px 0 8px;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #4a2e10;
+  opacity: 0;
+  transition: opacity 0.32s ease 0.05s;
+}
+.onb-card.is-in .onb-title { opacity: 1; }
+
+.onb-text {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.85;
+  color: #5d3a1a;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.32s ease 0.1s;
+}
+.onb-card.is-in .onb-text { opacity: 1; }
+
+/* نقاط پیشرفت */
+.onb-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px 0 14px;
+}
+.onb-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(184, 134, 11, 0.32);
+  transition: width 0.3s, background 0.3s;
+}
+.onb-dot.is-active {
+  width: 26px;
+  background: linear-gradient(90deg, #ffd54f, #ff8a00);
+}
+
+/* دکمه‌ها */
+.onb-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.onb-back, .onb-skip {
+  background: transparent;
+  color: #8a5c2b;
+  border: none;
+  padding: 8px 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.onb-back:hover:not(:disabled), .onb-skip:hover { color: #4a2e10; }
+.onb-back:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* حالت تیره */
+:root[data-theme="dark"] .onb-wrap {
+  background: linear-gradient(160deg, #2b2540, #1f1830);
+  border-color: rgba(255, 215, 0, 0.4);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .onb-title { color: #ffd54f; }
+:root[data-theme="dark"] .onb-text { color: #d8c89e; }
+:root[data-theme="dark"] .onb-back, :root[data-theme="dark"] .onb-skip { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .onb-card, .onb-emoji, .onb-title, .onb-text, .onb-wrap {
+    transition: none !important;
+    animation: none !important;
+  }
+}

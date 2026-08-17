@@ -446,7 +446,7 @@
 
     g.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });
 
-    // فعال‌سازی «دربارهٔ ما» + دستاوردها + استیکرها
+    // فعال‌سازی «دربارهٔ ما» + دستاوردها + استیکرها + Onboarding
     if (g.About && g.About.init) g.About.init();
     if (g.Stickers && g.Stickers.init) {
       g.Stickers.init({
@@ -457,6 +457,14 @@
     if (g.Achievements && g.Achievements.checkInstalled && matchMedia('(display-mode: standalone)').matches) {
       g.Achievements.checkInstalled();
     }
+    // خوش‌آمدگویی فقط در اولین اجرا (اگر دیده نشده و آلبوم کاملاً خالی است)
+    try {
+      if (g.Onboarding && typeof g.Onboarding.show === 'function' && !g.Onboarding.isSeen()) {
+        setTimeout(function () {
+          if (Album.list().length === 0) g.Onboarding.show();
+        }, 600);
+      }
+    } catch (_) {}
 
     // بازگرداندن پیش‌نویس نیمه‌کاره
     const restored = Engine.tryRestoreDraft();
