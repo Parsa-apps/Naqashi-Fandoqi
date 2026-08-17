@@ -34,8 +34,63 @@
   <link rel="stylesheet" href="css/stickers.css">
   <link rel="stylesheet" href="css/save-anim.css">
   <link rel="stylesheet" href="css/onboarding.css">
+  <link rel="stylesheet" href="css/settings.css">
 </head>
 <body>
+
+  <!-- ============ تنظیمات (Settings) ============ -->
+  <div class="modal-backdrop is-hidden" id="settings-modal">
+    <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <button id="settings-close" class="settings-close" type="button" aria-label="بستن">✕</button>
+      <h3 id="settings-title">⚙️ تنظیمات</h3>
+      <p class="hint">صحنهٔ نقاشی‌ات را شخصی کن</p>
+
+      <div class="settings-section" aria-label="صدا">
+        <h4>🔊 صدا</h4>
+        <div class="settings-row">
+          <label class="field" for="set-sound">فعال‌سازی صدا</label>
+          <button type="button" class="settings-toggle" data-field="sound" aria-label="صدا را فعال/غیرفعال کن"></button>
+          <input id="set-sound" type="checkbox" hidden>
+        </div>
+        <div class="settings-row">
+          <label class="field" for="set-volume">حجم صدا</label>
+          <input id="set-volume" type="range" min="0" max="1" step="0.05" aria-label="حجم صدا">
+          <span id="set-volume-num" aria-live="polite">۸۵٪</span>
+        </div>
+      </div>
+
+      <div class="settings-section" aria-label="تم">
+        <h4>🌗 تم</h4>
+        <div class="settings-row">
+          <label class="field" for="set-theme">حالت تیره</label>
+          <button type="button" class="settings-toggle" data-field="theme" aria-label="تم تیره را فعال/غیرفعال کن"></button>
+          <select id="set-theme" hidden>
+            <option value="light">روشن</option>
+            <option value="dark">تیره</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="settings-section" aria-label="دستاوردها">
+        <h4>🏆 دستاوردهای من</h4>
+        <div class="gal-ach-list"></div>
+      </div>
+
+      <div class="settings-section" aria-label="ابزارهای سریع">
+        <h4>⚡ ابزارهای سریع</h4>
+        <div class="settings-row" style="justify-content: center; gap: 6px;">
+          <button id="btn-show-stickers" class="act-btn ghost" type="button">🌟 جعبه استیکر</button>
+          <button id="btn-reset-onboard" class="act-btn ghost" type="button">👋 خوش‌آمدگویی</button>
+        </div>
+      </div>
+
+      <div class="danger-zone">
+        <h4>⚠️ منطقهٔ خطر</h4>
+        <p>تمام نقاشی‌ها، پیش‌نویس‌ها و دستاوردها پاک می‌شوند. این عملیات برگشت‌ناپذیر است.</p>
+        <button id="btn-reset-all" class="btn-danger" type="button">🗑️ پاک کردن همهٔ داده‌ها</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============ خوش‌آمدگویی (Onboarding) ============ -->
   <div id="onboarding" role="dialog" aria-modal="true" aria-labelledby="onb-title" aria-hidden="true">
@@ -97,6 +152,7 @@
       <button class="tab" id="tab-learn" role="tab" aria-selected="false" aria-controls="view-learn">📚 آموزش</button>
     </nav>
     <button id="sound-toggle" class="sound-btn" aria-label="قطع صدا" aria-pressed="false">🔊</button>
+    <button id="settings-btn" class="about-btn" type="button" aria-label="تنظیمات" title="تنظیمات">⚙️</button>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="تیره کردن تم" aria-pressed="false" title="تغییر تم">
       <span class="theme-ico-light" aria-hidden="true">🌞</span>
       <span class="theme-ico-dark" aria-hidden="true">🌙</span>
@@ -381,6 +437,7 @@
   <script src="js/stickers.js"></script>
   <script src="js/save-anim.js"></script>
   <script src="js/onboarding.js"></script>
+  <script src="js/settings.js"></script>
   <script src="js/app.js"></script>
 
   <!-- ثبت آفلاین — کوچک و کودک‌پسند -->

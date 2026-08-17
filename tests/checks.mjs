@@ -32,7 +32,8 @@ const JS_FILES = [
   'js/engine.js', 'js/album.js', 'js/tutorials.js',
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
   'js/about.js', 'js/splash.js', 'js/stickers.js',
-  'js/save-anim.js', 'js/onboarding.js', 'js/app.js'
+  'js/save-anim.js', 'js/onboarding.js', 'js/settings.js',
+  'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -216,6 +217,12 @@ section('تست‌های Theme و About و Splash — ایمن در Node');
   ok('Onboarding.show یک تابع است', typeof ONB.show === 'function');
   ok('Onboarding.hide یک تابع است', typeof ONB.hide === 'function');
   ok('Onboarding.resetSeen قابل فراخوانی است', typeof ONB.resetSeen === 'function');
+
+  const SET = (await import(pathToFileURL(join(ROOT, 'js/settings.js')).href)).default;
+  ok('Settings.open یک تابع است', typeof SET.open === 'function');
+  ok('Settings.close یک تابع است', typeof SET.close === 'function');
+  ok('Settings.isOpen یک تابع است', typeof SET.isOpen === 'function');
+  ok('Settings.ensureInit یک تابع است', typeof SET.ensureInit === 'function');
 }
 
 /* ---------- خلاصه ---------- */

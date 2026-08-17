@@ -446,13 +446,19 @@
 
     g.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });
 
-    // فعال‌سازی «دربارهٔ ما» + دستاوردها + استیکرها + Onboarding
+    // فعال‌سازی «دربارهٔ ما» + دستاوردها + استیکرها + Onboarding + Settings
     if (g.About && g.About.init) g.About.init();
     if (g.Stickers && g.Stickers.init) {
       g.Stickers.init({
         trayEl: U.$('#sticker-tray'),
         toggleBtn: U.$('#sticker-toggle')
       });
+    }
+    if (g.Settings && g.Settings.ensureInit) g.Settings.ensureInit();
+    // دکمهٔ تنظیمات در هدر
+    const settingsBtn = U.$('#settings-btn');
+    if (settingsBtn && g.Settings && g.Settings.open) {
+      settingsBtn.addEventListener('click', function () { g.Settings.open(); });
     }
     if (g.Achievements && g.Achievements.checkInstalled && matchMedia('(display-mode: standalone)').matches) {
       g.Achievements.checkInstalled();
