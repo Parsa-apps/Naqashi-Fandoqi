@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.fandoqi.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.fandoqi.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 200
+        versionName "2.0.0-offline"
+
+        // برای کودکان — پشتیبانی از همه دستگاه‌ها
+        multiDexEnabled false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // امضا با debug keystore برای نصب آسان روی همه گوشی‌ها
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // آفلاین — همه فایل‌های www در assets
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+
+    // برای نصب روی همه گوشی‌ها — universal APK
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = false
+        }
+        abi {
+            enableSplit = false
+        }
+    }
+}
+
+dependencies {
+    // هیچ وابستگی خارجی — فقط Android SDK — ۱۰۰٪ آفلاین
+}
