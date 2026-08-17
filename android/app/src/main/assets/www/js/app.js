@@ -160,8 +160,17 @@
       if (res.ok) {
         hideModal('save-modal');
         Sound.save();
-        U.toast('شاهکارت در آلبوم ثبت شد! 🌟', 'success');
-        // دستاورد بر اساس تعداد نقاشی‌های آلبوم
+        // اگر ماژول SaveAnim لود شده، نمایش پیش‌نمایش قشنگ با ذرات طلایی
+        if (g.SaveAnim && g.SaveAnim.show) {
+          const nth = res.album.length;
+          g.SaveAnim.show({
+            name: name,
+            thumb: thumb,
+            sub: 'شاهکار شماره\u2060\u200B ' + nth + ' \u062F\u0631 \u0622\u0644\u0628\u0648\u0645\u062A! \uD83C\uDF31'
+          });
+        } else {
+          U.toast('ثبت شد!', 'success');
+        }
         if (g.Achievements && g.Achievements.checkAlbumSize && g.Album && typeof g.Album.list === 'function') {
           g.Achievements.checkAlbumSize(g.Album.list().length);
         }

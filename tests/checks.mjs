@@ -32,7 +32,7 @@ const JS_FILES = [
   'js/engine.js', 'js/album.js', 'js/tutorials.js',
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
   'js/about.js', 'js/splash.js', 'js/stickers.js',
-  'js/app.js'
+  'js/save-anim.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -201,6 +201,10 @@ section('تست‌های Theme و About و Splash — ایمن در Node');
 
   const Sp = (await import(pathToFileURL(join(ROOT, 'js/stickers.js')).href)).default;
   ok('Stickers.init وجود دارد', typeof Sp.init === 'function');
+
+  const SAV = (await import(pathToFileURL(join(ROOT, 'js/save-anim.js')).href)).default;
+  ok('SaveAnim.show یک تابع است', typeof SAV.show === 'function');
+  ok('SaveAnim.hide یک تابع است', typeof SAV.hide === 'function');
 }
 
 /* ---------- خلاصه ---------- */
