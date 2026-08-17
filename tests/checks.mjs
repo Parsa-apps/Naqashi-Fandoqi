@@ -156,6 +156,12 @@ section('تست‌های Sound.chime');
   ok('Sound.setEnabled(false) غیرفعال می‌کند', Sound.setEnabled(false) === false && Sound.isEnabled() === false);
   Sound.chime();
   ok('Sound.setEnabled(true) فعال می‌کند', Sound.setEnabled(true) === true);
+  // کنترل حجم صدا
+  ok('Sound.getVolume() مقدار اولیه بین ۰ و ۱ برمی‌گرداند', Sound.getVolume() >= 0 && Sound.getVolume() <= 1);
+  ok('Sound.setVolume(0.3) حجم را تنظیم می‌کند', Sound.setVolume(0.3) === 0.3 && Sound.getVolume() === 0.3);
+  ok('Sound.setVolume(5) کلمپ به ۱ می‌شود', Sound.setVolume(5) === 1);
+  ok('Sound.setVolume(-1) کلمپ به ۰ می‌شود', Sound.setVolume(-1) === 0);
+  Sound.setVolume(0.85);
 }
 
 section('تست‌های ParentGate');
