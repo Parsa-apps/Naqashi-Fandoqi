@@ -119,3 +119,70 @@
     transition: none !important;
   }
 }
+
+/* ============================================================
+   Hero Animation — هنگام آماده شدن splash، عناصر اصلی stagger
+   ============================================================ */
+body:not(.is-app-ready) .app-header,
+body:not(.is-app-ready) .toolbar,
+body:not(.is-app-ready) .canvas-area,
+body:not(.is-app-ready) .controlbar {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+}
+
+body.is-app-ready .app-header {
+  animation: hero-rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.05s;
+}
+body.is-app-ready .toolbar,
+body.is-app-ready .canvas-area {
+  animation: hero-rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.18s;
+}
+body.is-app-ready .controlbar {
+  animation: hero-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.32s;
+}
+
+@keyframes hero-rise {
+  0%   { opacity: 0; transform: translate3d(0, 18px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.welcome-toast {
+  display: inline-block;
+  margin-inline-start: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fff7e0, #ffe1cf);
+  color: #5d3a1a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.18);
+  animation: welcome-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.4s;
+}
+@keyframes welcome-pop {
+  0%   { opacity: 0; transform: scale(0.6) translateY(8px); }
+  60%  { opacity: 1; transform: scale(1.08) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.is-app-ready) .app-header,
+  body:not(.is-app-ready) .toolbar,
+  body:not(.is-app-ready) .canvas-area,
+  body:not(.is-app-ready) .controlbar {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  body.is-app-ready .app-header,
+  body.is-app-ready .toolbar,
+  body.is-app-ready .canvas-area,
+  body.is-app-ready .controlbar,
+  .welcome-toast {
+    animation: none !important;
+    transition: none !important;
+  }
+}

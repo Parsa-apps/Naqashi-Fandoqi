@@ -74,6 +74,10 @@
       el.classList.add('is-bye');
       setTimeout(function () {
         el.classList.add('is-gone');
+        // رویداد سفارشی برای هماهنگی با Hero Animation در اپ
+        try {
+          g.dispatchEvent(new CustomEvent('fandoqi:splash-done'));
+        } catch (_) {}
         setTimeout(function () {
           if (el.parentNode) el.parentNode.removeChild(el);
         }, FADE_DURATION);

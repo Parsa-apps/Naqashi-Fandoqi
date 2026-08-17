@@ -466,6 +466,25 @@
       }
     } catch (_) {}
 
+    // Hero Animation — وقتی splash بسته شد، عناصر اصلی stagger ظاهر می‌شوند
+    let heroTriggered = false;
+    function triggerHero() {
+      if (heroTriggered) return;
+      heroTriggered = true;
+      document.body.classList.add('is-app-ready');
+      // پیام خوش‌آمد موقت در هدر
+      const brand = U.$('.brand');
+      if (brand) {
+        const toast = document.createElement('span');
+        toast.className = 'welcome-toast';
+        toast.textContent = '\u2728 \u062E\u0648\u0634 \u0622\u0645\u062F\u06CC!';
+        brand.appendChild(toast);
+      }
+    }
+    // اگر splash قبلاً بسته شده (برای سشن‌های بعدی)
+    if (!document.getElementById('splash')) triggerHero();
+    g.addEventListener('fandoqi:splash-done', triggerHero);
+
     // بازگرداندن پیش‌نویس نیمه‌کاره
     const restored = Engine.tryRestoreDraft();
     if (restored) {
