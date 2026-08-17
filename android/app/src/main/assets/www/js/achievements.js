@@ -19,6 +19,8 @@
     'all-tutorials': { ico: '\uD83E\uDD47', title: '\u0627\u0633\u062A\u0627\u062F \u0646\u0642\u0627\u0634\u06CC \u0641\u0646\u062F\u0648\u0642\u06CC!',   sub: '\u0647\u0645\u0647\u0654 \u0622\u0645\u0648\u0632\u0634\u200C\u0647\u0627 \u0631\u0627 \u06A9\u0627\u0645\u0644 \u06A9\u0631\u062F\u06CC' },
     'all-stamps':  { ico: '\uD83C\uDF39', title: '\u0633\u062A\u0627\u0631\u0647\u200C\u0686\u06CC\u0646',              sub: '\u0647\u0645\u0647 \u0633\u062A\u0627\u0631\u0647\u200C\u0647\u0627\u06CC \u062C\u0627\u062F\u0648\u06CC \u0631\u0627 \u0628\u0647 \u062F\u0633\u062A \u0622\u0648\u0631\u062F\u06CC' },
     'share-me':    { ico: '\uD83D\uDCF2', title: '\u0646\u0635\u0628 \u0641\u0646\u062F\u0648\u0642\u06CC',              sub: '\u0641\u0646\u062F\u0648\u0642\u06CC \u0631\u0627 \u0631\u0648\u06CC \u062F\u0633\u062A\u06AF\u0627\u0647\u062A \u0646\u0635\u0628 \u06A9\u0631\u062F\u06CC' },
+    'streak-3':    { ico: '\uD83D\uDD25', title: '\u0633\u0647 \u0631\u0648\u063A \u067E\u06CC\u0627\u067E\u06CC!',          sub: '\u066B\u0663 \u0631\u0648\u063A \u067E\u06CC\u0627\u067E\u06CC \u067E\u062F\u0631\u067E\u06CC \u06A9\u0634\u06CC\u062F\u06CC' },
+    'streak-7':    { ico: '\uD83C\uDFC5', title: '\u0647\u0641\u062A \u0631\u0648\u063A \u0639\u0627\u0644\u06CC!',         sub: '\u06CC\u06A9 \u0647\u0641\u062A\u0647 \u06A9\u0627\u0645\u0644 \u0628\u062F\u0648\u0646 \u062A\u0648\u0642\u0641!' },
   };
 
   const STORAGE_KEY = 'fandoqi.achievements';
@@ -115,6 +117,12 @@
   function checkFirstStep() { unlock('first-step'); }
   function checkAllStamps() { unlock('all-stamps'); }
 
+  function checkStreak(streak) {
+    if (typeof streak !== 'number') return;
+    if (streak >= 3) unlock('streak-3');
+    if (streak >= 7) unlock('streak-7');
+  }
+
   const api = {
     CATALOG: CATALOG,
     has: has,
@@ -124,7 +132,8 @@
     checkAlbumSize: checkAlbumSize,
     checkInstalled: checkInstalled,
     checkFirstStep: checkFirstStep,
-    checkAllStamps: checkAllStamps
+    checkAllStamps: checkAllStamps,
+    checkStreak: checkStreak
   };
 
   g.Achievements = api;

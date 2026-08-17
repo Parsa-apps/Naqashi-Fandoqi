@@ -272,6 +272,15 @@ section('تست‌های challenges — چالش‌های روزانه');
   ok('getStreak شیء با current و best برمی‌گرداند', st0 && typeof st0.current === 'number' && typeof st0.best === 'number');
   const first = CH.POOL[0];
   ok('POOL[i] دارای id/emoji/title/desc', !!first.id && !!first.emoji && !!first.title && !!first.desc);
+
+  // تست streak achievements
+  {
+    const AC = (await import(pathToFileURL(join(ROOT, 'js/achievements.js')).href)).default;
+    ok('Achievements.checkStreak یک تابع است', typeof AC.checkStreak === 'function');
+    ok('Achievements.CATALOG شامل streak-3 است', !!AC.CATALOG && !!AC.CATALOG['streak-3']);
+    ok('Achievements.CATALOG شامل streak-7 است', !!AC.CATALOG && !!AC.CATALOG['streak-7']);
+    ok('Achievements.CATALOG حداقل ٫١٠ آیتم دارد', Object.keys(AC.CATALOG || {}).length >= 10);
+  }
 }
 
 /* ---------- خلاصه ---------- */

@@ -479,6 +479,16 @@
       });
     }
     if (g.Settings && g.Settings.ensureInit) g.Settings.ensureInit();
+    if (g.Challenges && g.Challenges.init) {
+      g.Challenges.init({ cardEl: U.$('#challenge-card') });
+      g.Challenges.show();
+      // گوش دادن به رویداد چالش برای باز کردن دستاوردها
+      g.addEventListener('fandoqi-challenge-done', function (e) {
+        if (g.Achievements && g.Achievements.checkStreak && e.detail && typeof e.detail.streak === 'number') {
+          g.Achievements.checkStreak(e.detail.streak);
+        }
+      });
+    }
     if (g.Templates && g.Templates.init) {
       g.Templates.init({
         trayEl: U.$('#tpl-tray'),

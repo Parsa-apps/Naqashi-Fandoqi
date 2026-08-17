@@ -55,12 +55,19 @@
   function markDone() {
     const today = dayIndex();
     const s = loadState();
-    if (s.lastDoneDay === today) return s;
+    const wasNew = s.lastDoneDay !== today;
+    if (!wasNew) return s;
     if (s.lastDoneDay === today - 1) s.streak++;
     else s.streak = 1;
     s.best = Math.max(s.best || 0, s.streak);
     s.lastDoneDay = today;
     saveState(s);
+    // رویداد سفارشی برای ارتباط با سیستم دستاوردها
+    try {
+      if (typeof g.dispatchEvent === 'function') {
+        g.dispatchEvent(new CustomEvent('fandoqi-challenge-done', { detail: { streak: s.streak, best: s.best } }));
+      }
+    } catch (_) {}
     return s;
   }
 
