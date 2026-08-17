@@ -234,6 +234,9 @@
       switchTab('draw');
       U.toast('حالا ادامهٔ نقاشی‌ات را بکش! 🖌️', 'success');
     });
+    U.$('#view-print').addEventListener('click', function () {
+      try { g.print(); Sound.save(); } catch (_) {}
+    });
     U.$('#view-delete').addEventListener('click', function () {
       if (!viewingRec) return;
       const rec = viewingRec;
