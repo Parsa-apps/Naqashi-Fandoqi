@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8a5cff">
+  <meta name="description" content="استودیوی نقاشی و خلاقیت کودکان؛ ابزارهای حرفه‌ای، براش‌های جادویی و آلبوم شاهکارها.">
+  <title>استودیو نقاشی فندوقی 🌰</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌰</text></svg>">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="brand">
+      <span class="mascot" aria-hidden="true">🌰</span>
+      <h1>استودیو نقاشی فندوقی</h1>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="بخش‌های برنامه">
+      <button class="tab is-active" id="tab-draw" role="tab" aria-selected="true" aria-controls="view-draw">🖌️ نقاشی</button>
+      <button class="tab" id="tab-album" role="tab" aria-selected="false" aria-controls="view-album">🖼️ آلبوم</button>
+      <button class="tab" id="tab-learn" role="tab" aria-selected="false" aria-controls="view-learn">📚 آموزش</button>
+    </nav>
+    <button id="sound-toggle" class="sound-btn" aria-label="قطع صدا" aria-pressed="false">🔊</button>
+  </header>
+
+  <main id="app">
+
+    <!-- ============ بخش نقاشی ============ -->
+    <section id="view-draw" class="view" role="tabpanel" aria-labelledby="tab-draw">
+      <div class="studio">
+        <aside class="toolbar" aria-label="جعبه ابزار">
+          <div class="tool-group">
+            <h2>ابزارهای حرفه‌ای</h2>
+            <div class="tools">
+              <button class="tool-btn is-active" data-tool="brush"><span class="ico" aria-hidden="true">🖌️</span>قلم‌مو</button>
+              <button class="tool-btn" data-tool="pencil"><span class="ico" aria-hidden="true">✏️</span>مداد</button>
+              <button class="tool-btn" data-tool="eraser"><span class="ico" aria-hidden="true">🧽</span>پاک‌کن</button>
+              <button class="tool-btn" data-tool="spray"><span class="ico" aria-hidden="true">💨</span>اسپری</button>
+              <button class="tool-btn" data-tool="fill"><span class="ico" aria-hidden="true">🪣</span>سطل رنگ</button>
+              <button class="tool-btn" data-tool="line"><span class="ico" aria-hidden="true">📏</span>خط</button>
+              <button class="tool-btn" data-tool="rect"><span class="ico" aria-hidden="true">⬜</span>مستطیل</button>
+              <button class="tool-btn" data-tool="ellipse"><span class="ico" aria-hidden="true">⭕</span>بیضی</button>
+              <button class="tool-btn" data-tool="triangle"><span class="ico" aria-hidden="true">🔺</span>مثلث</button>
+              <button class="tool-btn" data-tool="star"><span class="ico" aria-hidden="true">⭐</span>ستاره</button>
+            </div>
+          </div>
+          <div class="tool-group magic">
+            <h2>براش‌های جادویی ✨</h2>
+            <div class="tools">
+              <button class="tool-btn" data-tool="rainbow"><span class="ico" aria-hidden="true">🌈</span>رنگین‌کمان</button>
+              <button class="tool-btn" data-tool="sparkle"><span class="ico" aria-hidden="true">✨</span>برق جادویی</button>
+              <button class="tool-btn" data-tool="glow"><span class="ico" aria-hidden="true">💡</span>نئون</button>
+              <button class="tool-btn" data-tool="stamp-heart"><span class="ico" aria-hidden="true">❤️</span>مهر قلب</button>
+              <button class="tool-btn" data-tool="stamp-star"><span class="ico" aria-hidden="true">🌟</span>مهر ستاره</button>
+              <button class="tool-btn" data-tool="stamp-flower"><span class="ico" aria-hidden="true">🌸</span>مهر گل</button>
+              <button class="tool-btn" data-tool="stamp-butterfly"><span class="ico" aria-hidden="true">🦋</span>مهر پروانه</button>
+              <button class="tool-btn" data-tool="stamp-smiley"><span class="ico" aria-hidden="true">😊</span>مهر لبخند</button>
+            </div>
+          </div>
+        </aside>
+
+        <section class="canvas-area" aria-label="محل نقاشی">
+          <div class="canvas-wrap">
+            <canvas id="board" width="900" height="600" aria-label="بوم نقاشی. با موس یا انگشت نقاشی کن.">
+              متأسفیم! مرورگر تو از بوم نقاشی پشتیبانی نمی‌کند. 😢
+            </canvas>
+          </div>
+        </section>
+      </div>
+
+      <div class="controlbar">
+        <div class="control-group" aria-label="انتخاب رنگ">
+          <div class="swatches" id="swatches">
+            <button class="swatch is-active" data-color="#ec407a" style="background:#ec407a" aria-label="رنگ صورتی"></button>
+            <button class="swatch" data-color="#e53935" style="background:#e53935" aria-label="رنگ قرمز"></button>
+            <button class="swatch" data-color="#fb8c00" style="background:#fb8c00" aria-label="رنگ نارنجی"></button>
+            <button class="swatch" data-color="#fdd835" style="background:#fdd835" aria-label="رنگ زرد"></button>
+            <button class="swatch" data-color="#8bc34a" style="background:#8bc34a" aria-label="رنگ سبز روشن"></button>
+            <button class="swatch" data-color="#43a047" style="background:#43a047" aria-label="رنگ سبز"></button>
+            <button class="swatch" data-color="#4fc3f7" style="background:#4fc3f7" aria-label="رنگ آبی آسمانی"></button>
+            <button class="swatch" data-color="#1e88e5" style="background:#1e88e5" aria-label="رنگ آبی"></button>
+            <button class="swatch" data-color="#8e24aa" style="background:#8e24aa" aria-label="رنگ بنفش"></button>
+            <button class="swatch" data-color="#795548" style="background:#795548" aria-label="رنگ قهوه‌ای"></button>
+            <button class="swatch" data-color="#90a4ae" style="background:#90a4ae" aria-label="رنگ خاکستری"></button>
+            <button class="swatch" data-color="#212121" style="background:#212121" aria-label="رنگ مشکی"></button>
+          </div>
+          <label class="custom-color" for="custom-color">
+            <span>🎨 رنگ دلخواه</span>
+            <input type="color" id="custom-color" value="#ec407a" aria-label="انتخاب رنگ دلخواه">
+          </label>
+        </div>
+
+        <div class="control-group size-box">
+          <span id="size-label" aria-live="polite">ضخامت: ۱۲</span>
+          <input type="range" id="size-slider" min="2" max="64" value="12" aria-label="اندازه قلم‌مو">
+        </div>
+
+        <div class="control-group actions">
+          <button class="act-btn" id="btn-undo" disabled aria-label="برگرداندن آخرین حرکت">↩️ برگردان</button>
+          <button class="act-btn" id="btn-redo" disabled aria-label="انجام دوباره">↪️ دوباره</button>
+          <button class="act-btn" id="btn-clear" aria-label="پاک کردن صفحه">🧹 پاک‌کردن</button>
+          <button class="act-btn ghost" id="btn-download" aria-label="دانلود نقاشی">⬇️ دانلود</button>
+          <button class="act-btn primary" id="btn-save" aria-label="ذخیره در آلبوم">💾 ذخیره در آلبوم</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ بخش آلبوم ============ -->
+    <section id="view-album" class="view is-hidden" role="tabpanel" aria-labelledby="tab-album">
+      <header class="view-head">
+        <h2>🖼️ آلبوم شاهکارها</h2>
+        <p>نقاشی‌هایت اینجا نگهداری می‌شوند؛ هر وقت خواستی نمایش بده، دانلود کن یا ادامه‌اش را بکش!</p>
+      </header>
+      <div id="album-grid" class="album-grid"></div>
+      <div id="album-empty" class="empty-state is-hidden">
+        <div class="big" aria-hidden="true">🖼️</div>
+        <h3>هنوز شاهکاری ثبت نشده!</h3>
+        <p>برو توی بخش «نقاشی»، یک شاهکار بکش و دکمهٔ «💾 ذخیره در آلبوم» را بزن.</p>
+      </div>
+    </section>
+
+    <!-- ============ بخش آموزش ============ -->
+    <section id="view-learn" class="view is-hidden" role="tabpanel" aria-labelledby="tab-learn">
+      <div id="learn-home">
+        <header class="view-head">
+          <h2>📚 آموزش صفر تا صد نقاشی</h2>
+          <p>قدم‌به‌قدم با من نقاشی بکش؛ از شکل‌های ساده شروع می‌کنیم و کم‌کم به شاهکار می‌رسیم! 🎉</p>
+        </header>
+        <div id="lesson-grid" class="lesson-grid"></div>
+
+        <section class="tips" aria-label="ترفندهای طلایی">
+          <h3>✨ ترفندهای طلایی برای راحت نقاشی‌کشیدن</h3>
+          <div id="tips-grid" class="tips-grid"></div>
+        </section>
+      </div>
+
+      <div id="learn-detail" class="is-hidden">
+        <button id="lesson-back" class="act-btn ghost">⬅️ بازگشت به آموزش‌ها</button>
+        <div class="lesson-detail card">
+          <header class="lesson-head">
+            <div>
+              <span id="lesson-emoji" class="lesson-emoji" aria-hidden="true">🐱</span>
+              <h3 id="lesson-title">گربه</h3>
+              <span id="lesson-level" class="badge">آسان</span>
+            </div>
+            <span id="step-indicator" class="step-indicator">قدم ۱ از ۵</span>
+          </header>
+
+          <div id="step-svg" class="step-svg" aria-hidden="true"></div>
+          <p id="step-text" class="step-text"></p>
+
+          <div class="step-nav">
+            <button id="step-prev" class="act-btn" disabled>قدم قبلی</button>
+            <button id="step-done" class="act-btn primary">✅ این قدم را یاد گرفتم!</button>
+            <button id="step-next" class="act-btn">قدم بعدی</button>
+          </div>
+
+          <div id="lesson-done" class="lesson-done is-hidden">
+            🎉 آفرین! این آموزش را کامل کردی! حالا برو سراغ آموزش بعدی.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ مودال ذخیره ============ -->
+  <div class="modal-backdrop is-hidden" id="save-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="save-title">
+      <h3 id="save-title">💾 ذخیره در آلبوم</h3>
+      <p class="hint">برای شاهکارت یک اسم قشنگ بگذار:</p>
+      <input type="text" id="save-name" maxlength="40" placeholder="مثلاً: گربهٔ رنگین‌کمانی">
+      <img id="save-preview" class="save-preview" alt="پیش‌نمایش نقاشی">
+      <div class="modal-actions">
+        <button id="save-confirm" class="act-btn primary">ذخیره کن! 🌟</button>
+        <button id="save-cancel" class="act-btn ghost">بیخیال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ مودال نمایش ============ -->
+  <div class="modal-backdrop is-hidden" id="view-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="view-name">
+      <h3 id="view-name"></h3>
+      <time id="view-date" class="hint"></time>
+      <img id="view-img" class="view-img" alt="نقاشی ذخیره‌شده">
+      <div class="modal-actions">
+        <button id="view-edit" class="act-btn">🖌️ ادامه نقاشی</button>
+        <button id="view-download" class="act-btn ghost">⬇️ دانلود</button>
+        <button id="view-delete" class="act-btn danger">🗑️ حذف</button>
+        <button id="view-close" class="act-btn ghost">بستن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ مودال تأیید ============ -->
+  <div class="modal-backdrop is-hidden" id="confirm-modal">
+    <div class="modal modal-sm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-text">
+      <p id="confirm-text"></p>
+      <div class="modal-actions">
+        <button id="confirm-yes" class="act-btn primary">بله</button>
+        <button id="confirm-no" class="act-btn ghost">بیخیال</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="js/storage-core.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/album.js"></script>
+  <script src="js/tutorials.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
