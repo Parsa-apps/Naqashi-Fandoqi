@@ -110,7 +110,7 @@
         U.toast('بوم که خالی است! اول چیزی بکش 🎨', 'info');
         return;
       }
-      confirmDialog('🧹 همهٔ نقاشی پاک شود؟').then(function (yes) {
+      confirmWithGate('🧹 همهٔ نقاشی پاک شود؟').then(function (yes) {
         if (!yes) return;
         Engine.clear();
         U.toast('بوم پاک شد؛ حالا یک شاهکار جدید بکش! 🎨', 'info');
@@ -208,7 +208,7 @@
       if (!viewingRec) return;
       const rec = viewingRec;
       hideModal('view-modal');
-      confirmDialog('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
+      confirmWithGate('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
         if (!yes) return;
         Album.remove(rec.id);
         Sound.error();
@@ -227,6 +227,17 @@
     return new Promise(function (resolve) {
       confirmResolver = resolve;
     });
+  }
+
+  // تأیید حساس — ابتدا دروازهٔ والدین با سوال ریاضی، سپس تأیید
+  function confirmWithGate(text) {
+    if (g.ParentGate && typeof g.ParentGate.open === 'function') {
+      return g.ParentGate.open().then(function (passed) {
+        if (!passed) return false;
+        return confirmDialog(text);
+      });
+    }
+    return confirmDialog(text);
   }
 
   function wireConfirmModal() {
@@ -392,7 +403,7 @@
           U.toast('حالا ادامهٔ نقاشی‌ات را بکش! 🖌️', 'success');
         },
         delete: function (rec) {
-          confirmDialog('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
+          confirmWithGate('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
             if (!yes) return;
             Album.remove(rec.id);
             U.toast('نقاشی حذف شد', 'info');

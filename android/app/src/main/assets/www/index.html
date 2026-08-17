@@ -27,8 +27,28 @@
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/parent-gate.css">
+  <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
+
+  <!-- ============ اسپلش اسکرین فندوقی ============ -->
+  <div id="splash" role="status" aria-label="در حال بارگذاری فندوقی">
+    <div class="splash-logo" aria-hidden="true">
+      <span class="splash-logo-ring"></span>
+      <span class="splash-logo-ring ring-2"></span>
+      <span class="splash-logo-ring ring-3"></span>
+      <div class="splash-logo-core">🌰</div>
+    </div>
+    <h2 class="splash-title">استودیو نقاشی فندوقی</h2>
+    <p class="splash-subtitle">آفلاین، امن، پر از ابزار جادویی</p>
+    <div class="splash-progress" aria-hidden="true">
+      <div class="splash-progress-bar"></div>
+    </div>
+    <p class="splash-loading-text" aria-live="polite">در حال آماده‌سازی رنگ‌ها...</p>
+    <p class="splash-bye">ساخته‌شده با 🌰 توسط گروه پارسا اپس</p>
+  </div>
 
   <header class="app-header">
     <div class="brand">
@@ -42,6 +62,10 @@
       <button class="tab" id="tab-learn" role="tab" aria-selected="false" aria-controls="view-learn">📚 آموزش</button>
     </nav>
     <button id="sound-toggle" class="sound-btn" aria-label="قطع صدا" aria-pressed="false">🔊</button>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="تیره کردن تم" aria-pressed="false" title="تغییر تم">
+      <span class="theme-ico-light" aria-hidden="true">🌞</span>
+      <span class="theme-ico-dark" aria-hidden="true">🌙</span>
+    </button>
     <button id="about-btn" class="about-btn" type="button" aria-label="دربارهٔ ما" title="دربارهٔ ما">ℹ️</button>
   </header>
 
@@ -240,6 +264,24 @@
     </div>
   </div>
 
+  <!-- ============ مودال دروازهٔ والدین (Parental Gate) ============ -->
+  <div class="modal-backdrop is-hidden" id="parent-gate-modal">
+    <div class="parent-gate-modal" role="alertdialog" aria-modal="true" aria-labelledby="pg-title">
+      <div class="pg-icon" aria-hidden="true">🛡️</div>
+      <p class="pg-pre-title">این قسمت برای بزرگ‌ترهاست. لطفاً جواب بده:</p>
+      <h3 id="pg-title">دروازهٔ والدین</h3>
+      <div id="pg-question" class="pg-question" dir="ltr">۰ + ۰ = ?</div>
+      <input type="number" inputmode="numeric" pattern="[0-9]*" id="pg-input" class="pg-input" placeholder="٠" aria-label="پاسخ" maxlength="3" autocomplete="off">
+      <p id="pg-hint" class="pg-hint">یک بزرگ‌تر کمکت کنه 🌟</p>
+      <p id="pg-error" class="pg-error">❌ اشتباه بود، دوباره امتحان کن</p>
+      <div id="pg-locked" class="pg-locked is-hidden" aria-live="polite">⏳ برای امنیت، ۳۰ ثانیه صبر کن و دوباره امتحان کن.</div>
+      <div class="parent-gate-actions">
+        <button id="pg-confirm" class="act-btn primary" type="button">تأیید ✨</button>
+        <button id="pg-cancel" class="act-btn ghost" type="button">بیخیال</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ مودال «دربارهٔ ما / پارسا اپس» ============ -->
   <div class="modal-backdrop is-hidden" id="about-modal">
     <div class="about-modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
@@ -290,6 +332,9 @@
   <script src="js/offline.js"></script>
   <script src="js/sound.js"></script>
   <script src="js/achievements.js"></script>
+  <script src="js/splash.js"></script>
+  <script src="js/parent-gate.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/album.js"></script>
   <script src="js/tutorials.js"></script>

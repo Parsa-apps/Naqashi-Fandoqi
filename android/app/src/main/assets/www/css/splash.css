@@ -1,0 +1,214 @@
+/* ============================================================
+   splash.css — اسپلش اسکرین انیمیت‌شدهٔ فندوقی
+   - لایهٔ تمام‌صفحه با گرادیان گرم کودکانه
+   - لوگوی 🌰 با چرخش آرام + هالهٔ درخشان
+   - نوار پیشرفت با رنگ طلایی
+   - کم‌کم محو می‌شود بعد از لود کامل
+   ============================================================ */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background:
+    radial-gradient(circle at center 25%, rgba(255, 215, 0, 0.22) 0%, transparent 55%),
+    linear-gradient(160deg, #fff7e6 0%, #ffe9cc 45%, #ffd9a8 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  pointer-events: auto;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+  overflow: hidden;
+}
+
+#splash.is-gone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* دایره‌های پس‌زمینه — حس عمق می‌دن */
+#splash::before,
+#splash::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: splash-drift 6s ease-in-out infinite;
+}
+#splash::before {
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(255, 167, 38, 0.55), transparent 70%);
+  top: 12%; left: -50px;
+  animation-delay: 0s;
+}
+#splash::after {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(206, 147, 216, 0.55), transparent 70%);
+  bottom: 18%; right: -40px;
+  animation-delay: -3s;
+}
+
+@keyframes splash-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(20px, -10px) scale(1.08); }
+}
+
+/* ----- لوگوی فندوقی با دو حلقهٔ چرخان ----- */
+.splash-logo {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-logo-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    rgba(255, 215, 0, 0)    0%,
+    rgba(255, 215, 0, 0.75) 17%,
+    rgba(255, 235, 130, 0.95) 30%,
+    rgba(255, 167, 38, 0.85) 47%,
+    rgba(255, 215, 0, 0)    65%,
+    rgba(255, 215, 0, 0)   100%);
+  mask: radial-gradient(circle, transparent 60%, #000 62%, #000 78%, transparent 80%);
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%, #000 78%, transparent 80%);
+  animation: splash-rotate 4s linear infinite;
+}
+.splash-logo-ring.ring-2 {
+  animation: splash-rotate-reverse 5s linear infinite;
+  inset: -10px;
+  opacity: 0.55;
+}
+.splash-logo-ring.ring-3 {
+  animation: splash-rotate 6s linear infinite;
+  inset: 10px;
+  opacity: 0.38;
+}
+
+@keyframes splash-rotate        { from { transform: rotate(0deg);   } to { transform: rotate(360deg);  } }
+@keyframes splash-rotate-reverse{ from { transform: rotate(360deg); } to { transform: rotate(0deg);    } }
+
+/* ----- مهرهٔ مرکزی: 🌰 با درخشش و ریز ضربان ----- */
+.splash-logo-core {
+  position: relative;
+  width: 116px;
+  height: 116px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #fff, #fff8ed);
+  border-radius: 50%;
+  font-size: 4.6rem;
+  line-height: 1;
+  z-index: 2;
+  border: 3px solid #ffd54f;
+  box-shadow:
+    inset 0 0 0 3px #fff8e1,
+    0 14px 36px rgba(255, 167, 38, 0.35),
+    0 0 0 0   rgba(255, 215, 0, 0.55);
+  animation: splash-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes splash-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      inset 0 0 0 3px #fff8e1,
+      0 14px 36px rgba(255, 167, 38, 0.35),
+      0 0 0 0   rgba(255, 215, 0, 0.55);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow:
+      inset 0 0 0 3px #fff8e1,
+      0 18px 44px rgba(255, 167, 38, 0.45),
+      0 0 0 18px rgba(255, 215, 0, 0);
+  }
+}
+
+/* ----- عنوان و زیرعنوان ----- */
+.splash-title {
+  margin: 6px 0 0;
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #5d3a1a;
+  text-shadow: 0 1px 0 #fff, 0 0 12px rgba(255, 215, 0, 0.55);
+}
+.splash-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #8a5c2b;
+  font-weight: 700;
+}
+
+/* ----- نوار پیشرفت با لبهٔ طلایی ----- */
+.splash-progress {
+  width: min(260px, 60vw);
+  height: 8px;
+  background: rgba(184, 134, 11, 0.16);
+  border: 2px solid rgba(184, 134, 11, 0.28);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 14px;
+  position: relative;
+}
+.splash-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ffd54f, #ff8a00);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 16px rgba(255, 167, 38, 0.55);
+}
+
+/* ----- متن بارگذاری ----- */
+.splash-loading-text {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: #8a5c2b;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- پیام انتهایی هنگام خروج ----- */
+.splash-bye {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  font-size: 0.74rem;
+  color: rgba(138, 92, 43, 0.7);
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#splash.is-bye .splash-bye {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* حالت ریسپانسیو */
+@media (max-width: 380px) {
+  .splash-logo { width: 140px; height: 140px; }
+  .splash-logo-core { width: 96px; height: 96px; font-size: 3.6rem; }
+  .splash-title { font-size: 1.25rem; }
+}
+
+/* دسترس‌پذیری: کاهش حرکت */
+@media (prefers-reduced-motion: reduce) {
+  #splash::before, #splash::after,
+  .splash-logo-ring,
+  .splash-logo-core {
+    animation: none !important;
+  }
+  #splash { transition-duration: 0.001s; }
+}
