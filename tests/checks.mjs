@@ -33,7 +33,7 @@ const JS_FILES = [
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
   'js/about.js', 'js/splash.js', 'js/stickers.js',
   'js/save-anim.js', 'js/onboarding.js', 'js/settings.js',
-  'js/app.js'
+  'js/templates.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -223,6 +223,11 @@ section('تست‌های Theme و About و Splash — ایمن در Node');
   ok('Settings.close یک تابع است', typeof SET.close === 'function');
   ok('Settings.isOpen یک تابع است', typeof SET.isOpen === 'function');
   ok('Settings.ensureInit یک تابع است', typeof SET.ensureInit === 'function');
+
+  const TPL = (await import(pathToFileURL(join(ROOT, 'js/templates.js')).href)).default;
+  ok('Templates.init یک تابع است', typeof TPL.init === 'function');
+  ok('Templates.list ۴ قالب برمی‌گرداند', Array.isArray(TPL.list()) && TPL.list().length === 4);
+  ok('Templates.loadTemplate قابل فراخوانی است', typeof TPL.loadTemplate === 'function');
 }
 
 /* ---------- خلاصه ---------- */

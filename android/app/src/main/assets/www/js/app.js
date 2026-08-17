@@ -455,6 +455,12 @@
       });
     }
     if (g.Settings && g.Settings.ensureInit) g.Settings.ensureInit();
+    if (g.Templates && g.Templates.init) {
+      g.Templates.init({
+        trayEl: U.$('#tpl-tray'),
+        toggleBtn: U.$('#tpl-toggle')
+      });
+    }
     // دکمهٔ تنظیمات در هدر
     const settingsBtn = U.$('#settings-btn');
     if (settingsBtn && g.Settings && g.Settings.open) {

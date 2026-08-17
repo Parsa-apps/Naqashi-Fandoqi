@@ -643,6 +643,21 @@
     img.src = dataUrl;
   }
 
+  /* ---------- بارگذاری قالب از SVG ---------- */
+  function loadSvgTemplate(svgString, fit) {
+    if (typeof TextEncoder === 'undefined' || typeof btoa === 'undefined') return false;
+    try {
+      const bytes = new TextEncoder().encode(svgString);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      const dataUrl = 'data:image/svg+xml;base64,' + btoa(bin);
+      loadImage(dataUrl, fit !== false);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   /* ---------- پیش‌نویس ---------- */
 
   function saveDraftNow() {
@@ -714,6 +729,7 @@
     exportDataUrl: exportDataUrl,
     exportThumb: exportThumb,
     loadImage: loadImage,
+    loadSvgTemplate: loadSvgTemplate,
     saveDraftNow: saveDraftNow,
     saveDraftDebounced: saveDraftDebounced,
     tryRestoreDraft: tryRestoreDraft,
