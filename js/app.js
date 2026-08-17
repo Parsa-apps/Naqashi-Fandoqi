@@ -73,6 +73,7 @@
   function wireColors() {
     const swatches = U.$('#swatches');
     const custom = U.$('#custom-color');
+    renderRecent();
     swatches.addEventListener('click', function (e) {
       const sw = e.target.closest('.swatch');
       if (!sw) return;
@@ -81,10 +82,41 @@
       Engine.setColor(sw.dataset.color);
       custom.value = sw.dataset.color;
       Sound.click();
+      if (typeof renderRecent === 'function') renderRecent();
     });
     custom.addEventListener('input', function () {
       U.$$('.swatch').forEach(function (s) { s.classList.remove('is-active'); });
       Engine.setColor(custom.value);
+      renderRecent();
+    });
+  }
+
+  function renderRecent() {
+    const recentEl = U.$('#recent-colors');
+    if (!recentEl || !Engine || typeof Engine.getRecentColors !== 'function') return;
+    const cur = Engine.getColor();
+    const list = Engine.getRecentColors().filter(function (c) { return c && c !== cur; });
+    recentEl.innerHTML = '';
+    if (list.length === 0) { recentEl.classList.add('is-empty'); return; }
+    recentEl.classList.remove('is-empty');
+    const lab = document.createElement('span');
+    lab.className = 'label';
+    lab.textContent = 'اخیر:';
+    recentEl.appendChild(lab);
+    list.forEach(function (c) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'recent-color';
+      b.style.background = c;
+      b.title = c;
+      b.setAttribute('aria-label', 'رنگ ' + c);
+      b.addEventListener('click', function () {
+        U.$$('.swatch').forEach(function (s) { s.classList.remove('is-active'); });
+        Engine.setColor(c);
+        if (custom) custom.value = c;
+        renderRecent();
+      });
+      recentEl.appendChild(b);
     });
   }
 

@@ -33,6 +33,7 @@
   let shapeStart = null;
   let shapeSnap = null;
   let hasDrawing = false;
+  const recentColors = [];
 
   let history = [];
   let hIndex = -1;
@@ -708,7 +709,21 @@
   const api = {
     init: init,
     setTool: function (t) { tool = t; },
-    setColor: function (c) { color = c; },
+    setColor: function (c) {
+      color = c;
+      if (c) {
+        if (!recentColors.includes(c)) recentColors.unshift(c);
+        else recentColors.splice(recentColors.indexOf(c), 1);
+        if (recentColors.length > 8) recentColors.length = 8;
+      }
+    },
+    addRecentColor: function (c) {
+      if (!c) return;
+      if (!recentColors.includes(c)) recentColors.unshift(c);
+      else recentColors.splice(recentColors.indexOf(c), 1);
+      if (recentColors.length > 8) recentColors.length = 8;
+    },
+    getRecentColors: function () { return recentColors.slice(); },
     setSize: function (s) { size = g.Utils.clamp(Number(s) || 12, 2, 64); },
     getTool: function () { return tool; },
     getColor: function () { return color; },

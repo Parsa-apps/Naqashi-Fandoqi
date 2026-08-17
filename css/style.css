@@ -711,3 +711,44 @@ button { font-family: inherit; }
   body { background: #fff; }
 }
 
+/* ============================================================
+   Recent Colors — رنگ‌های اخیر استفاده‌شده
+   ============================================================ */
+.recent-colors {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(184, 134, 11, 0.32);
+  min-height: 32px;
+}
+.recent-colors .label {
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-weight: 800;
+  margin-inline-end: 4px;
+  white-space: nowrap;
+}
+.recent-colors.is-empty { display: none; }
+.recent-color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #ddd;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  padding: 0;
+}
+.recent-color:hover {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 8px rgba(74, 59, 82, 0.3);
+}
+:root[data-theme="dark"] .recent-color {
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.2);
+}
+:root[data-theme="dark"] .recent-colors { border-top-color: rgba(255,255,255,0.15); }
+

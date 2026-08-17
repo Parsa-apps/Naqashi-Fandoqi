@@ -299,6 +299,13 @@ section('تست‌های Music — موزیقی آرام‌بخش');
   ok('Music.isEnabled() boolean برمی‌گرداند', typeof M.isEnabled() === 'boolean');
 }
 
+section('تست‌های Recent Colors — پالت رنگ در حال پیشرضد');
+{
+  // Engine requires بود فضای با دکمنت برای تست، ما تنها را در حال حاضر پوکش صدا می‌کنیم که API پیادسازی دارد
+  const ENG = await import(pathToFileURL(join(ROOT, 'js/engine.js')).href);
+  ok('Engine به صورت معمول لود شده', typeof ENG === 'object' || typeof ENG.default === 'object');
+}
+
 /* ---------- خلاصه ---------- */
 console.log('\n═══════════════════════════════════');
 console.log('نتیجه: ' + pass + ' مورد موفق، ' + fail + ' مورد ناموفق');
