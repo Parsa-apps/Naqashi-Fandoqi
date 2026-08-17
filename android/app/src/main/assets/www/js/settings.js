@@ -162,6 +162,33 @@
     }
 
     // سفر به استیکرها
+    const backupBtn = el.querySelector('#btn-backup-all');
+    if (backupBtn) {
+      backupBtn.addEventListener('click', function () {
+        if (g.Backup && typeof g.Backup.exportToFile === 'function') {
+          g.Backup.exportToFile();
+          if (g.Utils && g.Utils.toast) g.Utils.toast('\u067e\u0634\u062a\u06cc\u0628\u0627\u0646 \u0633\u0627\u062e\u062a\u0647 \u0634\u062f! \u0628\u0631\u0627\u06cc \u0627\u0646\u062a\u0642\u0627\u0644 \u062a\u0645\u0627\u0645 \u0634\u062f \uD83D\uDCBE', 'success');
+        }
+      });
+    }
+    const restoreBtn = el.querySelector('#btn-restore-all');
+    if (restoreBtn) {
+      restoreBtn.addEventListener('click', function () {
+        if (!g.Backup || typeof g.Backup.restoreInteractive !== 'function') return;
+        g.Backup.restoreInteractive().then(function (res) {
+          if (!res || !res.ok) {
+            if (res && res.reason !== 'cancelled' && g.Utils && g.Utils.toast) {
+              g.Utils.toast('فایل پشتیبان نامعتبر بود', 'error');
+            }
+            return;
+          }
+          if (res.count > 0 && g.Utils && g.Utils.toast) {
+            g.Utils.toast(res.count + ' مورد بازگردانی شد. صفحه رفرش می‌شود...', 'success');
+          }
+          setTimeout(function () { g.location.reload(); }, 1200);
+        });
+      });
+    }
     const stickersBtn = el.querySelector('#btn-show-stickers');
     if (stickersBtn) {
       stickersBtn.addEventListener('click', function () {

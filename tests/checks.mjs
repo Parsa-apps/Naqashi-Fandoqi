@@ -33,7 +33,7 @@ const JS_FILES = [
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
   'js/about.js', 'js/splash.js', 'js/stickers.js',
   'js/save-anim.js', 'js/onboarding.js', 'js/settings.js',
-  'js/templates.js', 'js/app.js'
+  'js/templates.js', 'js/backup.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -239,6 +239,23 @@ section('تست‌های Theme و About و Splash — ایمن در Node');
   ok('Templates.init یک تابع است', typeof TPL.init === 'function');
   ok('Templates.list ۴ قالب برمی‌گرداند', Array.isArray(TPL.list()) && TPL.list().length === 4);
   ok('Templates.loadTemplate قابل فراخوانی است', typeof TPL.loadTemplate === 'function');
+}
+
+section('تست‌های backup — پشتیبان‌گیری و بازگردانی');
+{
+  const BAK = (await import(pathToFileURL(join(ROOT, 'js/backup.js')).href)).default;
+  ok('Backup.snapshot قابل فراخوانی است', typeof BAK.snapshot === 'function');
+  ok('Backup.exportToFile یک تابع است', typeof BAK.exportToFile === 'function');
+  ok('Backup.restoreFromText ایمن در Node', typeof BAK.restoreFromText === 'function');
+  ok('Backup.restoreInteractive یک تابع است', typeof BAK.restoreInteractive === 'function');
+  ok('Backup.pickFile یک تابع است', typeof BAK.pickFile === 'function');
+  const snap = BAK.snapshot();
+  ok('Backup.snapshot آبجکت معتبر', snap && snap.app === 'fandoqi' && typeof snap.data === 'object');
+  ok('Backup.snapshot ← data.album', typeof snap.data === 'object' && 'album' in snap.data);
+  const res1 = BAK.restoreFromText('not json {{{');
+  ok('Backup.restoreFromText با نامعتبر', res1.ok === false);
+  const res2 = BAK.restoreFromText(JSON.stringify({ app: 'wrong', data: {} }));
+  ok('Backup نامعتبر (app غلط)', res2.ok === false);
 }
 
 /* ---------- خلاصه ---------- */
