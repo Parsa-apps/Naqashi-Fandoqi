@@ -58,6 +58,8 @@
       if (!field) return;
       if (field === 'sound') tg.classList.toggle('is-on', !!(g.Sound && g.Sound.isEnabled()));
       if (field === 'theme') tg.classList.toggle('is-on', !!(g.Theme && g.Theme.current() === 'dark'));
+      if (field === 'music') tg.classList.toggle('is-on', !!(g.Music && g.Music.isEnabled()));
+      if (field === 'music') tg.classList.toggle('is-on', !!(g.Music && g.Music.isEnabled()));
     });
     // گالری دستاوردها
     renderAchievements();
@@ -112,6 +114,20 @@
           g.Theme.toggle();
           tg.classList.toggle('is-on', g.Theme.current() === 'dark');
           render();
+        }
+        if (field === 'music' && g.Music) {
+          g.Music.toggle();
+          tg.classList.toggle('is-on', g.Music.isEnabled());
+          if (g.Utils && g.Utils.toast) {
+            g.Utils.toast(g.Music.isEnabled() ? 'موسیقی آرام پخش‌سازی' : 'موسیقی خاموش شد', 'info');
+          }
+        }
+        if (field === 'music' && g.Music) {
+          g.Music.toggle();
+          tg.classList.toggle('is-on', g.Music.isEnabled());
+          if (g.Utils && g.Utils.toast) {
+            g.Utils.toast(g.Music.isEnabled() ? 'موزیک آرام پاکسازی' : 'موزیک خاموش شد', 'info');
+          }
         }
       });
     });

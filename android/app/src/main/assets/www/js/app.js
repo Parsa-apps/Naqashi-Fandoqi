@@ -479,6 +479,9 @@
       });
     }
     if (g.Settings && g.Settings.ensureInit) g.Settings.ensureInit();
+    if (g.Music && typeof g.Music.isEnabled === 'function') {
+      // صدای زمینه‌ای اگر کاربر در جلوه تنظیم کرده باشد
+    }
     if (g.Challenges && g.Challenges.init) {
       g.Challenges.init({ cardEl: U.$('#challenge-card') });
       g.Challenges.show();

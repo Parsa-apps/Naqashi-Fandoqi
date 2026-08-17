@@ -33,7 +33,7 @@ const JS_FILES = [
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
   'js/about.js', 'js/splash.js', 'js/stickers.js',
   'js/save-anim.js', 'js/onboarding.js', 'js/settings.js',
-  'js/templates.js', 'js/backup.js', 'js/challenges.js', 'js/app.js'
+  'js/templates.js', 'js/backup.js', 'js/challenges.js', 'js/music.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -281,6 +281,22 @@ section('تست‌های challenges — چالش‌های روزانه');
     ok('Achievements.CATALOG شامل streak-7 است', !!AC.CATALOG && !!AC.CATALOG['streak-7']);
     ok('Achievements.CATALOG حداقل ٫١٠ آیتم دارد', Object.keys(AC.CATALOG || {}).length >= 10);
   }
+}
+
+section('تست‌های Music — موزیقی آرام‌بخش');
+{
+  const M = (await import(pathToFileURL(join(ROOT, 'js/music.js')).href)).default;
+  ok('Music.start یک تابع است', typeof M.start === 'function');
+  ok('Music.stop یک تابع است', typeof M.stop === 'function');
+  ok('Music.toggle یک تابع است', typeof M.toggle === 'function');
+  ok('Music.setVolume یک تابع است', typeof M.setVolume === 'function');
+  ok('Music.getVolume یک عدد است', typeof M.getVolume() === 'number');
+  ok('Music.isEnabled یک تابع است', typeof M.isEnabled === 'function');
+  ok('Music.NOTES آرایه‌ای از فرکانس‌هاست', Array.isArray(M.NOTES) && M.NOTES.length >= 5);
+  ok('Music.setVolume(0.4) عدد برمی‌گرداند', M.setVolume(0.4) === 0.4);
+  ok('Music.setVolume(2) clamp به 1', M.setVolume(2) === 1);
+  ok('Music.setVolume(-1) clamp به 0', M.setVolume(-1) === 0);
+  ok('Music.isEnabled() boolean برمی‌گرداند', typeof M.isEnabled() === 'boolean');
 }
 
 /* ---------- خلاصه ---------- */
