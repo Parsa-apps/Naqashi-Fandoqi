@@ -31,7 +31,8 @@ const JS_FILES = [
   'js/storage-core.js', 'js/utils.js', 'js/sound.js',
   'js/engine.js', 'js/album.js', 'js/tutorials.js',
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
-  'js/about.js', 'js/splash.js', 'js/app.js'
+  'js/about.js', 'js/splash.js', 'js/stickers.js',
+  'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -148,22 +149,58 @@ ok('CSS: عدم تداخل ارتفاع در موبایل', css.includes('46vh')
 
 /* ---------- بخش ۶: سیستم‌های جانبی ---------- */
 section('تست‌های Sound.chime');
-// در jsdom صدا واقعی پخش نمی‌شود؛ فقط باید متد وجود داشته باشد و بدون خطا صدا زده شود.
 {
   const Sound = (await import(pathToFileURL(join(ROOT, 'js/sound.js')).href)).default;
-  // بارگذاری در محیط Node بدون AudioContext → متدها نباید crash کنند
   ok('Sound.chime به‌عنوان تابع وجود دارد', typeof Sound.chime === 'function');
   ok('Sound.isEnabled یک boolean برمی‌گرداند', typeof Sound.isEnabled() === 'boolean');
   ok('Sound.setEnabled(false) غیرفعال می‌کند', Sound.setEnabled(false) === false && Sound.isEnabled() === false);
-  Sound.chime(); // نباید crash کند حتی بدون AudioContext
+  Sound.chime();
   ok('Sound.setEnabled(true) فعال می‌کند', Sound.setEnabled(true) === true);
 }
 
-section('تست‌های ParentGate — منطق ریاضی سوال‌ها و پاسخ');
+section('تست‌های ParentGate');
 {
   const PG = (await import(pathToFileURL(join(ROOT, 'js/parent-gate.js')).href)).default;
   ok('ParentGate.open یک Promise برمی‌گرداند', typeof PG.open === 'function');
   ok('ParentGate.close یک تابع است', typeof PG.close === 'function');
+  // در Node چون document نیست، open فوراً false برمی‌گرداند
+  const p = PG.open();
+  ok('ParentGate.open در Node به‌سرعت false برمی‌گرداند', (await p) === false);
+  PG.close(true);
+}
+
+section('تست‌های Stickers (Sticker Box)');
+{
+  const S = (await import(pathToFileURL(join(ROOT, 'js/stickers.js')).href)).default;
+  ok('Stickers شامل ۸ استیکر همیشه‌دردسترس است', S.listAvailable().length >= 8);
+  ok('Stickers.listLocked در Node حداقل ۰ قفل دارد', Array.isArray(S.listLocked()));
+  ok('Stickers.STICKERS آرایهٔ کامل است', Array.isArray(S.STICKERS) && S.STICKERS.length >= 12);
+  ok('Stickers.tryUnlock(ten-draw) فقط با داشتن localStorage کار می‌کند', typeof S.tryUnlock === 'function');
+  S.deselect();
+  ok('Stickers.deselect در Node بدون خطا اجرا می‌شود', S.currentSticker() === null);
+}
+
+section('تست‌های Achievements');
+{
+  const A = (await import(pathToFileURL(join(ROOT, 'js/achievements.js')).href)).default;
+  ok('Achievements.CATALOG حداقل ۸ آیتم دارد', Object.keys(A.CATALOG).length >= 8);
+  ok('Achievements.has(id) مقدار boolean می‌دهد', typeof A.has('first-draw') === 'boolean');
+  ok('Achievements.checkAllStamps قابل فراخوانی است', typeof A.checkAllStamps === 'function');
+}
+
+section('تست‌های Theme و About و Splash — ایمن در Node');
+{
+  const T = (await import(pathToFileURL(join(ROOT, 'js/theme.js')).href)).default;
+  ok('Theme.apply یک تابع است', typeof T.apply === 'function');
+  ok('Theme.current یک تابع است', typeof T.current === 'function');
+  ok('Theme.detect یک تابع است', typeof T.detect === 'function');
+
+  const Ab = (await import(pathToFileURL(join(ROOT, 'js/about.js')).href)).default;
+  ok('About.open یک تابع است', typeof Ab.open === 'function');
+  ok('About.close یک تابع است', typeof Ab.close === 'function');
+
+  const Sp = (await import(pathToFileURL(join(ROOT, 'js/stickers.js')).href)).default;
+  ok('Stickers.init وجود دارد', typeof Sp.init === 'function');
 }
 
 /* ---------- خلاصه ---------- */

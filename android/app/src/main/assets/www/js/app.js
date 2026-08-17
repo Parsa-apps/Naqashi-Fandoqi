@@ -437,8 +437,14 @@
 
     g.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });
 
-    // فعال‌سازی «دربارهٔ ما» + دستاوردها
+    // فعال‌سازی «دربارهٔ ما» + دستاوردها + استیکرها
     if (g.About && g.About.init) g.About.init();
+    if (g.Stickers && g.Stickers.init) {
+      g.Stickers.init({
+        trayEl: U.$('#sticker-tray'),
+        toggleBtn: U.$('#sticker-toggle')
+      });
+    }
     if (g.Achievements && g.Achievements.checkInstalled && matchMedia('(display-mode: standalone)').matches) {
       g.Achievements.checkInstalled();
     }

@@ -62,6 +62,11 @@
     cache = data;
     save();
     show(id);
+    try {
+      if (typeof g.dispatchEvent === 'function') {
+        g.dispatchEvent(new CustomEvent('fandoqi-achievement-unlocked', { detail: { id: id } }));
+      }
+    } catch (_) {}
     return true;
   }
 

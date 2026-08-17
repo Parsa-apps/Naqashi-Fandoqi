@@ -31,8 +31,15 @@
   <link rel="stylesheet" href="css/parent-gate.css">
   <link rel="stylesheet" href="css/theme.css">
   <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/stickers.css">
 </head>
 <body>
+
+  <!-- ============ لایهٔ فلش استیکر هنگام چسباندن ============ -->
+  <div id="sticker-flash" aria-hidden="true"></div>
+
+  <!-- ============ پالت استیکرها (پایین) ============ -->
+  <div id="sticker-tray" class="sticker-tray is-hidden" role="toolbar" aria-label="جعبه استیکرها"></div>
 
   <!-- ============ اسپلش اسکرین فندوقی ============ -->
   <div id="splash" role="status" aria-label="در حال بارگذاری فندوقی">
@@ -150,6 +157,10 @@
           <button class="act-btn" id="btn-undo" disabled aria-label="برگرداندن آخرین حرکت">↩️ برگردان</button>
           <button class="act-btn" id="btn-redo" disabled aria-label="انجام دوباره">↪️ دوباره</button>
           <button class="act-btn" id="btn-clear" aria-label="پاک کردن صفحه">🧹 پاک‌کردن</button>
+          <button class="sticker-toggle" id="sticker-toggle" type="button" aria-label="جعبه استیکر" aria-pressed="false" title="استیکرها">
+            <span class="sticker-toggle-ico" aria-hidden="true">🌟</span>
+            <span>استیکر</span>
+          </button>
           <button class="act-btn ghost" id="btn-download" aria-label="دانلود نقاشی">⬇️ دانلود</button>
           <button class="act-btn primary" id="btn-save" aria-label="ذخیره در آلبوم">💾 ذخیره در آلبوم</button>
         </div>
@@ -340,6 +351,7 @@
   <script src="js/album.js"></script>
   <script src="js/tutorials.js"></script>
   <script src="js/about.js"></script>
+  <script src="js/stickers.js"></script>
   <script src="js/app.js"></script>
 
   <!-- ثبت آفلاین — کوچک و کودک‌پسند -->

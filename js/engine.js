@@ -572,6 +572,28 @@
     endStroke();
   }
 
+  /* ---------- موتور استیکر ---------- */
+  let stickerActive = null;
+  const STICKER_BASE = 56;
+  function setStickerMode(s) { stickerActive = (s && typeof s === 'object') ? s : null; }
+  function currentSticker() { return stickerActive; }
+  function placeSticker(sticker, x, y) {
+    if (!sticker) return false;
+    const size = STICKER_BASE + Math.min(60, (size || 12) * 1.4);
+    pushHistory();
+    ctx.save();
+    ctx.font = size + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla","Android Emoji",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (sticker.color) { ctx.shadowColor = sticker.color; ctx.shadowBlur = Math.max(6, size * 0.1); }
+    ctx.fillText(String(sticker.ico || ''), x, y);
+    ctx.restore();
+    hasDrawing = true;
+    pushHistory();
+    if (typeof saveDraftDebounced === 'function') saveDraftDebounced();
+    return true;
+  }
+
   /* ---------- صادرات ---------- */
 
   function exportDataUrl(maxDim) {
@@ -677,6 +699,9 @@
     getColor: function () { return color; },
     getSize: function () { return size; },
     isMagicTool: function (t) { return MAGIC_TOOLS.indexOf(t || tool) !== -1; },
+    setStickerMode: setStickerMode,
+    currentSticker: currentSticker,
+    placeSticker: placeSticker,
     undo: undo,
     redo: redo,
     canUndo: function () { return hIndex > 0; },
