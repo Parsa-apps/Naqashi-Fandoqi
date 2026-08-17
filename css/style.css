@@ -138,6 +138,47 @@ button { font-family: inherit; }
   padding: 10px;
 }
 
+.tool-group.offline-info {
+  background: linear-gradient(160deg, #eef3ff, #f7f1ff);
+  border: 2px solid #d6ccff;
+  border-radius: 16px;
+  padding: 10px 12px;
+}
+.offline-info .offline-note {
+  margin: 4px 0 0;
+  font-size: 0.72rem;
+  line-height: 1.8;
+  color: #6b5b7e;
+  font-weight: 700;
+}
+.offline-hint {
+  background: rgba(255,255,255,0.22);
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+}
+.offline-tips .tip-card,
+.offline-feature-card {
+  background: linear-gradient(160deg, #fff7e0, #ffeef5);
+  border: 2px dashed #f6c84d;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+}
+.offline-feature-card .tip-emoji { font-size: 2rem; }
+.offline-feature-card h4 { margin: 8px 0 6px; font-size: 0.95rem; }
+.offline-feature-card p { margin: 0; font-size: 0.82rem; color: #6b5b7e; line-height: 1.9; }
+
+.offline-tips .offline-feature-card {
+  background: linear-gradient(160deg, #eef3ff, #f7f1ff);
+  border-color: #c9b8ff;
+  border-style: solid;
+}
+
 .tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 
 .tool-btn {
@@ -582,6 +623,79 @@ button { font-family: inherit; }
   .act-btn { padding: 9px 12px; font-size: 0.8rem; }
 }
 
+/* ============ آفلاین — مخصوص کودکان 🌰 ============ */
+.offline-badge {
+  position: fixed;
+  top: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  border: 2px solid #e3d9f5;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+  pointer-events: none;
+}
+.offline-badge.is-hidden {
+  transform: translateX(-50%) translateY(-20px);
+  opacity: 0;
+}
+.offline-badge.is-offline {
+  background: linear-gradient(120deg, #fff0f3, #ffe9cc);
+  border-color: #ffb07a;
+  color: #8a4a2b;
+}
+.offline-badge.is-online {
+  background: #e8f7ee;
+  border-color: var(--green);
+  color: var(--green);
+}
+.offline-badge.is-ready {
+  background: linear-gradient(120deg, #eef3ff, #e8f7ee);
+  border-color: #8a5cff;
+  color: #5a3cb5;
+}
+.offline-badge.is-local {
+  background: linear-gradient(120deg, #fff7e0, #ffeef5);
+  border-color: #f6c84d;
+}
+.offline-badge .badge-ico { font-size: 1.15rem; }
+.offline-badge .badge-txt { white-space: nowrap; }
+
+.pwa-install-btn {
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.22);
+  color: #fff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform 0.15s, background 0.15s;
+  margin-inline-start: 8px;
+  min-height: 36px;
+}
+.pwa-install-btn:hover { transform: translateY(-2px) scale(1.03); background: rgba(255,255,255,0.32); }
+
+@media (max-width: 920px) {
+  .offline-badge { top: 132px; font-size: 0.78rem; padding: 6px 14px; }
+}
+
+/* انیمیشن دوستانه برای کودک هنگام آفلاین */
+@keyframes offline-pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.04); }
+}
+.offline-badge.is-offline { animation: offline-pulse 2s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001s !important;
@@ -589,3 +703,11 @@ button { font-family: inherit; }
     transition-duration: 0.001s !important;
   }
 }
+
+/* چاپ — برای کودکان که نقاشی‌شان را چاپ کنند */
+@media print {
+  .app-header, .toolbar, .controlbar, .toasts, .offline-badge, .pwa-install-btn { display: none !important; }
+  .canvas-wrap { box-shadow: none; border: 2px solid #ddd; }
+  body { background: #fff; }
+}
+

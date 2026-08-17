@@ -13,7 +13,10 @@
     album: 'nf.v1.album',
     draft: 'nf.v1.draft',
     progress: 'nf.v1.progress',
-    sound: 'nf.v1.sound'
+    sound: 'nf.v1.sound',
+    lastTab: 'nf.v1.lastTab',
+    offlineReady: 'nf.v1.offlineReady',
+    installPrompt: 'nf.v1.installPrompt'
   };
 
   /* ---------- ابزارهای خالص ---------- */

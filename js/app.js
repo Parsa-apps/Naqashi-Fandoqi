@@ -10,20 +10,45 @@
   const Album = g.Album;
   const Tutorials = g.Tutorials;
   const Sound = g.Sound;
+  const Offline = g.Offline;
 
   /* ---------- ناوبری تب‌ها ---------- */
 
-  function switchTab(name) {
-    ['draw', 'album', 'learn'].forEach(function (n) {
+  function switchTab(name, opts) {
+    const options = opts || {};
+    const list = ['draw', 'album', 'learn'];
+    if (list.indexOf(name) === -1) name = 'draw';
+    list.forEach(function (n) {
       const tab = U.$('#tab-' + n);
       const view = U.$('#view-' + n);
+      if (!tab || !view) return;
       const active = n === name;
       tab.classList.toggle('is-active', active);
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
       view.classList.toggle('is-hidden', !active);
     });
     if (name === 'album') Album.refresh();
-    Sound.click();
+    if (!options.silent) Sound.click();
+    // به‌روزرسانی hash برای PWA shortcuts آفلاین
+    try {
+      if (history && history.replaceState) {
+        history.replaceState(null, '', '#' + name);
+      } else {
+        location.hash = name;
+      }
+    } catch (e) {}
+    // ذخیره آخرین تب برای بازگشت آفلاین
+    try { SC.safeSet(SC.KEYS.lastTab, name); } catch (e) {}
+  }
+
+  function getInitialTab() {
+    try {
+      const h = (location.hash || '').replace('#', '').trim();
+      if (['draw', 'album', 'learn'].indexOf(h) !== -1) return h;
+      const saved = SC.safeGet(SC.KEYS.lastTab, null);
+      if (saved && ['draw', 'album', 'learn'].indexOf(saved) !== -1) return saved;
+    } catch (e) {}
+    return 'draw';
   }
 
   /* ---------- ابزارها ---------- */
@@ -290,8 +315,39 @@
 
   /* ---------- شروع ---------- */
 
+  function wireOffline() {
+    if (!Offline) return;
+    // پیام‌های آفلاین کودک‌پسند با گوش دادن به رویداد اتصال
+    g.addEventListener('fandoqi:connectivity', function (e) {
+      const hint = U.$('#offline-hint');
+      if (!hint) return;
+      if (e.detail && e.detail.isOnline) {
+        hint.textContent = '🌐 آنلاین';
+        hint.style.background = 'rgba(232,247,238,0.9)';
+        hint.style.color = '#2e7d32';
+        setTimeout(function () {
+          hint.textContent = '💚 آفلاین';
+          hint.style.background = '';
+          hint.style.color = '';
+        }, 3500);
+      } else {
+        hint.textContent = '📴 آفلاین';
+        hint.style.background = 'rgba(255,240,243,0.9)';
+        hint.style.color = '#8a4a2b';
+      }
+    });
+
+    // تلاش برای ثبت SW اگر قبلا در index.html ثبت نشده
+    try {
+      if (!Offline.getRegistration()) {
+        Offline.init();
+      }
+    } catch (e) {}
+  }
+
   function init() {
     wireSound();
+    wireOffline();
     Engine.init(U.$('#board'));
     Engine.setHistoryListener(updateHistoryButtons);
 
@@ -305,11 +361,16 @@
     wireModalBackdrops();
     wireKeyboard();
 
+    // تب اولیه از hash یا ذخیره‌شده — برای PWA آفلاین
+    const initial = getInitialTab();
+
     U.$$('.tab').forEach(function (tab) {
       tab.addEventListener('click', function () {
         switchTab(tab.id.replace('tab-', ''));
       });
     });
+    // سوئیچ اولیه بدون صدا
+    switchTab(initial, { silent: true });
 
     Album.init({
       gridEl: U.$('#album-grid'),

@@ -2,13 +2,29 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#8a5cff">
-  <meta name="description" content="استودیوی نقاشی و خلاقیت کودکان؛ ابزارهای حرفه‌ای، براش‌های جادویی و آلبوم شاهکارها.">
-  <title>استودیو نقاشی فندوقی 🌰</title>
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="استودیوی نقاشی و خلاقیت کودکان؛ آفلاین، بدون اینترنت، ابزارهای حرفه‌ای، براش‌های جادویی و آلبوم شاهکارها.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="فندوقی">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="فندوقی">
+  <meta name="format-detection" content="telephone=no">
+  <title>استودیو نقاشی فندوقی 🌰 — آفلاین</title>
+
+  <!-- آیکون‌ها — آفلاین ۱۰۰٪ -->
+  <link rel="icon" href="icons/favicon-32.png" type="image/png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌰</text></svg>">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- فونت‌ها — آفلاین محلی، بدون CDN -->
+  <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,6 +33,7 @@
     <div class="brand">
       <span class="mascot" aria-hidden="true">🌰</span>
       <h1>استودیو نقاشی فندوقی</h1>
+      <span id="offline-hint" class="offline-hint" title="این برنامه بدون اینترنت هم کار می‌کند" aria-label="آفلاین کار می‌کند">💚 آفلاین</span>
     </div>
     <nav class="tabs" role="tablist" aria-label="بخش‌های برنامه">
       <button class="tab is-active" id="tab-draw" role="tab" aria-selected="true" aria-controls="view-draw">🖌️ نقاشی</button>
@@ -59,6 +76,10 @@
               <button class="tool-btn" data-tool="stamp-butterfly"><span class="ico" aria-hidden="true">🦋</span>مهر پروانه</button>
               <button class="tool-btn" data-tool="stamp-smiley"><span class="ico" aria-hidden="true">😊</span>مهر لبخند</button>
             </div>
+          </div>
+          <div class="tool-group offline-info" aria-label="اطلاعات آفلاین">
+            <h2>💾 آفلاین و امن</h2>
+            <p class="offline-note">بدون اینترنت کار می‌کند! همهٔ نقاشی‌ها فقط در همین دستگاه ذخیره می‌شوند و هیچ‌جا ارسال نمی‌شوند 🌰</p>
           </div>
         </aside>
 
@@ -112,13 +133,13 @@
     <section id="view-album" class="view is-hidden" role="tabpanel" aria-labelledby="tab-album">
       <header class="view-head">
         <h2>🖼️ آلبوم شاهکارها</h2>
-        <p>نقاشی‌هایت اینجا نگهداری می‌شوند؛ هر وقت خواستی نمایش بده، دانلود کن یا ادامه‌اش را بکش!</p>
+        <p>نقاشی‌هایت اینجا نگهداری می‌شوند؛ حتی بدون اینترنت، همیشه همراهت هستند! هر وقت خواستی نمایش بده، دانلود کن یا ادامه‌اش را بکش!</p>
       </header>
       <div id="album-grid" class="album-grid"></div>
       <div id="album-empty" class="empty-state is-hidden">
         <div class="big" aria-hidden="true">🖼️</div>
         <h3>هنوز شاهکاری ثبت نشده!</h3>
-        <p>برو توی بخش «نقاشی»، یک شاهکار بکش و دکمهٔ «💾 ذخیره در آلبوم» را بزن.</p>
+        <p>برو توی بخش «نقاشی»، یک شاهکار بکش و دکمهٔ «💾 ذخیره در آلبوم» را بزن. همه‌چیز آفلاین ذخیره می‌شود 🌰</p>
       </div>
     </section>
 
@@ -127,13 +148,23 @@
       <div id="learn-home">
         <header class="view-head">
           <h2>📚 آموزش صفر تا صد نقاشی</h2>
-          <p>قدم‌به‌قدم با من نقاشی بکش؛ از شکل‌های ساده شروع می‌کنیم و کم‌کم به شاهکار می‌رسیم! 🎉</p>
+          <p>قدم‌به‌قدم با من نقاشی بکش؛ از شکل‌های ساده شروع می‌کنیم و کم‌کم به شاهکار می‌رسیم! همهٔ آموزش‌ها آفلاین هستند 🎉</p>
         </header>
         <div id="lesson-grid" class="lesson-grid"></div>
 
         <section class="tips" aria-label="ترفندهای طلایی">
           <h3>✨ ترفندهای طلایی برای راحت نقاشی‌کشیدن</h3>
           <div id="tips-grid" class="tips-grid"></div>
+        </section>
+
+        <section class="tips offline-tips" aria-label="نکات آفلاین">
+          <h3>💾 چرا فندوقی بدون اینترنت هم کار می‌کند؟</h3>
+          <div class="tips-grid">
+            <div class="offline-feature-card"><div class="tip-emoji">📴</div><h4>بدون اینترنت</h4><p>تمام ابزارها، آموزش‌ها و آلبوم روی خود دستگاه است. حتی در هواپیما هم کار می‌کند!</p></div>
+            <div class="offline-feature-card"><div class="tip-emoji">🔒</div><h4>امن برای کودکان</h4><p>هیچ داده‌ای به اینترنت ارسال نمی‌شود. همه‌چیز فقط در مرورگر خودت می‌ماند.</p></div>
+            <div class="offline-feature-card"><div class="tip-emoji">⚡</div><h4>خیلی سریع</h4><p>چون نیازی به اینترنت نیست، همه‌چیز فوری باز می‌شود و لگ ندارد.</p></div>
+            <div class="offline-feature-card"><div class="tip-emoji">📲</div><h4>قابل نصب</h4><p>می‌توانی فندوقی را مثل اپ واقعی روی موبایل یا تبلت نصب کنی!</p></div>
+          </div>
         </section>
       </div>
 
@@ -171,7 +202,7 @@
   <div class="modal-backdrop is-hidden" id="save-modal">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="save-title">
       <h3 id="save-title">💾 ذخیره در آلبوم</h3>
-      <p class="hint">برای شاهکارت یک اسم قشنگ بگذار:</p>
+      <p class="hint">برای شاهکارت یک اسم قشنگ بگذار (آفلاین ذخیره می‌شود):</p>
       <input type="text" id="save-name" maxlength="40" placeholder="مثلاً: گربهٔ رنگین‌کمانی">
       <img id="save-preview" class="save-preview" alt="پیش‌نمایش نقاشی">
       <div class="modal-actions">
@@ -209,12 +240,40 @@
 
   <div id="toasts" class="toasts" aria-live="polite"></div>
 
+  <!-- اسکریپت‌ها — ۱۰۰٪ آفلاین، بدون وابستگی خارجی -->
   <script src="js/storage-core.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/offline.js"></script>
   <script src="js/sound.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/album.js"></script>
   <script src="js/tutorials.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- ثبت آفلاین — کوچک و کودک‌پسند -->
+  <script>
+    // اگر روی http/https هستیم، آفلاین را فعال کن
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        // تاخیر کوچک برای اینکه اول اپ لود شود
+        setTimeout(function() {
+          if (window.Offline) window.Offline.init();
+        }, 700);
+      });
+    } else {
+      // حتی بدون SW، اپ کار می‌کند — چون همه چیز لوکال است
+      window.addEventListener('DOMContentLoaded', function() {
+        if (window.Offline) window.Offline.init();
+      });
+    }
+  </script>
+
+  <!-- نوفال — اگر جاوااسکریپت غیرفعال باشد -->
+  <noscript>
+    <div style="text-align:center;padding:40px;background:#fff6ea">
+      <h2>🌰 برای استفاده از فندوقی، لطفا جاوااسکریپت را فعال کن</h2>
+      <p>فندوقی بدون اینترنت کار می‌کند، اما به جاوااسکریپت نیاز دارد 🎨</p>
+    </div>
+  </noscript>
 </body>
 </html>

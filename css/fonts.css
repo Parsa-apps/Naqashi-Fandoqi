@@ -1,0 +1,54 @@
+/* ============================================================
+   fonts.css — فونت آفلاین برای کودکان
+   بدون نیاز به اینترنت — با fallback هوشمند
+   ============================================================ */
+
+/* تلاش برای لود فونت محلی اگر وجود داشت، در غیر این صورت fallback سیستم */
+
+/* اگر فایل‌های Vazirmatn در مسیر fonts/ موجود بود، لود می‌شود
+   اگر نه، مرورگر به صورت خودکار به فونت‌های بعدی می‌رود */
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: local('Vazirmatn'),
+       local('Vazir'),
+       url('fonts/Vazirmatn-Regular.woff2') format('woff2'),
+       url('fonts/Vazirmatn-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: local('Vazirmatn Bold'),
+       local('Vazir Bold'),
+       url('fonts/Vazirmatn-Bold.woff2') format('woff2'),
+       url('fonts/Vazirmatn-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: local('Vazirmatn ExtraBold'),
+       url('fonts/Vazirmatn-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* فونت سیستم فارسی زیبا — وقتی Vazirmatn در دسترس نیست */
+:root {
+  --font-fallback: Tahoma, "IRANSans", "B Nazanin", "Segoe UI", Arial, sans-serif;
+  --font-main: Vazirmatn, var(--font-fallback);
+}
+
+/* اطمینان از اینکه حتی بدون فونت، متن خوانا و کودک‌پسند است */
+body {
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
