@@ -1,0 +1,17 @@
+{
+  "name": "naqashi-fandoqi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "استودیوی نقاشی و خلاقیت کودکان؛ ابزارهای حرفه‌ای، براش‌های جادویی و آلبوم شاهکارها.",
+  "scripts": {
+    "test": "node tests/checks.mjs && node tests/e2e.mjs",
+    "test:unit": "node tests/checks.mjs",
+    "test:e2e": "node tests/e2e.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.0.6",
+    "jsdom": "^30.0.1",
+    "pngjs": "^7.0.0"
+  }
+}
