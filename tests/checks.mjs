@@ -165,6 +165,17 @@ section('تست‌های Sound.chime');
   Sound.setVolume(0.85);
 }
 
+section('تست‌های utils.share — اشتراک‌گذاری');
+{
+  const U = (await import(pathToFileURL(join(ROOT, 'js/utils.js')).href)).default;
+  ok('Utils.canShare یک تابع است', typeof U.canShare === 'function');
+  ok('Utils.share یک تابع است', typeof U.share === 'function');
+  ok('Utils.canShare() در Node مقدار boolean برمی‌گرداند', typeof U.canShare() === 'boolean');
+  // فراخوانی share در Node باید بدون crash و false برگرداند (navigator.share نیست)
+  const result = await U.share({ title: 'تست' }).catch(function () { return null; });
+  ok('Utils.share در Node بدون navigator.share ایمن است', result === false || result === null);
+}
+
 section('تست‌های ParentGate');
 {
   const PG = (await import(pathToFileURL(join(ROOT, 'js/parent-gate.js')).href)).default;

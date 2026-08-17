@@ -1,27 +1,47 @@
 /* ============================================================
    sw.js — Service Worker آفلاین برای کودکان 🌰
    استراتژی: Cache First + Network Fallback
-   نسخه: v2.0.0 — آفلاین ۱۰۰٪
+   نسخه: v3.0.0 — تمام فایل‌های پروژهٔ فندوقی در pre-cache
    ============================================================ */
 
-const CACHE_NAME = 'fandoqi-v2-offline-kids';
+const CACHE_NAME = 'fandoqi-v3-offline-kids';
 const OFFLINE_URL = './index.html';
 
-// لیست تمام فایل‌های ضروری برای کار آفلاین
+// لیست تمام فایل‌های ضروری برای کار آفلاین — v3 with ALL new modules
 const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
   './css/style.css',
   './css/fonts.css',
+  './css/about.css',
+  './css/splash.css',
+  './css/parent-gate.css',
+  './css/theme.css',
+  './css/transitions.css',
+  './css/save-anim.css',
+  './css/stickers.css',
+  './css/onboarding.css',
+  './css/settings.css',
+  './css/templates.css',
   './js/storage-core.js',
   './js/utils.js',
   './js/sound.js',
   './js/engine.js',
   './js/album.js',
   './js/tutorials.js',
-  './js/app.js',
+  './js/parent-gate.js',
+  './js/theme.js',
+  './js/achievements.js',
   './js/offline.js',
+  './js/splash.js',
+  './js/about.js',
+  './js/stickers.js',
+  './js/save-anim.js',
+  './js/onboarding.js',
+  './js/settings.js',
+  './js/templates.js',
+  './js/app.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
@@ -33,7 +53,7 @@ self.addEventListener('install', (event) => {
   console.log('[SW] نصب نسخه', CACHE_NAME);
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] کش کردن فایل‌های آفلاین');
+      console.log('[SW] کش کردن فایل‌های آفلاین (' + PRECACHE_URLS.length + ' مورد)');
       return cache.addAll(PRECACHE_URLS);
     }).then(() => {
       // فعال‌سازی فوری بدون منتظر ماندن
@@ -63,7 +83,6 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
 
   // فقط درخواست‌های هم‌دامنه را کش می‌کنیم
-  // درخواست‌های خارجی (اگر زمانی اضافه شد) را نادیده می‌گیریم
   if (url.origin !== location.origin) {
     return;
   }

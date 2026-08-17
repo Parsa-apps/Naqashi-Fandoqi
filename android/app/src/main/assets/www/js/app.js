@@ -211,6 +211,22 @@
       U.download(viewingRec.dataUrl, viewingRec.name + '.png');
       Sound.save();
     });
+    // اشتراك‌گذاري اختصاصي (Web Share API) — اگر ساپورت شد، دكمه نمايش
+    const shareBtn = U.$('#view-share');
+    if (shareBtn && U.canShare && U.canShare()) {
+      shareBtn.hidden = false;
+      shareBtn.addEventListener('click', function () {
+        if (!viewingRec) return;
+        U.share({
+          title: viewingRec.name || 'شاهکار فندوقی',
+          text: 'نقاشی من اپ فندوقی ✨ ۱۰۰٫٠ٯ آفلاین',
+          dataUrl: viewingRec.dataUrl,
+          filename: (viewingRec.name || 'fandoqi') + '.png'
+        }).then(function (ok) {
+          if (ok) Sound.save();
+        });
+      });
+    }
     U.$('#view-edit').addEventListener('click', function () {
       if (!viewingRec) return;
       hideModal('view-modal');
