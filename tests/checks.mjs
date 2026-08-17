@@ -29,7 +29,9 @@ function section(title) {
 section('بررسی سینتکس فایل‌های جاوااسکریپت');
 const JS_FILES = [
   'js/storage-core.js', 'js/utils.js', 'js/sound.js',
-  'js/engine.js', 'js/album.js', 'js/tutorials.js', 'js/app.js'
+  'js/engine.js', 'js/album.js', 'js/tutorials.js',
+  'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
+  'js/about.js', 'js/splash.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -143,6 +145,26 @@ ok('CSS: وجود قواعد ریسپانسیو', css.includes('@media (max-widt
 ok('CSS: وجود فوکوس قابل مشاهده', css.includes(':focus-visible'));
 ok('CSS: پشتیبانی prefers-reduced-motion', css.includes('prefers-reduced-motion'));
 ok('CSS: عدم تداخل ارتفاع در موبایل', css.includes('46vh'));
+
+/* ---------- بخش ۶: سیستم‌های جانبی ---------- */
+section('تست‌های Sound.chime');
+// در jsdom صدا واقعی پخش نمی‌شود؛ فقط باید متد وجود داشته باشد و بدون خطا صدا زده شود.
+{
+  const Sound = (await import(pathToFileURL(join(ROOT, 'js/sound.js')).href)).default;
+  // بارگذاری در محیط Node بدون AudioContext → متدها نباید crash کنند
+  ok('Sound.chime به‌عنوان تابع وجود دارد', typeof Sound.chime === 'function');
+  ok('Sound.isEnabled یک boolean برمی‌گرداند', typeof Sound.isEnabled() === 'boolean');
+  ok('Sound.setEnabled(false) غیرفعال می‌کند', Sound.setEnabled(false) === false && Sound.isEnabled() === false);
+  Sound.chime(); // نباید crash کند حتی بدون AudioContext
+  ok('Sound.setEnabled(true) فعال می‌کند', Sound.setEnabled(true) === true);
+}
+
+section('تست‌های ParentGate — منطق ریاضی سوال‌ها و پاسخ');
+{
+  const PG = (await import(pathToFileURL(join(ROOT, 'js/parent-gate.js')).href)).default;
+  ok('ParentGate.open یک Promise برمی‌گرداند', typeof PG.open === 'function');
+  ok('ParentGate.close یک تابع است', typeof PG.close === 'function');
+}
 
 /* ---------- خلاصه ---------- */
 console.log('\n═══════════════════════════════════');

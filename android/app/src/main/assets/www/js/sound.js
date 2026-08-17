@@ -64,8 +64,27 @@
         [880, 0.16, 'triangle', 0.12, 0.09]
       ]);
     },
+    chime() {
+      // جشن سه‌نتی بالارونده برای لحظه‌های موفقیت (دستاورد، اتمام آموزش)
+      play([
+        [523, 0.14, 'sine',     0.12, 0],
+        [784, 0.14, 'sine',     0.14, 0.10],
+        [1047, 0.22, 'triangle', 0.16, 0.20]
+      ]);
+    },
     error() { play([[130, 0.18, 'sawtooth', 0.08]]); }
   };
 
   g.Sound = api;
+  if (typeof module !== 'undefined' && module.exports) {
+    // برای تست در Node — همه متدها به‌جز ctx به‌دردبخور نیستند
+    const nodeSafe = {
+      setEnabled: api.setEnabled,
+      isEnabled: api.isEnabled,
+      click: api.click, tool: api.tool, magic: api.magic,
+      save: api.save, chime: api.chime, error: api.error,
+      unlock: api.unlock
+    };
+    module.exports = nodeSafe;
+  }
 })(typeof window !== 'undefined' ? window : globalThis);

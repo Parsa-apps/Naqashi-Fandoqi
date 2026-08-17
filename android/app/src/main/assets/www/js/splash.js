@@ -1,20 +1,28 @@
 /* ============================================================
-   splash.js — مدیر اسپلش اسکرین فندوقی
+   splash.js — مدير اسپلش اسكرين فندوقي
+   - شروع خودکار بلافاصله پس از لود اسکريپت
+   - رعايت حداقل ۱.۳s براي حس حرفه‌اي
+   - fade out چندمرحله‌اي: bye → gone → remove
+   - حذف تميز از DOM پس از پايان
    ============================================================ */
 (function (g) {
   'use strict';
 
-  const MIN_TIME = 1300;   // حداقل زمان نمایش برای حس «حرفه‌ای»
-  const FADE_DELAY = 250;  // تاخیر کوتاه برای نشستن انیمیشن آخر
+  const MIN_TIME = 1300;
+  const FADE_DURATION = 700;
+  const REMOVE_DELAY = 200;
 
   let boot = null;
+  let progressInterval = null;
+  let doneCalled = false;
 
   function start() {
+    if (boot !== null) return;
+    if (typeof document === 'undefined') return;
     boot = Date.now();
     const el = g.document.getElementById('splash');
-    if (!el) return false;
+    if (!el) return;
     animateProgress(el);
-    return true;
   }
 
   function animateProgress(el) {
@@ -22,66 +30,76 @@
     const txt = el.querySelector('.splash-loading-text');
     if (!bar) return;
 
-    // پیام‌های شاد فارسی برای کودک
-    const msgs = ['در حال آماده‌سازی رنگ‌ها...', 'پر کردن قلم‌موها...', 'گرم کردن تختهٔ نقاشی...', 'روشن کردن چراغ‌ها...'];
+    const msgs = [
+      '\u062F\u0631 \u062D\u0627\u0644 \u0622\u0645\u0627\u062F\u0647\u200C\u0633\u0627\u0632\u06CC \u0631\u0646\u06AF\u200C\u0647\u0627...',
+      '\u067E\u0631 \u06A9\u0631\u062F\u0646 \u0642\u0644\u0645\u200C\u0645\u0648\u0647\u0627...',
+      '\u06AF\u0631\u0645 \u06A9\u0631\u062F\u0646 \u062A\u062E\u062A\u0647\u0654 \u0646\u0642\u0627\u0634\u06CC...',
+      '\u0631\u0648\u0634\u0646 \u06A9\u0631\u062F\u0646 \u0686\u0631\u0627\u063A\u200C\u0647\u0627...'
+    ];
     let i = 0;
     let pct = 8;
-    const tick = setInterval(function () {
+    progressInterval = setInterval(function () {
       pct = Math.min(94, pct + 6 + Math.random() * 8);
       bar.style.width = pct + '%';
       if (txt) txt.textContent = msgs[(i++) % msgs.length];
-      if (pct >= 94) clearInterval(tick);
+      if (pct >= 94) stopProgress();
     }, 220);
-    el._splashTick = tick;
+  }
+
+  function stopProgress() {
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      progressInterval = null;
+    }
   }
 
   function done() {
+    if (doneCalled) return;
+    if (typeof document === 'undefined') return;
+    doneCalled = true;
     const el = g.document.getElementById('splash');
     if (!el || el.classList.contains('is-gone')) return;
 
-    // پاک کردن تایمر پیشرفت
-    if (el._splashTick) clearInterval(el._splashTick);
+    stopProgress();
 
-    // پر کردن نوار نهایی
     const bar = el.querySelector('.splash-progress-bar');
     const txt = el.querySelector('.splash-loading-text');
     if (bar) bar.style.width = '100%';
-    if (txt) txt.textContent = 'آماده‌ای! 🌰';
+    if (txt) txt.textContent = '\u0622\u0645\u0627\u062F\u0647\u200C\u0627\u06CC! \uD83C\uDF30';
 
-    // رعایت حداقل زمان
-    const elapsed = boot ? (Date.now() - boot) : 0;
-    const wait = Math.max(0, MIN_TIME - elapsed) + FADE_DELAY;
+    const elapsed = boot ? (Date.now() - boot) : MIN_TIME;
+    const wait = Math.max(0, MIN_TIME - elapsed);
 
     setTimeout(function () {
       el.classList.add('is-bye');
       setTimeout(function () {
         el.classList.add('is-gone');
-        // حس «premium» — کم‌کم ناپدید شود
         setTimeout(function () {
-          if (el && el.parentNode) el.parentNode.removeChild(el);
-        }, 800);
-      }, 350);
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, FADE_DURATION);
+      }, REMOVE_DELAY);
     }, wait);
   }
 
-  // اگر صفحه از قبل آماده نبود، منتظر می‌مانیم تا همه چیز لود شود
   function autoWire() {
-    // شروع فوری (حتی قبل از window.onload) تا حس pre-loader القا شود
+    if (typeof document === 'undefined') return;
     if (document.readyState === 'loading') {
-      // DOM هنوز کامل نیست؛ بعد از DOMContentLoaded شروع کن
       document.addEventListener('DOMContentLoaded', start, { once: true });
     } else {
       start();
     }
-
-    // پایان هنگام لود کامل پنجره
     if (document.readyState === 'complete') {
       done();
-    } else {
+    } else if (g.addEventListener) {
       g.addEventListener('load', done, { once: true });
     }
   }
 
-  g.Splash = { start: start, done: done };
+  const api = { start: start, done: done, stop: stopProgress };
+
+  g.Splash = api;
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  }
   autoWire();
 })(typeof window !== 'undefined' ? window : globalThis);

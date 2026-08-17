@@ -58,6 +58,11 @@
       btn.addEventListener('click', function () {
         U.$$('.tool-btn').forEach(function (b) { b.classList.remove('is-active'); });
         btn.classList.add('is-active');
+        // میکرو تعامل: پالس کوتاه
+        btn.classList.remove('is-clicked');
+        void btn.offsetWidth;
+        btn.classList.add('is-clicked');
+        setTimeout(function () { btn.classList.remove('is-clicked'); }, 400);
         Engine.setTool(btn.dataset.tool);
         if (Engine.isMagicTool(btn.dataset.tool)) Sound.magic();
         else Sound.tool();

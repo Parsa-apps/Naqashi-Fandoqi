@@ -1,0 +1,121 @@
+/* ============================================================
+   transitions.css — ترنزیشن‌های نرم بین تب‌ها
+   - هنگام رفتن به تب نقاشی: کشویی افقی به داخل
+   - هنگام رفتن به آلبوم/آموزش: fade + کمی بالا آمدن
+   - ریسپانسیو با prefer-reduced-motion
+   ============================================================ */
+
+/* ورود عمومی — برای تب فعال تازه */
+.view.is-active.is-enter {
+  animation: tab-enter 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes tab-enter {
+  0% { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.985); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* ترنزیشن تب فعال فعلی = بر اساس تب قبلی در data-dir */
+.view.is-active[data-from="draw"] { animation-name: tab-from-draw; }
+.view.is-active[data-from="album"] { animation-name: tab-from-album; }
+.view.is-active[data-from="learn"] { animation-name: tab-from-learn; }
+
+@keyframes tab-from-draw {
+  0%   { opacity: 0; transform: translate3d(-30px, 0, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes tab-from-album {
+  0%   { opacity: 0; transform: translate3d(30px, 0, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes tab-from-learn {
+  0%   { opacity: 0; transform: translate3d(0, 14px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* پاک کردن پس از اتمام — یک‌بار اجرا شود */
+.view.is-active.is-enter::after {
+  content: '';
+  /* placeholder — animationend listener در JS کلاس‌ها را پاک می‌کند */
+}
+
+/* ---------- فید بین مودال‌ها ---------- */
+.modal-backdrop:not(.is-hidden) .modal,
+.modal-backdrop:not(.is-hidden) .about-modal,
+.modal-backdrop:not(.is-hidden) .parent-gate-modal {
+  animation: modal-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes modal-pop {
+  0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.96); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* ---------- رفتار اسکرول بوم هنگام تغییر سایز ---------- */
+.canvas-wrap.is-resizing {
+  transition: box-shadow 0.4s ease;
+}
+
+/* ---------- میکرو تعامل روی دکمه‌های ابزار ---------- */
+.tool-btn.is-clicked {
+  animation: tool-pulse 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes tool-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- وقتی می‌خواهیم کودک روی تب فعلی کلیک کند، یک ریپل کوچک بده ---------- */
+.tab {
+  position: relative;
+  overflow: hidden;
+}
+.tab::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.6);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.tab.is-ripple::after {
+  opacity: 0.18;
+  transform: scale(1);
+}
+
+/* ---------- کارت‌های آلبوم — هنگام ورود آرام ----- */
+.album-card {
+  animation: card-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes card-rise {
+  0% { opacity: 0; transform: translate3d(0, 10px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ---------- کارت‌های آموزش — stagger ---------- */
+.lesson-card { animation: card-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lesson-card:nth-child(1) { animation-delay: 0.02s; }
+.lesson-card:nth-child(2) { animation-delay: 0.06s; }
+.lesson-card:nth-child(3) { animation-delay: 0.10s; }
+.lesson-card:nth-child(4) { animation-delay: 0.14s; }
+.lesson-card:nth-child(5) { animation-delay: 0.18s; }
+.lesson-card:nth-child(6) { animation-delay: 0.22s; }
+.lesson-card:nth-child(7) { animation-delay: 0.26s; }
+.lesson-card:nth-child(8) { animation-delay: 0.30s; }
+
+/* ---------- اگر کاربر حساس به حرکت است، همه‌چیز ساده ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .view.is-enter, .view.is-active[data-from] {
+    animation: none !important;
+  }
+  .modal-backdrop:not(.is-hidden) .modal,
+  .modal-backdrop:not(.is-hidden) .about-modal,
+  .modal-backdrop:not(.is-hidden) .parent-gate-modal,
+  .album-card, .lesson-card, .tool-btn.is-clicked, .tab::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
