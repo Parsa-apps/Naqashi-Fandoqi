@@ -1,0 +1,36 @@
+name: 📱 Build Fandoqi APK — آفلاین برای همه گوشی‌ها
+
+on:
+  push:
+    branches: [ main, arena/* ]
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+# برای اینکه GitHub اجازه ساخت workflow بده، این فایل را کپی کن به:
+# .github/workflows/build-apk.yml
+# سپس push کن
+
+jobs:
+  build-apk:
+    name: 🤖 Build APK (Universal)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: ☕ Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 🤖 Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: 🔄 Sync Web Assets to Android
+        run: |
+          rm -rf android/app/src/main/assets/www/*
+          mkdir -p android/app/src/main/assets/www
+          cp -r index.html manifest.json sw.js css js icons android/app/src/main/assets/www/
