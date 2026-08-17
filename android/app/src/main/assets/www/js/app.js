@@ -160,6 +160,11 @@
       if (res.ok) {
         hideModal('save-modal');
         Sound.save();
+        // ڇالنش روزانه: علامت بامشد ستریک را به‌روز رسانید
+        if (g.Challenges && g.Challenges.markDone) {
+          g.Challenges.markDone();
+          g.Challenges.renderCard();
+        }
         // اگر ماژول SaveAnim لود شده، نمایش پیش‌نمایش قشنگ با ذرات طلایی
         if (g.SaveAnim && g.SaveAnim.show) {
           const nth = res.album.length;

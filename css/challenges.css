@@ -1,0 +1,70 @@
+/* ============================================================
+   challenges.css — کارت چالش روزانه
+   ============================================================ */
+
+.challenge-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #fff7e0 0%, #ffe1cf 100%);
+  border: 2px solid #ffd54f;
+  border-radius: 18px;
+  padding: 12px 16px;
+  margin: 0 0 12px;
+  box-shadow: 0 4px 14px rgba(255, 167, 38, 0.2);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.challenge-card.is-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.challenge-card.is-hidden { display: none; }
+
+.ch-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  flex: none;
+}
+
+.ch-body {
+  flex: 1;
+  text-align: start;
+}
+
+.ch-body h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  color: #5d3a1a;
+  font-weight: 800;
+}
+
+.ch-body p {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  color: #8a5c2b;
+  line-height: 1.5;
+}
+
+.ch-meta {
+  font-size: 0.74rem;
+  color: #b8860b;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+:root[data-theme="dark"] .challenge-card {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 167, 38, 0.12) 100%);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+:root[data-theme="dark"] .ch-body h3 { color: #ffd54f; }
+:root[data-theme="dark"] .ch-body p { color: var(--muted); }
+:root[data-theme="dark"] .ch-meta { background: rgba(255, 215, 0, 0.15); color: var(--accent-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .challenge-card { transition: none !important; }
+}

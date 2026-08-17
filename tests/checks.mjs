@@ -33,7 +33,7 @@ const JS_FILES = [
   'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
   'js/about.js', 'js/splash.js', 'js/stickers.js',
   'js/save-anim.js', 'js/onboarding.js', 'js/settings.js',
-  'js/templates.js', 'js/backup.js', 'js/app.js'
+  'js/templates.js', 'js/backup.js', 'js/challenges.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -256,6 +256,22 @@ section('تست‌های backup — پشتیبان‌گیری و بازگردا�
   ok('Backup.restoreFromText با نامعتبر', res1.ok === false);
   const res2 = BAK.restoreFromText(JSON.stringify({ app: 'wrong', data: {} }));
   ok('Backup نامعتبر (app غلط)', res2.ok === false);
+}
+
+section('تست‌های challenges — چالش‌های روزانه');
+{
+  const CH = (await import(pathToFileURL(join(ROOT, 'js/challenges.js')).href)).default;
+  ok('Challenges.POOL حداقل ٫٧ آیتم دارد', Array.isArray(CH.POOL) && CH.POOL.length >= 7);
+  ok('Challenges.dayIndex یک عدد است', typeof CH.dayIndex() === 'number');
+  ok('Challenges.currentChallenge یک تابع است', typeof CH.currentChallenge === 'function');
+  const ch = CH.currentChallenge();
+  ok('currentChallenge شیء معتبر برمی‌گرداند', !!ch && !!ch.id && !!ch.emoji && !!ch.title);
+  ok('Challenges.markDone ایمن در Node', typeof CH.markDone === 'function');
+  ok('Challenges.getStreak یک تابع است', typeof CH.getStreak === 'function');
+  const st0 = CH.getStreak();
+  ok('getStreak شیء با current و best برمی‌گرداند', st0 && typeof st0.current === 'number' && typeof st0.best === 'number');
+  const first = CH.POOL[0];
+  ok('POOL[i] دارای id/emoji/title/desc', !!first.id && !!first.emoji && !!first.title && !!first.desc);
 }
 
 /* ---------- خلاصه ---------- */
