@@ -1,30 +1,41 @@
 #!/usr/bin/env sh
-# Simplified gradlew for GitHub Actions — uses system gradle if available, otherwise downloads
+# gradlew — Gradle Wrapper 8.4 همان‌طور که پروژه می‌خواهد
+#
+# ترتیب اولویت:
+#   1) jar واقعی wrapper (gradle/wrapper/gradle-wrapper.jar) → همیشه Gradle 8.4 نص می‌شود
+#      (مهم: gradle سیستم رانرها ممکن است 9.x باشد که با AGP 8.2.2 ناسازگار است!)
+#   2) اگر jar نبود → gradle سیستم (اگر بود)
+#   3) در نهایت → دانلود Gradle 8.4
 
 set -e
 
-# If gradle is installed, use it
-if command -v gradle >/dev/null 2>&1; then
-  exec gradle "$@"
-fi
-
-# Otherwise, try to find gradle via sdkman or wrapper
 DIR="$(cd "$(dirname "$0")" && pwd)"
 JAR="$DIR/gradle/wrapper/gradle-wrapper.jar"
 
-if [ ! -f "$JAR" ]; then
-  echo "Gradle wrapper jar not found, attempting to download gradle..."
-  # Fallback: try to download gradle directly if curl works for this domain
-  # On GitHub Actions, this will work because internet is available
-  curl -L -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.4-bin.zip || wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.4-bin.zip || true
-  if [ -f /tmp/gradle.zip ]; then
-    unzip -q /tmp/gradle.zip -d /tmp
-    /tmp/gradle-8.4/bin/gradle "$@"
-    exit $?
-  fi
-  echo "Failed to get gradle. Please ensure gradle is installed."
+# پیدا کردن java (اولویت با JAVA_HOME)
+if [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ]; then
+  JAVA="$JAVA_HOME/bin/java"
+elif command -v java >/dev/null 2>&1; then
+  JAVA="java"
+else
+  echo "❌ java پیدا نشد — JDK 17 نصب کن یا JAVA_HOME را تنظیم کن"
   exit 1
 fi
 
-# Run wrapper jar
-exec java -jar "$JAR" "$@"
+# 1) wrapper jar — نسخه پین‌شده 8.4 از gradle-wrapper.properties
+if [ -f "$JAR" ]; then
+  exec "$JAVA" -jar "$JAR" "$@"
+fi
+
+# 2) gradle سیستم
+if command -v gradle >/dev/null 2>&1; then
+  echo "⚠️  wrapper jar پیدا نشد — از gradle سیستم استفاده می‌شود ($(gradle --version | grep -i gradle | head -1 | awk '{print $NF}'))"
+  exec gradle "$@"
+fi
+
+# 3) دانلود مستقیم Gradle 8.4
+echo "📥 wrapper و gradle سیستم نیستند — دانلود Gradle 8.4..."
+ZIP=/tmp/gradle-8.4-bin.zip
+curl -L -o "$ZIP" https://services.gradle.org/distributions/gradle-8.4-bin.zip || wget -O "$ZIP" https://services.gradle.org/distributions/gradle-8.4-bin.zip
+unzip -q "$ZIP" -d /tmp
+exec /tmp/gradle-8.4/bin/gradle "$@"

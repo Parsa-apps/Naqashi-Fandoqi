@@ -9,12 +9,8 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+// نکته: repositoryهای پروژه در settings.gradle (dependencyResolutionManagement) تعریف شده‌اند
+// و حالت FAIL_ON_PROJECT_REPOS اجازهٔ تعریف مجدد در build.gradle را نمی‌دهد.
 
 task clean(type: Delete) {
     delete rootProject.buildDir
