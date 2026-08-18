@@ -33,19 +33,19 @@
 3. به ایجنت بگو «دسترسی را دادم» — ایجنت خودش فایل‌ها را پوش می‌کند و از آن به بعد
    همه‌چیز خودکار است.
 
-## راه ۲ — کپی دستی با وب (۲ دقیقه)
+## راه ۲ — کپی دستی با وب (۲ دقیقه) ⭐
 
-1. فایل `workflows/Apk.yml` از ریپو را باز کن (روی برنچ `arena/01a013ac-naqashi-fandoqi`)
-2. دکمه مداد (✏️ Edit) را بزن — گیت‌هاب یک fork/branch می‌سازد؛ اگر برنچ ایجاد کرد، بعداً PR آن را بزن
-3. کل محتوا را با محتوای خام فایل زیر جایگزین کن:
+لینک‌های زیر مستقیم صفحهٔ ویرایش هر فایل را روی برنچ `arena/01a013ac-naqashi-fandoqi` باز می‌کنند:
 
-   **آدرس خام برای کپی:** `https://raw.githubusercontent.com/Parsa-apps/Naqashi-Fandoqi/arena/01a013ac-naqashi-fandoqi/workflows/Apk.yml`
-
-4. Commit کن
-5. همین کار را برای `main.yml` تکرار کن:
-
-   `https://raw.githubusercontent.com/Parsa-apps/Naqashi-Fandoqi/arena/01a013ac-naqashi-fandoqi/workflows/main.yml`
-
+1. این لینک را باز کن (ویرایش Apk.yml):
+   👉 `https://github.com/Parsa-apps/Naqashi-Fandoqi/edit/arena/01a013ac-naqashi-fandoqi/.github/workflows/Apk.yml`
+2. محتوای این لینک را باز کن، **کامل کپی** کن (Ctrl+A سپس Ctrl+C):
+   📄 `https://raw.githubusercontent.com/Parsa-apps/Naqashi-Fandoqi/arena/01a013ac-naqashi-fandoqi/workflows/Apk.yml`
+3. برگرد به صفحهٔ ویرایش، همهٔ محتوا را پاک/انتخاب کن (Ctrl+A) و جایگزین کن (Ctrl+V)
+4. پایین صفحه «Commit changes» — مطمئن شو گزینهٔ **Commit directly to the `arena/01a013ac-naqashi-fandoqi` branch** انتخاب شده → Commit
+5. همین ۴ قدم را برای main.yml تکرار کن:
+   - ویرایش: `https://github.com/Parsa-apps/Naqashi-Fandoqi/edit/arena/01a013ac-naqashi-fandoqi/.github/workflows/main.yml`
+   - محتوا: `https://raw.githubusercontent.com/Parsa-apps/Naqashi-Fandoqi/arena/01a013ac-naqashi-fandoqi/workflows/main.yml`
 6. بعد از commit، ورک‌فلو خودکار اجرا می‌شود، APK تازه ساخته و در ریپو commit می‌شود ✅
 
 ## بعد از رفع، از کجا بفهمم درست شد؟
