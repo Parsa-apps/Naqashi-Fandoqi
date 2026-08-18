@@ -1,3 +1,27 @@
-git push origin arena/01a01126-naqashi-fandoqi
-gh pr create --base main --head arena/01a01126-naqashi-fandoqi \
-  --title "Add APK build & test workflow"
+name: 🧪 Fandoqi Tests
+
+on:
+  push:
+    branches: [ main, arena/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: ✔️ Unit + E2E checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🧪 Run tests
+        run: npm test
