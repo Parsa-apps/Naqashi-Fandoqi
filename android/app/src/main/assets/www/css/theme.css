@@ -1,0 +1,233 @@
+/* ============================================================
+   theme.css — حالت تیره (Dark Mode) فندوقی
+   - بازنویسی متغیرها در حالت [data-theme="dark"]
+   - رنگ‌های گرم تیره (نه سرد و بی‌روح) برای راحتی چشم کودکان
+   - ترنزیشن نرم بین دو تم
+   ============================================================ */
+
+:root {
+  --transition-theme: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+/* وقتی تم عوض می‌شود، ترنزیشن نرم برقرار شود */
+html,
+body,
+.app-header,
+.card,
+.modal,
+.about-modal,
+.parent-gate-modal,
+.toasts > .toast,
+.offline-badge,
+.pwa-install-btn,
+.about-btn,
+.sound-btn,
+.theme-toggle,
+.tab,
+.tool-btn,
+.act-btn,
+.lesson-card,
+.tip-card,
+.offline-feature-card {
+  transition: var(--transition-theme);
+}
+
+/* ----- تم تیرهٔ گرم ----- */
+:root[data-theme="dark"] {
+  --bg: #1f1a2e;
+  --card: #2b2540;
+  --ink: #f1e9d8;
+  --muted: #b9aacb;
+  --accent: #ff8fab;
+  --accent-2: #b39bff;
+  --accent-3: #ffd166;
+  --green: #5fd28b;
+  --danger: #ff6e6a;
+  --shadow: 0 12px 34px rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+
+/* ----- پس‌زمینه بدن در حالت تیره، با ستاره‌های ریز پنهان برای حس کودکانه ----- */
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 25% 12%, rgba(255, 215, 0, 0.06) 0, transparent 38%),
+    radial-gradient(circle at 75% 85%, rgba(179, 155, 255, 0.08) 0, transparent 35%),
+    var(--bg);
+}
+
+/* هدر در حالت تیره */
+:root[data-theme="dark"] .app-header {
+  background: linear-gradient(120deg, #3a2f5a, #2b2540);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+:root[data-theme="dark"] .brand h1,
+:root[data-theme="dark"] .tool-group h2,
+:root[data-theme="dark"] .tab,
+:root[data-theme="dark"] .lesson-emoji {
+  color: var(--ink);
+}
+
+/* مودال‌ها */
+:root[data-theme="dark"] .modal,
+:root[data-theme="dark"] .about-modal,
+:root[data-theme="dark"] .parent-gate-modal {
+  background: linear-gradient(160deg, #2b2540, #1f1a2e);
+  color: var(--ink);
+  border-color: rgba(179, 155, 255, 0.35);
+}
+:root[data-theme="dark"] .modal-backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* تب فعال */
+:root[data-theme="dark"] .tab.is-active {
+  background: var(--card);
+  color: var(--accent-2);
+}
+
+/* کارت‌ها */
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .lesson-card,
+:root[data-theme="dark"] .tip-card,
+:root[data-theme="dark"] .offline-feature-card {
+  background: var(--card);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-soft);
+}
+:root[data-theme="dark"] .lesson-card.is-done {
+  background: linear-gradient(160deg, rgba(95, 210, 139, 0.16), rgba(95, 210, 139, 0.04));
+  border-color: rgba(95, 210, 139, 0.45);
+}
+
+/* دکمه‌ها */
+:root[data-theme="dark"] .act-btn {
+  background: var(--card);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .act-btn.primary {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #1f1830;
+}
+:root[data-theme="dark"] .act-btn.danger {
+  background: linear-gradient(135deg, #ef5350, #c62828);
+  color: #fff;
+}
+
+/* Inputs */
+:root[data-theme="dark"] input[type="text"],
+:root[data-theme="dark"] input[type="number"],
+:root[data-theme="dark"] .pg-input {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] .pg-input::placeholder {
+  color: rgba(241, 233, 216, 0.4);
+}
+:root[data-theme="dark"] .pg-question {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 215, 0, 0.45);
+  color: var(--accent-3);
+}
+
+/* Canvas / بوم نقاشی: رنگ کاغذ تیرهٔ گرم در حالت شب */
+:root[data-theme="dark"] #board {
+  background: #2e283f;
+}
+
+/* Tooltips/Ribbon */
+:root[data-theme="dark"] .lesson-emoji::after,
+:root[data-theme="dark"] .badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .step-indicator {
+  color: var(--ink);
+}
+:root[data-theme="dark"] .step-text {
+  color: var(--muted);
+}
+
+/* Achievement Pop */
+:root[data-theme="dark"] .achievement-pop {
+  background: linear-gradient(135deg, #3a2f5a, #2b2540);
+  color: var(--ink);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+:root[data-theme="dark"] .achievement-pop .ach-title { color: var(--accent-3); }
+:root[data-theme="dark"] .achievement-pop .ach-sub   { color: var(--muted); }
+
+/* Info Banner/Empty */
+:root[data-theme="dark"] .offline-info,
+:root[data-theme="dark"] .offline-tips h3 {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .offline-note,
+:root[data-theme="dark"] .view-head p,
+:root[data-theme="dark"] .step-text {
+  color: var(--muted);
+}
+
+/* About modal specific */
+:root[data-theme="dark"] .about-credit-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 215, 0, 0.18);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .about-credit-card .label { color: var(--muted); }
+
+/* Toggle button */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease;
+  margin-inline-start: 8px;
+}
+.theme-toggle:hover { transform: scale(1.08); background: rgba(255,255,255,0.32); }
+.theme-toggle:focus-visible { outline: 3px solid #ffd54f; outline-offset: 2px; }
+.theme-toggle .theme-ico-dark  { display: none; }
+.theme-toggle .theme-ico-light { display: inline; }
+:root[data-theme="dark"] .theme-toggle .theme-ico-dark  { display: inline; }
+:root[data-theme="dark"] .theme-toggle .theme-ico-light { display: none; }
+:root[data-theme="dark"] .theme-toggle {
+  background: rgba(241, 233, 216, 0.16);
+  border-color: rgba(241, 233, 216, 0.4);
+}
+
+/* فعال‌سازی انتخاب خودکار بر اساس سیستم — قبل از اینکه JS لود شود */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1f1a2e;
+    --card: #2b2540;
+    --ink: #f1e9d8;
+    --muted: #b9aacb;
+    --shadow: 0 12px 34px rgba(0, 0, 0, 0.5);
+    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html, body, .app-header, .card,
+  .modal, .about-modal, .parent-gate-modal,
+  .toasts > .toast, .offline-badge, .pwa-install-btn,
+  .about-btn, .sound-btn, .theme-toggle,
+  .tab, .tool-btn, .act-btn, .lesson-card,
+  .tip-card, .offline-feature-card {
+    transition: none !important;
+  }
+}

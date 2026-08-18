@@ -1,0 +1,124 @@
+/* ============================================================
+   save-anim.css — انیمیشن موفقیت پس از ذخیره
+   - پیش‌نمایش بزرگ نقاشی + ذرات طلایی + متن تبریک
+   - احساس «premium» لحظةٔ ذخیره
+   ============================================================ */
+
+#save-success {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  perspective: 1000px;
+}
+#save-success.is-visible { opacity: 1; pointer-events: auto; }
+
+.save-success-card {
+  position: relative;
+  background: linear-gradient(160deg, #fff, #fff6dc);
+  border-radius: 28px;
+  padding: 24px 28px 28px;
+  box-shadow:
+    0 18px 60px rgba(255, 167, 38, 0.45),
+    0 0 0 4px rgba(255, 215, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  text-align: center;
+  transform: scale(0.6) rotateX(20deg);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: min(420px, calc(100vw - 32px));
+}
+#save-success.is-visible .save-success-card { transform: scale(1) rotateX(0); }
+
+.save-success-img {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 3px solid #ffd54f;
+  background: #fff;
+  display: block;
+  margin: 6px 0 14px;
+  box-shadow: 0 8px 26px rgba(184, 134, 11, 0.2);
+}
+
+.save-success-title {
+  margin: 0 0 4px;
+  color: #5d3a1a;
+  font-size: 1.45rem;
+  font-weight: 900;
+  text-shadow: 0 1px 0 #fff, 0 0 10px rgba(255, 215, 0, 0.55);
+}
+.save-success-sub {
+  margin: 0;
+  color: #8a5c2b;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* ----- ذرات جشن ----- */
+.save-particle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.save-particle .p {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+#save-success.is-visible .save-particle .p {
+  animation: save-particle 1.6s ease-out forwards;
+}
+
+@keyframes save-particle {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(0); }
+  20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(60deg); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 220px))) scale(0.6) rotate(var(--rot, 360deg)); }
+}
+
+/* ----- حلقهٔ طلایی دور کارت ----- */
+.save-ring {
+  position: absolute;
+  inset: -20px;
+  border-radius: 40px;
+  background: conic-gradient(from 0deg,
+    rgba(255, 215, 0, 0.0) 0%,
+    rgba(255, 215, 0, 0.45) 25%,
+    rgba(255, 167, 38, 0.55) 50%,
+    rgba(255, 215, 0, 0.45) 75%,
+    rgba(255, 215, 0, 0.0) 100%);
+  z-index: -1;
+  animation: save-ring-spin 4s linear infinite;
+  filter: blur(6px);
+  opacity: 0.85;
+}
+@keyframes save-ring-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+/* حالت تیره */
+:root[data-theme="dark"] .save-success-card {
+  background: linear-gradient(160deg, #2b2540, #1f1830);
+  border-color: rgba(255, 215, 0, 0.45);
+}
+:root[data-theme="dark"] .save-success-card { color: #f1e9d8; }
+:root[data-theme="dark"] .save-success-title { color: #ffd54f; }
+:root[data-theme="dark"] .save-success-sub { color: #d8c89e; }
+:root[data-theme="dark"] .save-success-img { background: #2b2540; border-color: rgba(255, 215, 0, 0.5); }
+
+@media (prefers-reduced-motion: reduce) {
+  .save-success-card, .save-ring, .save-particle .p {
+    animation: none !important;
+    transition: none !important;
+  }
+}

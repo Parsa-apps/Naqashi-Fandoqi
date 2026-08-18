@@ -26,8 +26,134 @@
   <!-- فونت‌ها — آفلاین محلی، بدون CDN -->
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/parent-gate.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/stickers.css">
+  <link rel="stylesheet" href="css/save-anim.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/templates.css">
+  <link rel="stylesheet" href="css/challenges.css">
 </head>
 <body>
+
+  <!-- ============ تنظیمات (Settings) ============ -->
+  <div class="modal-backdrop is-hidden" id="settings-modal">
+    <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <button id="settings-close" class="settings-close" type="button" aria-label="بستن">✕</button>
+      <h3 id="settings-title">⚙️ تنظیمات</h3>
+      <p class="hint">صحنهٔ نقاشی‌ات را شخصی کن</p>
+
+      <div class="settings-section" aria-label="صدا">
+        <h4>🔊 صدا</h4>
+        <div class="settings-row">
+          <label class="field" for="set-sound">فعال‌سازی صدا</label>
+          <button type="button" class="settings-toggle" data-field="sound" aria-label="صدا را فعال/غیرفعال کن"></button>
+          <button type="button" class="settings-toggle" data-field="music" aria-label="موسیقی آرام">🎵</button>
+          <input id="set-sound" type="checkbox" hidden>
+        </div>
+        <div class="settings-row">
+          <label class="field" for="set-volume">حجم صدا</label>
+          <input id="set-volume" type="range" min="0" max="1" step="0.05" aria-label="حجم صدا">
+          <span id="set-volume-num" aria-live="polite">۸۵٪</span>
+        </div>
+      </div>
+
+      <div class="settings-section" aria-label="تم">
+        <h4>🌗 تم</h4>
+        <div class="settings-row">
+          <label class="field" for="set-theme">حالت تیره</label>
+          <button type="button" class="settings-toggle" data-field="theme" aria-label="تم تیره را فعال/غیرفعال کن"></button>
+          <select id="set-theme" hidden>
+            <option value="light">روشن</option>
+            <option value="dark">تیره</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="settings-section" aria-label="دستاوردها">
+        <h4>🏆 دستاوردهای من</h4>
+        <div class="gal-ach-list"></div>
+      </div>
+
+      <div class="settings-section" aria-label="ابزارهای سریع">
+        <h4>⚡ ابزارهای سریع</h4>
+        <div class="settings-row" style="justify-content: center; gap: 6px;">
+          <button id="btn-show-stickers" class="act-btn ghost" type="button">🌟 جعبه استیکر</button>
+          <button id="btn-reset-onboard" class="act-btn ghost" type="button">👋 خوش‌آمدگویی</button>
+        </div>
+      </div>
+
+      <div class="settings-section" aria-label="پشتیبان‌گیری">
+        <h4>💾 پشتیبان‌گیری و انتقال</h4>
+        <p style="margin:6px 0 10px;font-size:0.85rem;color:#8a5c2b;">همهٔ نقاشی‌ها + دستاوردها را در یک فایل JSON ذخیره کن — می‌توانی در دستگاه دیگر بازگردانی کنی.</p>
+        <div class="settings-row" style="justify-content:center;gap:6px;">
+          <button id="btn-backup-all" class="act-btn primary" type="button">⬇️ دانلود پشتیبان</button>
+          <button id="btn-restore-all" class="act-btn ghost" type="button">⬆️ بازگردانی پشتیبان</button>
+        </div>
+      </div>
+
+      <div class="danger-zone">
+        <h4>⚠️ منطقهٔ خطر</h4>
+        <p>تمام نقاشی‌ها، پیش‌نویس‌ها و دستاوردها پاک می‌شوند. این عملیات برگشت‌ناپذیر است.</p>
+        <button id="btn-reset-all" class="btn-danger" type="button">🗑️ پاک کردن همهٔ داده‌ها</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ خوش‌آمدگویی (Onboarding) ============ -->
+  <div id="onboarding" role="dialog" aria-modal="true" aria-labelledby="onb-title" aria-hidden="true">
+    <div class="onb-wrap">
+      <div class="onb-card-wrap"></div>
+      <div class="onb-dots" aria-hidden="true"></div>
+      <div class="onb-buttons">
+        <button class="onb-back" type="button" aria-label="کارت قبلی">‹ قبلی</button>
+        <button class="onb-skip" type="button" aria-label="رد کردن">رد کن</button>
+        <button class="act-btn primary onb-next" type="button">بعدی ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ لایهٔ انیمیشن موفقیت ذخیره ============ -->
+  <div id="save-success" role="status" aria-live="polite" aria-hidden="true">
+    <div class="save-ring" aria-hidden="true"></div>
+    <div class="save-success-card">
+      <span class="save-ring" aria-hidden="true"></span>
+      <img id="save-success-img" class="save-success-img" alt="نقاشی ذخیره‌شده">
+      <h3 id="save-success-title">ذخیره شد!</h3>
+      <p id="save-success-sub">شاهکارت در آلبوم محفوظ شد 🌟</p>
+    </div>
+    <div class="save-particle" id="save-success-particles" aria-hidden="true"></div>
+  </div>
+
+  <!-- ============ لایهٔ فلش استیکر هنگام چسباندن ============ -->
+  <div id="sticker-flash" aria-hidden="true"></div>
+
+  <!-- ============ پالت استیکرها (پایین) ============ -->
+  <div id="sticker-tray" class="sticker-tray is-hidden" role="toolbar" aria-label="جعبه استیکرها"></div>
+
+  <!-- ============ قالب‌های آمادهٔ نقاشی ============ -->
+  <div id="tpl-tray" class="tpl-tray is-hidden" role="toolbar" aria-label="قالب‌های آماده"></div>
+
+  <!-- ============ اسپلش اسکرین فندوقی ============ -->
+  <div id="splash" role="status" aria-label="در حال بارگذاری فندوقی">
+    <div class="splash-logo" aria-hidden="true">
+      <span class="splash-logo-ring"></span>
+      <span class="splash-logo-ring ring-2"></span>
+      <span class="splash-logo-ring ring-3"></span>
+      <div class="splash-logo-core">🌰</div>
+    </div>
+    <h2 class="splash-title">استودیو نقاشی فندوقی</h2>
+    <p class="splash-subtitle">آفلاین، امن، پر از ابزار جادویی</p>
+    <div class="splash-progress" aria-hidden="true">
+      <div class="splash-progress-bar"></div>
+    </div>
+    <p class="splash-loading-text" aria-live="polite">در حال آماده‌سازی رنگ‌ها...</p>
+    <p class="splash-bye">ساخته‌شده با 🌰 توسط گروه پارسا اپس</p>
+  </div>
 
   <header class="app-header">
     <div class="brand">
@@ -41,6 +167,12 @@
       <button class="tab" id="tab-learn" role="tab" aria-selected="false" aria-controls="view-learn">📚 آموزش</button>
     </nav>
     <button id="sound-toggle" class="sound-btn" aria-label="قطع صدا" aria-pressed="false">🔊</button>
+    <button id="settings-btn" class="about-btn" type="button" aria-label="تنظیمات" title="تنظیمات">⚙️</button>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="تیره کردن تم" aria-pressed="false" title="تغییر تم">
+      <span class="theme-ico-light" aria-hidden="true">🌞</span>
+      <span class="theme-ico-dark" aria-hidden="true">🌙</span>
+    </button>
+    <button id="about-btn" class="about-btn" type="button" aria-label="دربارهٔ ما" title="دربارهٔ ما">ℹ️</button>
   </header>
 
   <main id="app">
@@ -52,29 +184,29 @@
           <div class="tool-group">
             <h2>ابزارهای حرفه‌ای</h2>
             <div class="tools">
-              <button class="tool-btn is-active" data-tool="brush"><span class="ico" aria-hidden="true">🖌️</span>قلم‌مو</button>
-              <button class="tool-btn" data-tool="pencil"><span class="ico" aria-hidden="true">✏️</span>مداد</button>
-              <button class="tool-btn" data-tool="eraser"><span class="ico" aria-hidden="true">🧽</span>پاک‌کن</button>
-              <button class="tool-btn" data-tool="spray"><span class="ico" aria-hidden="true">💨</span>اسپری</button>
-              <button class="tool-btn" data-tool="fill"><span class="ico" aria-hidden="true">🪣</span>سطل رنگ</button>
-              <button class="tool-btn" data-tool="line"><span class="ico" aria-hidden="true">📏</span>خط</button>
-              <button class="tool-btn" data-tool="rect"><span class="ico" aria-hidden="true">⬜</span>مستطیل</button>
-              <button class="tool-btn" data-tool="ellipse"><span class="ico" aria-hidden="true">⭕</span>بیضی</button>
-              <button class="tool-btn" data-tool="triangle"><span class="ico" aria-hidden="true">🔺</span>مثلث</button>
-              <button class="tool-btn" data-tool="star"><span class="ico" aria-hidden="true">⭐</span>ستاره</button>
+              <button class="tool-btn is-active" data-tool="brush" title="قلم‌مو — خطوط نرم و یکدست" aria-label="قلم‌مو — خطوط نرم و یکدست"><span class="ico" aria-hidden="true">🖌️</span>قلم‌مو</button>
+              <button class="tool-btn" data-tool="pencil" title="مداد — خطوط نازک و کنترل‌شده" aria-label="مداد — خطوط نازک و کنترل‌شده"><span class="ico" aria-hidden="true">✏️</span>مداد</button>
+              <button class="tool-btn" data-tool="eraser" title="پاک‌کن — برای پاک کردن بوم" aria-label="پاک‌کن — برای پاک کردن بوم"><span class="ico" aria-hidden="true">🧽</span>پاک‌کن</button>
+              <button class="tool-btn" data-tool="spray" title="اسپری — پاشش رنگ ذره‌ذره" aria-label="اسپری — پاشش رنگ ذره‌ذره"><span class="ico" aria-hidden="true">💨</span>اسپری</button>
+              <button class="tool-btn" data-tool="fill" title="سطل رنگ — پر کردن یک ناحیه" aria-label="سطل رنگ — پر کردن یک ناحیه"><span class="ico" aria-hidden="true">🪣</span>سطل رنگ</button>
+              <button class="tool-btn" data-tool="line" title="خط — کشیدن خط صاف" aria-label="خط — کشیدن خط صاف"><span class="ico" aria-hidden="true">📏</span>خط</button>
+              <button class="tool-btn" data-tool="rect" title="مستطیل — کشیدن چهارگوش" aria-label="مستطیل — کشیدن چهارگوش"><span class="ico" aria-hidden="true">⬜</span>مستطیل</button>
+              <button class="tool-btn" data-tool="ellipse" title="بیضی — کشیدن دایره یا تخم‌مرغ" aria-label="بیضی — کشیدن دایره یا تخم‌مرغ"><span class="ico" aria-hidden="true">⭕</span>بیضی</button>
+              <button class="tool-btn" data-tool="triangle" title="مثلث — سه‌ضلعی" aria-label="مثلث — سه‌ضلعی"><span class="ico" aria-hidden="true">🔺</span>مثلث</button>
+              <button class="tool-btn" data-tool="star" title="ستاره — پنج‌پر" aria-label="ستاره — پنج‌پر"><span class="ico" aria-hidden="true">⭐</span>ستاره</button>
             </div>
           </div>
           <div class="tool-group magic">
             <h2>براش‌های جادویی ✨</h2>
             <div class="tools">
-              <button class="tool-btn" data-tool="rainbow"><span class="ico" aria-hidden="true">🌈</span>رنگین‌کمان</button>
-              <button class="tool-btn" data-tool="sparkle"><span class="ico" aria-hidden="true">✨</span>برق جادویی</button>
-              <button class="tool-btn" data-tool="glow"><span class="ico" aria-hidden="true">💡</span>نئون</button>
-              <button class="tool-btn" data-tool="stamp-heart"><span class="ico" aria-hidden="true">❤️</span>مهر قلب</button>
-              <button class="tool-btn" data-tool="stamp-star"><span class="ico" aria-hidden="true">🌟</span>مهر ستاره</button>
-              <button class="tool-btn" data-tool="stamp-flower"><span class="ico" aria-hidden="true">🌸</span>مهر گل</button>
-              <button class="tool-btn" data-tool="stamp-butterfly"><span class="ico" aria-hidden="true">🦋</span>مهر پروانه</button>
-              <button class="tool-btn" data-tool="stamp-smiley"><span class="ico" aria-hidden="true">😊</span>مهر لبخند</button>
+              <button class="tool-btn" data-tool="rainbow" title="رنگین‌کمان — رنگ‌های متنوع" aria-label="رنگین‌کمان — رنگ‌های متنوع"><span class="ico" aria-hidden="true">🌈</span>رنگین‌کمان</button>
+              <button class="tool-btn" data-tool="sparkle" title="برق جادویی — درخشش ستاره‌ای" aria-label="برق جادویی — درخشش ستاره‌ای"><span class="ico" aria-hidden="true">✨</span>برق جادویی</button>
+              <button class="tool-btn" data-tool="glow" title="نئون — درخشان و شفاف" aria-label="نئون — درخشان و شفاف"><span class="ico" aria-hidden="true">💡</span>نئون</button>
+              <button class="tool-btn" data-tool="stamp-heart" title="مهر قلب — قلب رنگی" aria-label="مهر قلب — قلب رنگی"><span class="ico" aria-hidden="true">❤️</span>مهر قلب</button>
+              <button class="tool-btn" data-tool="stamp-star" title="مهر ستاره — ستاره پنج‌پر" aria-label="مهر ستاره — ستاره پنج‌پر"><span class="ico" aria-hidden="true">🌟</span>مهر ستاره</button>
+              <button class="tool-btn" data-tool="stamp-flower" title="مهر گل — گل رنگی" aria-label="مهر گل — گل رنگی"><span class="ico" aria-hidden="true">🌸</span>مهر گل</button>
+              <button class="tool-btn" data-tool="stamp-butterfly" title="مهر پروانه — بال‌های رنگی" aria-label="مهر پروانه — بال‌های رنگی"><span class="ico" aria-hidden="true">🦋</span>مهر پروانه</button>
+              <button class="tool-btn" data-tool="stamp-smiley" title="مهر لبخند — صورتک خندان" aria-label="مهر لبخند — صورتک خندان"><span class="ico" aria-hidden="true">😊</span>مهر لبخند</button>
             </div>
           </div>
           <div class="tool-group offline-info" aria-label="اطلاعات آفلاین">
@@ -92,7 +224,8 @@
         </section>
       </div>
 
-      <div class="controlbar">
+      <div id="challenge-card" class="challenge-card is-hidden" role="region" aria-label="چالش روزانه"></div>
+        <div class="controlbar">
         <div class="control-group" aria-label="انتخاب رنگ">
           <div class="swatches" id="swatches">
             <button class="swatch is-active" data-color="#ec407a" style="background:#ec407a" aria-label="رنگ صورتی"></button>
@@ -110,7 +243,8 @@
           </div>
           <label class="custom-color" for="custom-color">
             <span>🎨 رنگ دلخواه</span>
-            <input type="color" id="custom-color" value="#ec407a" aria-label="انتخاب رنگ دلخواه">
+            <div id="recent-colors" class="recent-colors is-empty" role="group" aria-label="رنگ‌های اخیر"></div>
+          <input type="color" id="custom-color" value="#ec407a" aria-label="انتخاب رنگ دلخواه">
           </label>
         </div>
 
@@ -123,6 +257,14 @@
           <button class="act-btn" id="btn-undo" disabled aria-label="برگرداندن آخرین حرکت">↩️ برگردان</button>
           <button class="act-btn" id="btn-redo" disabled aria-label="انجام دوباره">↪️ دوباره</button>
           <button class="act-btn" id="btn-clear" aria-label="پاک کردن صفحه">🧹 پاک‌کردن</button>
+          <button class="sticker-toggle" id="sticker-toggle" type="button" aria-label="جعبه استیکر" aria-pressed="false" title="استیکرها">
+            <span class="sticker-toggle-ico" aria-hidden="true">🌟</span>
+            <span>استیکر</span>
+          </button>
+          <button class="tpl-toggle" id="tpl-toggle" type="button" aria-label="قالب‌ها" title="قالب‌های آماده">
+            <span aria-hidden="true">📝</span>
+            <span>قالب</span>
+          </button>
           <button class="act-btn ghost" id="btn-download" aria-label="دانلود نقاشی">⬇️ دانلود</button>
           <button class="act-btn primary" id="btn-save" aria-label="ذخیره در آلبوم">💾 ذخیره در آلبوم</button>
         </div>
@@ -221,6 +363,8 @@
       <div class="modal-actions">
         <button id="view-edit" class="act-btn">🖌️ ادامه نقاشی</button>
         <button id="view-download" class="act-btn ghost">⬇️ دانلود</button>
+        <button id="view-share" class="act-btn ghost" hidden>📤 اشتراک‌گذاری</button>
+        <button id="view-print" class="act-btn ghost">🖨️ چاپ</button>
         <button id="view-delete" class="act-btn danger">🗑️ حذف</button>
         <button id="view-close" class="act-btn ghost">بستن</button>
       </div>
@@ -238,6 +382,66 @@
     </div>
   </div>
 
+  <!-- ============ مودال دروازهٔ والدین (Parental Gate) ============ -->
+  <div class="modal-backdrop is-hidden" id="parent-gate-modal">
+    <div class="parent-gate-modal" role="alertdialog" aria-modal="true" aria-labelledby="pg-title">
+      <div class="pg-icon" aria-hidden="true">🛡️</div>
+      <p class="pg-pre-title">این قسمت برای بزرگ‌ترهاست. لطفاً جواب بده:</p>
+      <h3 id="pg-title">دروازهٔ والدین</h3>
+      <div id="pg-question" class="pg-question" dir="ltr">۰ + ۰ = ?</div>
+      <input type="number" inputmode="numeric" pattern="[0-9]*" id="pg-input" class="pg-input" placeholder="٠" aria-label="پاسخ" maxlength="3" autocomplete="off">
+      <p id="pg-hint" class="pg-hint">یک بزرگ‌تر کمکت کنه 🌟</p>
+      <p id="pg-error" class="pg-error">❌ اشتباه بود، دوباره امتحان کن</p>
+      <div id="pg-locked" class="pg-locked is-hidden" aria-live="polite">⏳ برای امنیت، ۳۰ ثانیه صبر کن و دوباره امتحان کن.</div>
+      <div class="parent-gate-actions">
+        <button id="pg-confirm" class="act-btn primary" type="button">تأیید ✨</button>
+        <button id="pg-cancel" class="act-btn ghost" type="button">بیخیال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ مودال «دربارهٔ ما / پارسا اپس» ============ -->
+  <div class="modal-backdrop is-hidden" id="about-modal">
+    <div class="about-modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+      <button id="about-close" class="about-close-btn" type="button" aria-label="بستن">✕</button>
+      <p class="about-pre-title">ساخته‌شده با 🌰 توسط</p>
+      <h3 id="about-title">گروه برنامه‌نویسی پارسا اپس</h3>
+      <p class="about-subtitle">هر اپ، یک قدم به‌سوی آیندهٔ دیجیتال کودکان ایران 🌟</p>
+
+      <div class="parsa-logo-wrap" aria-hidden="true">
+        <span class="about-mascot-glow"></span>
+        <span class="about-shimmer-ring"></span>
+        <span class="parsa-logo">Parsa<br/>Apps</span>
+      </div>
+
+      <p class="about-author">فرشاد پارسا</p>
+
+      <div class="about-credit-card">
+        <div class="row"><span class="label">گروه</span><span class="value">Parsa Apps</span></div>
+        <div class="row"><span class="label">سازنده</span><span class="value">فرشاد پارسا</span></div>
+        <div class="row"><span class="label">پروژه</span><span class="value">استودیو نقاشی فندوقی 🌰</span></div>
+      </div>
+
+      <a id="about-telegram" class="about-telegram-btn" href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">
+        <span aria-hidden="true">💬</span>
+        <span>پشتیبانی در تلگرام: @Parsaappsadmin</span>
+      </a>
+
+      <p class="about-footer-note">
+        فندوقی یک پروژهٔ آفلاین برای کودکان ایران است؛ حتی در روستا، سفر و هواپیما هم کار می‌کند 🌲✈️
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ دستاورد (Achievement Pop) ============ -->
+  <div id="achievement-pop" class="achievement-pop" role="status" aria-live="polite">
+    <span class="ach-ico" id="ach-ico">⭐</span>
+    <div class="ach-body">
+      <p class="ach-title" id="ach-title">دستاورد تازه!</p>
+      <p class="ach-sub" id="ach-sub">یک قدم دیگر به سوی استادی</p>
+    </div>
+  </div>
+
   <div id="toasts" class="toasts" aria-live="polite"></div>
 
   <!-- اسکریپت‌ها — ۱۰۰٪ آفلاین، بدون وابستگی خارجی -->
@@ -245,9 +449,22 @@
   <script src="js/utils.js"></script>
   <script src="js/offline.js"></script>
   <script src="js/sound.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/splash.js"></script>
+  <script src="js/parent-gate.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/album.js"></script>
   <script src="js/tutorials.js"></script>
+  <script src="js/about.js"></script>
+  <script src="js/stickers.js"></script>
+  <script src="js/save-anim.js"></script>
+  <script src="js/onboarding.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/backup.js"></script>
+  <script src="js/challenges.js"></script>
+  <script src="js/music.js"></script>
   <script src="js/app.js"></script>
 
   <!-- ثبت آفلاین — کوچک و کودک‌پسند -->

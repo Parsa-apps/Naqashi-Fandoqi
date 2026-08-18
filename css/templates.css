@@ -1,0 +1,110 @@
+/* ============================================================
+   templates.css — قالب‌های از پیش ترسیم‌شده
+   ============================================================ */
+
+.tpl-toggle {
+  border: 2px solid rgba(184, 134, 11, 0.35);
+  background: linear-gradient(160deg, #fce4ec, #fff3e0);
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  font-weight: 800;
+  color: #5d3a1a;
+  font-family: inherit;
+}
+.tpl-toggle:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+.tpl-toggle.is-active {
+  background: linear-gradient(135deg, #ec407a, #ab47bc);
+  color: #fff;
+}
+
+.tpl-tray {
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) translateY(140%);
+  background: rgba(255, 247, 230, 0.97);
+  backdrop-filter: blur(10px);
+  border: 2px solid #f6c97a;
+  border-radius: 18px;
+  box-shadow: 0 14px 36px rgba(184, 134, 11, 0.32);
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  max-width: min(680px, calc(100% - 24px));
+  z-index: 60;
+  transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.36s;
+  opacity: 0;
+  pointer-events: none;
+}
+.tpl-tray.is-hidden { display: none; }
+.tpl-tray.is-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tpl-card {
+  background: #fff;
+  border: 2px solid rgba(255, 224, 130, 0.55);
+  border-radius: 14px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
+  color: #4a2e10;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.tpl-card:hover {
+  transform: translateY(-3px);
+  border-color: #ffb300;
+  box-shadow: 0 8px 18px rgba(255, 179, 0, 0.3);
+}
+.tpl-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+.tpl-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #5d3a1a;
+}
+.tpl-desc {
+  font-size: 0.78rem;
+  color: #8a5c2b;
+  text-align: center;
+  line-height: 1.4;
+}
+
+:root[data-theme="dark"] .tpl-toggle {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .tpl-tray {
+  background: rgba(43, 37, 64, 0.96);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+:root[data-theme="dark"] .tpl-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .tpl-title { color: var(--accent-3); }
+:root[data-theme="dark"] .tpl-desc { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tpl-tray, .tpl-card, .tpl-toggle {
+    transition: none !important;
+  }
+}

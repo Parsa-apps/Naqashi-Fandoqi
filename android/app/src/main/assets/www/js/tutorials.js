@@ -149,6 +149,99 @@
           svg: '<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="82" rx="9" ry="34" fill="#6d4c41" stroke="#5d4e37" stroke-width="3"/><path d="M100 68 Q60 14 38 44 Q30 76 96 82 Z" fill="#ce93d8" stroke="#5d4e37" stroke-width="4" stroke-linejoin="round"/><path d="M100 68 Q140 14 162 44 Q170 76 104 82 Z" fill="#ce93d8" stroke="#5d4e37" stroke-width="4" stroke-linejoin="round"/><path d="M98 82 Q60 96 52 122 Q56 146 92 126 Z" fill="#ba68c8" stroke="#5d4e37" stroke-width="4" stroke-linejoin="round"/><path d="M102 82 Q140 96 148 122 Q144 146 108 126 Z" fill="#ba68c8" stroke="#5d4e37" stroke-width="4" stroke-linejoin="round"/><path d="M94 48 Q80 28 72 24 M106 48 Q120 28 128 24" fill="none" stroke="#6d4c41" stroke-width="3" stroke-linecap="round"/><circle cx="52" cy="54" r="7" fill="#fff59d"/><circle cx="148" cy="54" r="7" fill="#fff59d"/><circle cx="66" cy="112" r="6" fill="#fff59d"/><circle cx="134" cy="112" r="6" fill="#fff59d"/><path d="M40 160 q6 -18 12 0" fill="none" stroke="#4caf50" stroke-width="3" stroke-linecap="round"/><path d="M160 160 q6 -18 12 0" fill="none" stroke="#4caf50" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="142" r="6" fill="#f06292"/><circle cx="40" cy="138" r="6" fill="#f06292"/><circle cx="52" cy="138" r="6" fill="#f06292"/><circle cx="166" cy="142" r="6" fill="#f48fb1"/><circle cx="160" cy="138" r="6" fill="#f48fb1"/><circle cx="172" cy="138" r="6" fill="#f48fb1"/><circle cx="46" cy="140" r="3" fill="#ffd54f"/><circle cx="166" cy="140" r="3" fill="#ffd54f"/></svg>'
         }
       ]
+    },
+
+    /* ---------- متد ۱: نقاشی از روی اعداد ---------- */
+    {
+      id: 'butterfly-number',
+      title: 'پروانه از عدد ۸',
+      emoji: '🧮',
+      level: 'مبتدی',
+      tag: 'عدد',
+      steps: [
+        {
+          text: 'یک عدد «۸» بکش — این می‌شه بدن و بال‌های پروانه!',
+          svg: '<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg"><text x="100" y="120" font-size="120" font-weight="900" text-anchor="middle" fill="#fff3e0" stroke="#5d4e37" stroke-width="4">۸</text></svg>'
+        },
+        {
+          text: 'یک خط عمودی وسط «۸» بکش تا بدن پروانه معلوم بشه.',
+          svg: '<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg"><text x="100" y="120" font-size="120" font-weight="900" text-anchor="middle" fill="#fff3e0" stroke="#5d4e37" stroke-width="4">۸</text><line x1="100" y1="50" x2="100" y2="130" stroke="#5d4e37" stroke-width="6" stroke-linecap="round"/></svg>'
+        },
+        {
+          text: 'حالا شکل «۸» را به بال‌های گرد تبدیل کن — مثل پروانه!',
+          svg: '<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="78" rx="30" ry="38" fill="#fff3e0" stroke="#5d4e37" stroke-width="4"/><ellipse cx="140" cy="78" rx="30" ry="38" fill="#fff3e0" stroke="#5d4e37" stroke-width="4"/><ellipse cx="60" cy="118" rx="22" ry="28" fill="#fff3e0" stroke="#5d4e37" stroke-width="4"/><ellipse cx="140" cy="118" rx="22" ry="28" fill="#fff3e0" stroke="#5d4e37" stroke-width="4"/><line x1="100" y1="60" x2="100" y2="140" stroke="#5d4e37" stroke-width="6" stroke-linecap="round"/></svg>'
+        },
+        {
+          text: 'دو شاخک بالای سر، و کناره‌های بال‌ها را گرد کن.',
+          svg: '<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="78" rx="30" ry="38" fill="#ce93d8" stroke="#5d4e37" stroke-width="4"/><ellipse cx="140" cy="78" rx="30" ry="38" fill="#ce93d8" stroke="#5d4e37" stroke-width="4"/><ellipse cx="60" cy="118" rx="22" ry="28" fill="#ba68c8" stroke="#5d4e37" stroke-width="4"/><ellipse cx="140" cy="118" rx="22" ry="28" fill="#ba68c8" stroke="#5d4e37" stroke-width="4"/><line x1="100" y1="60" x2="100" y2="140" stroke="#5d4e37" stroke-width="6" stroke-linecap="round"/><path d="M94 56 Q80 32 72 26 M106 56 Q120 32 128 26" fill="none" stroke="#5d4e37" stroke-width="3" stroke-linecap="round"/></svg>'
+        },
+        {
+          text: 'بال‌ها را با رنگ و خال‌های قشنگ پر کن. تمام شد! 🦋✨',
+          svg: '<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="78" rx="30" ry="38" fill="#ce93d8" stroke="#5d4e37" stroke-width="4"/><ellipse cx="140" cy="78" rx="30" ry="38" fill="#ce93d8" stroke="#5d4e37" stroke-width="4"/><ellipse cx="60" cy="118" rx="22" ry="28" fill="#ba68c8" stroke="#5d4e37" stroke-width="4"/><ellipse cx="140" cy="118" rx="22" ry="28" fill="#ba68c8" stroke="#5d4e37" stroke-width="4"/><line x1="100" y1="60" x2="100" y2="140" stroke="#5d4e37" stroke-width="6" stroke-linecap="round"/><path d="M94 56 Q80 32 72 26 M106 56 Q120 32 128 26" fill="none" stroke="#5d4e37" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="64" r="6" fill="#fff59d"/><circle cx="68" cy="84" r="5" fill="#fff59d"/><circle cx="130" cy="64" r="6" fill="#fff59d"/><circle cx="148" cy="84" r="5" fill="#fff59d"/><circle cx="60" cy="120" r="4" fill="#fff59d"/><circle cx="142" cy="120" r="4" fill="#fff59d"/></svg>'
+        }
+      ]
+    },
+
+    /* ---------- متد ۲: تکنیک نقطه‌چین (Stippling) ---------- */
+    {
+      id: 'starry-sky',
+      title: 'آسمان پرستاره',
+      emoji: '🌌',
+      level: 'متوسط',
+      tag: 'نقطه‌چین',
+      steps: [
+        {
+          text: 'یک خط افق بکش و نیمهٔ پایین را با قهوه‌ای پر کن — این زمین است.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="80" width="200" height="70" fill="#6d4c41"/><line x1="0" y1="80" x2="200" y2="80" stroke="#5d4e37" stroke-width="3"/></svg>'
+        },
+        {
+          text: 'نیمهٔ بالا را با آبی تیره پر کن — این آسمان شب است.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="200" height="80" fill="#1a237e"/><rect x="0" y="80" width="200" height="70" fill="#6d4c41"/><line x1="0" y1="80" x2="200" y2="80" stroke="#5d4e37" stroke-width="3"/></svg>'
+        },
+        {
+          text: 'حالا تکنیک «نقطه‌چین» — با قلم نازک، چند ستارهٔ کوچک بکش.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="200" height="80" fill="#1a237e"/><rect x="0" y="80" width="200" height="70" fill="#6d4c41"/><line x1="0" y1="80" x2="200" y2="80" stroke="#5d4e37" stroke-width="3"/><circle cx="30" cy="20" r="2" fill="#fff59d"/><circle cx="60" cy="40" r="1.5" fill="#fff" stroke="#fff" stroke-width="0"/><circle cx="90" cy="22" r="2" fill="#fff59d"/><circle cx="120" cy="50" r="1.5" fill="#fff" stroke="#fff" stroke-width="0"/><circle cx="160" cy="30" r="2" fill="#fff59d"/><circle cx="50" cy="65" r="1.5" fill="#fff" stroke="#fff" stroke-width="0"/><circle cx="110" cy="14" r="1.5" fill="#fff" stroke="#fff" stroke-width="0"/><circle cx="180" cy="60" r="2" fill="#fff59d"/></svg>'
+        },
+        {
+          text: 'تعداد نقطه‌ها را زیاد کن تا آسمان پرستاره بشه.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="200" height="80" fill="#1a237e"/><rect x="0" y="80" width="200" height="70" fill="#6d4c41"/><line x1="0" y1="80" x2="200" y2="80" stroke="#5d4e37" stroke-width="3"/><g fill="#fff59d"><circle cx="30" cy="20" r="2"/><circle cx="90" cy="22" r="2"/><circle cx="160" cy="30" r="2"/><circle cx="180" cy="60" r="2"/><circle cx="40" cy="50" r="1.5"/><circle cx="100" cy="40" r="1.5"/><circle cx="150" cy="60" r="1.5"/></g><g fill="#fff"><circle cx="20" cy="35" r="1"/><circle cx="55" cy="15" r="1"/><circle cx="70" cy="55" r="1"/><circle cx="80" cy="38" r="1"/><circle cx="105" cy="62" r="1"/><circle cx="115" cy="20" r="1"/><circle cx="130" cy="14" r="1"/><circle cx="145" cy="46" r="1"/><circle cx="170" cy="18" r="1"/><circle cx="190" cy="46" r="1"/><circle cx="65" cy="68" r="1"/><circle cx="48" cy="30" r="1"/><circle cx="125" cy="35" r="1"/><circle cx="200" cy="40" r="1"/></g></svg>'
+        },
+        {
+          text: 'یک ماه بزرگ با صورت خندان بکش. آسمان شبِ تو آماده است! 🌙',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="200" height="80" fill="#1a237e"/><rect x="0" y="80" width="200" height="70" fill="#6d4c41"/><line x1="0" y1="80" x2="200" y2="80" stroke="#5d4e37" stroke-width="3"/><g fill="#fff59d"><circle cx="30" cy="20" r="2"/><circle cx="90" cy="22" r="2"/><circle cx="160" cy="30" r="2"/><circle cx="180" cy="60" r="2"/><circle cx="40" cy="50" r="1.5"/><circle cx="100" cy="40" r="1.5"/><circle cx="150" cy="60" r="1.5"/></g><g fill="#fff"><circle cx="20" cy="35" r="1"/><circle cx="55" cy="15" r="1"/><circle cx="70" cy="55" r="1"/><circle cx="80" cy="38" r="1"/><circle cx="105" cy="62" r="1"/><circle cx="115" cy="20" r="1"/><circle cx="130" cy="14" r="1"/><circle cx="145" cy="46" r="1"/><circle cx="170" cy="18" r="1"/><circle cx="190" cy="46" r="1"/><circle cx="65" cy="68" r="1"/><circle cx="48" cy="30" r="1"/><circle cx="125" cy="35" r="1"/></g><circle cx="46" cy="36" r="14" fill="#fff59d" stroke="#5d4e37" stroke-width="3"/><circle cx="42" cy="32" r="1.5" fill="#5d4e37"/><circle cx="52" cy="32" r="1.5" fill="#5d4e37"/><path d="M40 38 q6 4 12 0" fill="none" stroke="#5d4e37" stroke-width="2" stroke-linecap="round"/><path d="M58 22 L66 14 M62 32 L72 30 M58 50 L66 56" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'
+        }
+      ]
+    },
+
+    /* ---------- متد ۳: تکنیک لایه‌بندی (Layering / عمق) ---------- */
+    {
+      id: 'layered-landscape',
+      title: 'منظرهٔ سه‌لایه',
+      emoji: '🏞️',
+      level: 'پیشرفته',
+      tag: 'لایه‌بندی',
+      steps: [
+        {
+          text: 'یک خط افق بکش. لایهٔ ۱: کوه‌های دور با رنگ آبی کمرنگ.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100" x2="200" y2="100" stroke="#5d4e37" stroke-width="2"/><path d="M0 100 L40 60 L80 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M60 100 L100 50 L140 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M120 100 L165 65 L200 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/></svg>'
+        },
+        {
+          text: 'لایهٔ ۲: تپه‌های میانی با سبز روشن — کمی جلوتر از کوه‌ها.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100" x2="200" y2="100" stroke="#5d4e37" stroke-width="2"/><path d="M0 100 L40 60 L80 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M60 100 L100 50 L140 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M120 100 L165 65 L200 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q25 80 50 100 Q75 78 100 100 Q125 76 150 100 Q175 78 200 100 Z" fill="#aed581" stroke="#5d4e37" stroke-width="3"/></svg>'
+        },
+        {
+          text: 'لایهٔ ۳: چمن جلویی با سبز پُررنگ — رنگش از لایهٔ قبل تیره‌تره.',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100" x2="200" y2="100" stroke="#5d4e37" stroke-width="2"/><path d="M0 100 L40 60 L80 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M60 100 L100 50 L140 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M120 100 L165 65 L200 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q25 80 50 100 Q75 78 100 100 Q125 76 150 100 Q175 78 200 100 Z" fill="#aed581" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q40 112 80 100 Q120 110 160 100 Q200 112 200 100 L200 150 L0 150 Z" fill="#388e3c" stroke="#5d4e37" stroke-width="3"/></svg>'
+        },
+        {
+          text: 'یک درخت بزرگ در لایهٔ جلویی بکش و رنگ‌های سه لایه را ببین!',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100" x2="200" y2="100" stroke="#5d4e37" stroke-width="2"/><path d="M0 100 L40 60 L80 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M60 100 L100 50 L140 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M120 100 L165 65 L200 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q25 80 50 100 Q75 78 100 100 Q125 76 150 100 Q175 78 200 100 Z" fill="#aed581" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q40 112 80 100 Q120 110 160 100 Q200 112 200 100 L200 150 L0 150 Z" fill="#388e3c" stroke="#5d4e37" stroke-width="3"/><rect x="44" y="80" width="8" height="34" fill="#6d4c41" stroke="#5d4e37" stroke-width="2"/><circle cx="48" cy="68" r="22" fill="#2e7d32" stroke="#5d4e37" stroke-width="3"/></svg>'
+        },
+        {
+          text: 'یک خورشید، یک ابر کوچک و چند گل اضافه کن. منظورهٔ تو کامل شد! 🌄',
+          svg: '<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100" x2="200" y2="100" stroke="#5d4e37" stroke-width="2"/><path d="M0 100 L40 60 L80 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M60 100 L100 50 L140 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M120 100 L165 65 L200 100 Z" fill="#bbdefb" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q25 80 50 100 Q75 78 100 100 Q125 76 150 100 Q175 78 200 100 Z" fill="#aed581" stroke="#5d4e37" stroke-width="3"/><path d="M0 100 Q40 112 80 100 Q120 110 160 100 Q200 112 200 100 L200 150 L0 150 Z" fill="#388e3c" stroke="#5d4e37" stroke-width="3"/><rect x="44" y="80" width="8" height="34" fill="#6d4c41" stroke="#5d4e37" stroke-width="2"/><circle cx="48" cy="68" r="22" fill="#2e7d32" stroke="#5d4e37" stroke-width="3"/><circle cx="170" cy="26" r="12" fill="#ffd54f" stroke="#5d4e37" stroke-width="3"/><path d="M170 9 L170 5 M170 42 L170 46 M153 26 L149 26 M187 26 L191 26 M158 14 L155 11 M182 38 L185 41 M158 38 L155 41 M182 14 L185 11" stroke="#ffd54f" stroke-width="2" stroke-linecap="round"/><ellipse cx="155" cy="44" rx="14" ry="6" fill="#fff" stroke="#5d4e37" stroke-width="2"/><circle cx="100" cy="138" r="3" fill="#f06292"/><circle cx="120" cy="142" r="3" fill="#ffd54f"/><circle cx="140" cy="138" r="3" fill="#ce93d8"/></svg>'
+        }
+      ]
     }
   ];
 
@@ -160,7 +253,10 @@
     { emoji: '🧩', title: 'اول بزرگ، بعد ریز', text: 'اول شکل‌های بزرگ را سر جایشان بگذار، بعد چشم‌ها، دکمه‌ها و جزئیات ریز را اضافه کن. این‌طوری هیچ‌چیز جا نمی‌ماند!' },
     { emoji: '🎨', title: 'رنگ‌های همسایه', text: 'رنگ‌هایی که در رنگین‌کمان کنار هم هستند، کنار هم قشنگ‌تر دیده می‌شوند؛ مثل آبی و سبز، یا صورتی و بنفش.' },
     { emoji: '🧽', title: 'اشتباه؟ اشکالی ندارد!', text: 'هر نقاش بزرگی هزار بار اشتباه کرده است. پاک‌کن دوست توست؛ پاک کن و دوباره بکش. مهم شجاعت کشیدن است!' },
-    { emoji: '🌟', title: 'هر روز یک شاهکار', text: 'هر روز کمی نقاشی بکش. نقاشی‌هایت را در آلبوم نگه دار تا ببینی هر هفته چقدر بهتر شده‌ای!' }
+    { emoji: '🌟', title: 'هر روز یک شاهکار', text: 'هر روز کمی نقاشی بکش. نقاشی‌هایت را در آلبوم نگه دار تا ببینی هر هفته چقدر بهتر شده‌ای!' },
+    { emoji: '🧮', title: 'از عدد بکش!', text: 'متد جدید: با اعداد نقاشی بکش! عدد «۸» می‌شه پروانه، عدد «۳» می‌شه گربه، و عدد «۰» می‌شه یک چشم درشت. عدد دوست توئه!' },
+    { emoji: '✨', title: 'تکنیک نقطه‌چین', text: 'برای آسمان شب، مه و دانه‌های برف، به جای خط از نقطه‌های ریز استفاده کن. با ابزار «نئون» و ضخامت کم، آسمان پرستاره بکش!' },
+    { emoji: '🏞️', title: 'تکنیک سه لایه', text: 'برای نقاشی منظره، سه لایه رنگی بکش: لایهٔ دور (آبی کمرنگ)، لایهٔ میانی (سبز روشن)، لایهٔ جلو (سبز پُررنگ). عمق نقاشی چند برابر می‌شه!' }
   ];
 
   /* ---------- رندر رابط کاربری ---------- */
@@ -183,6 +279,17 @@
     if (!Array.isArray(progress[tutId])) progress[tutId] = [];
     if (progress[tutId].indexOf(idx) === -1) progress[tutId].push(idx);
     g.StorageCore.saveProgress(progress);
+
+    // دستاورد: اولین قدم
+    if (g.Achievements && g.Achievements.checkFirstStep) g.Achievements.checkFirstStep();
+  }
+
+  function tutorialsCompletedCount() {
+    let n = 0;
+    TUTORIALS.forEach(function (tut) {
+      if (tutorialDoneCount(tut) === tut.steps.length) n++;
+    });
+    return n;
   }
 
   function tutorialDoneCount(tut) {
@@ -307,6 +414,11 @@
       renderDetail();
       renderHome();
       g.Sound.save();
+
+      // دستاورد: تعداد آموزش‌های کامل‌شده
+      if (g.Achievements && g.Achievements.checkAllTutorials) {
+        g.Achievements.checkAllTutorials(tutorialsCompletedCount(), TUTORIALS.length);
+      }
     });
     renderHome();
   }

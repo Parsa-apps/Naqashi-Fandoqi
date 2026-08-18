@@ -58,6 +58,11 @@
       btn.addEventListener('click', function () {
         U.$$('.tool-btn').forEach(function (b) { b.classList.remove('is-active'); });
         btn.classList.add('is-active');
+        // میکرو تعامل: پالس کوتاه
+        btn.classList.remove('is-clicked');
+        void btn.offsetWidth;
+        btn.classList.add('is-clicked');
+        setTimeout(function () { btn.classList.remove('is-clicked'); }, 400);
         Engine.setTool(btn.dataset.tool);
         if (Engine.isMagicTool(btn.dataset.tool)) Sound.magic();
         else Sound.tool();
@@ -68,6 +73,7 @@
   function wireColors() {
     const swatches = U.$('#swatches');
     const custom = U.$('#custom-color');
+    renderRecent();
     swatches.addEventListener('click', function (e) {
       const sw = e.target.closest('.swatch');
       if (!sw) return;
@@ -76,10 +82,41 @@
       Engine.setColor(sw.dataset.color);
       custom.value = sw.dataset.color;
       Sound.click();
+      if (typeof renderRecent === 'function') renderRecent();
     });
     custom.addEventListener('input', function () {
       U.$$('.swatch').forEach(function (s) { s.classList.remove('is-active'); });
       Engine.setColor(custom.value);
+      renderRecent();
+    });
+  }
+
+  function renderRecent() {
+    const recentEl = U.$('#recent-colors');
+    if (!recentEl || !Engine || typeof Engine.getRecentColors !== 'function') return;
+    const cur = Engine.getColor();
+    const list = Engine.getRecentColors().filter(function (c) { return c && c !== cur; });
+    recentEl.innerHTML = '';
+    if (list.length === 0) { recentEl.classList.add('is-empty'); return; }
+    recentEl.classList.remove('is-empty');
+    const lab = document.createElement('span');
+    lab.className = 'label';
+    lab.textContent = 'اخیر:';
+    recentEl.appendChild(lab);
+    list.forEach(function (c) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'recent-color';
+      b.style.background = c;
+      b.title = c;
+      b.setAttribute('aria-label', 'رنگ ' + c);
+      b.addEventListener('click', function () {
+        U.$$('.swatch').forEach(function (s) { s.classList.remove('is-active'); });
+        Engine.setColor(c);
+        if (custom) custom.value = c;
+        renderRecent();
+      });
+      recentEl.appendChild(b);
     });
   }
 
@@ -110,7 +147,7 @@
         U.toast('بوم که خالی است! اول چیزی بکش 🎨', 'info');
         return;
       }
-      confirmDialog('🧹 همهٔ نقاشی پاک شود؟').then(function (yes) {
+      confirmWithGate('🧹 همهٔ نقاشی پاک شود؟').then(function (yes) {
         if (!yes) return;
         Engine.clear();
         U.toast('بوم پاک شد؛ حالا یک شاهکار جدید بکش! 🎨', 'info');
@@ -155,7 +192,25 @@
       if (res.ok) {
         hideModal('save-modal');
         Sound.save();
-        U.toast('شاهکارت در آلبوم ثبت شد! 🌟', 'success');
+        // ڇالنش روزانه: علامت بامشد ستریک را به‌روز رسانید
+        if (g.Challenges && g.Challenges.markDone) {
+          g.Challenges.markDone();
+          g.Challenges.renderCard();
+        }
+        // اگر ماژول SaveAnim لود شده، نمایش پیش‌نمایش قشنگ با ذرات طلایی
+        if (g.SaveAnim && g.SaveAnim.show) {
+          const nth = res.album.length;
+          g.SaveAnim.show({
+            name: name,
+            thumb: thumb,
+            sub: 'شاهکار شماره\u2060\u200B ' + nth + ' \u062F\u0631 \u0622\u0644\u0628\u0648\u0645\u062A! \uD83C\uDF31'
+          });
+        } else {
+          U.toast('ثبت شد!', 'success');
+        }
+        if (g.Achievements && g.Achievements.checkAlbumSize && g.Album && typeof g.Album.list === 'function') {
+          g.Achievements.checkAlbumSize(g.Album.list().length);
+        }
       } else if (res.reason === 'full') {
         Sound.error();
         U.toast('آلبوم پر است! چند نقاشی قدیمی را حذف کن 🗑️', 'error');
@@ -193,6 +248,22 @@
       U.download(viewingRec.dataUrl, viewingRec.name + '.png');
       Sound.save();
     });
+    // اشتراك‌گذاري اختصاصي (Web Share API) — اگر ساپورت شد، دكمه نمايش
+    const shareBtn = U.$('#view-share');
+    if (shareBtn && U.canShare && U.canShare()) {
+      shareBtn.hidden = false;
+      shareBtn.addEventListener('click', function () {
+        if (!viewingRec) return;
+        U.share({
+          title: viewingRec.name || 'شاهکار فندوقی',
+          text: 'نقاشی من اپ فندوقی ✨ ۱۰۰٫٠ٯ آفلاین',
+          dataUrl: viewingRec.dataUrl,
+          filename: (viewingRec.name || 'fandoqi') + '.png'
+        }).then(function (ok) {
+          if (ok) Sound.save();
+        });
+      });
+    }
     U.$('#view-edit').addEventListener('click', function () {
       if (!viewingRec) return;
       hideModal('view-modal');
@@ -200,11 +271,14 @@
       switchTab('draw');
       U.toast('حالا ادامهٔ نقاشی‌ات را بکش! 🖌️', 'success');
     });
+    U.$('#view-print').addEventListener('click', function () {
+      try { g.print(); Sound.save(); } catch (_) {}
+    });
     U.$('#view-delete').addEventListener('click', function () {
       if (!viewingRec) return;
       const rec = viewingRec;
       hideModal('view-modal');
-      confirmDialog('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
+      confirmWithGate('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
         if (!yes) return;
         Album.remove(rec.id);
         Sound.error();
@@ -223,6 +297,17 @@
     return new Promise(function (resolve) {
       confirmResolver = resolve;
     });
+  }
+
+  // تأیید حساس — ابتدا دروازهٔ والدین با سوال ریاضی، سپس تأیید
+  function confirmWithGate(text) {
+    if (g.ParentGate && typeof g.ParentGate.open === 'function') {
+      return g.ParentGate.open().then(function (passed) {
+        if (!passed) return false;
+        return confirmDialog(text);
+      });
+    }
+    return confirmDialog(text);
   }
 
   function wireConfirmModal() {
@@ -388,7 +473,7 @@
           U.toast('حالا ادامهٔ نقاشی‌ات را بکش! 🖌️', 'success');
         },
         delete: function (rec) {
-          confirmDialog('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
+          confirmWithGate('🗑️ «' + rec.name + '» برای همیشه حذف شود؟').then(function (yes) {
             if (!yes) return;
             Album.remove(rec.id);
             U.toast('نقاشی حذف شد', 'info');
@@ -416,6 +501,79 @@
     });
 
     g.addEventListener('pointerdown', function () { Sound.unlock(); }, { once: true });
+
+    // فعال‌سازی «دربارهٔ ما» + دستاوردها + استیکرها + Onboarding + Settings
+    if (g.About && g.About.init) g.About.init();
+    if (g.Stickers && g.Stickers.init) {
+      g.Stickers.init({
+        trayEl: U.$('#sticker-tray'),
+        toggleBtn: U.$('#sticker-toggle')
+      });
+    }
+    if (g.Settings && g.Settings.ensureInit) g.Settings.ensureInit();
+    if (g.Music && typeof g.Music.isEnabled === 'function') {
+      // صدای زمینه‌ای اگر کاربر در جلوه تنظیم کرده باشد
+    }
+    if (g.Challenges && g.Challenges.init) {
+      g.Challenges.init({ cardEl: U.$('#challenge-card') });
+      g.Challenges.show();
+      // گوش دادن به رویداد چالش برای باز کردن دستاوردها
+      g.addEventListener('fandoqi-challenge-done', function (e) {
+        if (g.Achievements && g.Achievements.checkStreak && e.detail && typeof e.detail.streak === 'number') {
+          g.Achievements.checkStreak(e.detail.streak);
+        }
+        var ch = (g.Challenges && g.Challenges.currentChallenge) ? g.Challenges.currentChallenge() : null;
+        var card = U.$('#challenge-card');
+        if (ch && card) {
+          card.classList.add('is-pulse');
+          setTimeout(function () { card.classList.remove('is-pulse'); }, 800);
+        }
+        if (ch && g.Stickers && typeof g.Stickers.showTray === 'function') {
+          setTimeout(function () { g.Stickers.showTray(); }, 600);
+        }
+      });
+    }
+    if (g.Templates && g.Templates.init) {
+      g.Templates.init({
+        trayEl: U.$('#tpl-tray'),
+        toggleBtn: U.$('#tpl-toggle')
+      });
+    }
+    // دکمهٔ تنظیمات در هدر
+    const settingsBtn = U.$('#settings-btn');
+    if (settingsBtn && g.Settings && g.Settings.open) {
+      settingsBtn.addEventListener('click', function () { g.Settings.open(); });
+    }
+    if (g.Achievements && g.Achievements.checkInstalled && matchMedia('(display-mode: standalone)').matches) {
+      g.Achievements.checkInstalled();
+    }
+    // خوش‌آمدگویی فقط در اولین اجرا (اگر دیده نشده و آلبوم کاملاً خالی است)
+    try {
+      if (g.Onboarding && typeof g.Onboarding.show === 'function' && !g.Onboarding.isSeen()) {
+        setTimeout(function () {
+          if (Album.list().length === 0) g.Onboarding.show();
+        }, 600);
+      }
+    } catch (_) {}
+
+    // Hero Animation — وقتی splash بسته شد، عناصر اصلی stagger ظاهر می‌شوند
+    let heroTriggered = false;
+    function triggerHero() {
+      if (heroTriggered) return;
+      heroTriggered = true;
+      document.body.classList.add('is-app-ready');
+      // پیام خوش‌آمد موقت در هدر
+      const brand = U.$('.brand');
+      if (brand) {
+        const toast = document.createElement('span');
+        toast.className = 'welcome-toast';
+        toast.textContent = '\u2728 \u062E\u0648\u0634 \u0622\u0645\u062F\u06CC!';
+        brand.appendChild(toast);
+      }
+    }
+    // اگر splash قبلاً بسته شده (برای سشن‌های بعدی)
+    if (!document.getElementById('splash')) triggerHero();
+    g.addEventListener('fandoqi:splash-done', triggerHero);
 
     // بازگرداندن پیش‌نویس نیمه‌کاره
     const restored = Engine.tryRestoreDraft();

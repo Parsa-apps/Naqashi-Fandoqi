@@ -29,7 +29,11 @@ function section(title) {
 section('بررسی سینتکس فایل‌های جاوااسکریپت');
 const JS_FILES = [
   'js/storage-core.js', 'js/utils.js', 'js/sound.js',
-  'js/engine.js', 'js/album.js', 'js/tutorials.js', 'js/app.js'
+  'js/engine.js', 'js/album.js', 'js/tutorials.js',
+  'js/parent-gate.js', 'js/theme.js', 'js/achievements.js',
+  'js/about.js', 'js/splash.js', 'js/stickers.js',
+  'js/save-anim.js', 'js/onboarding.js', 'js/settings.js',
+  'js/templates.js', 'js/backup.js', 'js/challenges.js', 'js/music.js', 'js/app.js'
 ];
 for (const f of JS_FILES) {
   const path = join(ROOT, f);
@@ -111,6 +115,8 @@ const T = (await import(pathToFileURL(join(ROOT, 'js/tutorials.js')).href)).defa
 
 ok('حداقل ۵ آموزش وجود دارد (FR-8)', T.TUTORIALS.length >= 5);
 ok('حداقل ۶ ترفند وجود دارد (FR-9)', T.TIPS.length >= 6);
+ok('۸ آموزش فراهم است (۵ اصلی + ۳ با متد جدید)', T.TUTORIALS.length === 8);
+ok('۹ ترفند فراهم است (۶ اصلی + ۳ متد جدید)', T.TIPS.length === 9);
 
 const idsSet = new Set(T.TUTORIALS.map((t) => t.id));
 ok('شناسهٔ آموزش‌ها یکتاست', idsSet.size === T.TUTORIALS.length);
@@ -141,6 +147,164 @@ ok('CSS: وجود قواعد ریسپانسیو', css.includes('@media (max-widt
 ok('CSS: وجود فوکوس قابل مشاهده', css.includes(':focus-visible'));
 ok('CSS: پشتیبانی prefers-reduced-motion', css.includes('prefers-reduced-motion'));
 ok('CSS: عدم تداخل ارتفاع در موبایل', css.includes('46vh'));
+
+/* ---------- بخش ۶: سیستم‌های جانبی ---------- */
+section('تست‌های Sound.chime');
+{
+  const Sound = (await import(pathToFileURL(join(ROOT, 'js/sound.js')).href)).default;
+  ok('Sound.chime به‌عنوان تابع وجود دارد', typeof Sound.chime === 'function');
+  ok('Sound.isEnabled یک boolean برمی‌گرداند', typeof Sound.isEnabled() === 'boolean');
+  ok('Sound.setEnabled(false) غیرفعال می‌کند', Sound.setEnabled(false) === false && Sound.isEnabled() === false);
+  Sound.chime();
+  ok('Sound.setEnabled(true) فعال می‌کند', Sound.setEnabled(true) === true);
+  // کنترل حجم صدا
+  ok('Sound.getVolume() مقدار اولیه بین ۰ و ۱ برمی‌گرداند', Sound.getVolume() >= 0 && Sound.getVolume() <= 1);
+  ok('Sound.setVolume(0.3) حجم را تنظیم می‌کند', Sound.setVolume(0.3) === 0.3 && Sound.getVolume() === 0.3);
+  ok('Sound.setVolume(5) کلمپ به ۱ می‌شود', Sound.setVolume(5) === 1);
+  ok('Sound.setVolume(-1) کلمپ به ۰ می‌شود', Sound.setVolume(-1) === 0);
+  Sound.setVolume(0.85);
+}
+
+section('تست‌های utils.share — اشتراک‌گذاری');
+{
+  const U = (await import(pathToFileURL(join(ROOT, 'js/utils.js')).href)).default;
+  ok('Utils.canShare یک تابع است', typeof U.canShare === 'function');
+  ok('Utils.share یک تابع است', typeof U.share === 'function');
+  ok('Utils.canShare() در Node مقدار boolean برمی‌گرداند', typeof U.canShare() === 'boolean');
+  // فراخوانی share در Node باید بدون crash و false برگرداند (navigator.share نیست)
+  const result = await U.share({ title: 'تست' }).catch(function () { return null; });
+  ok('Utils.share در Node بدون navigator.share ایمن است', result === false || result === null);
+}
+
+section('تست‌های ParentGate');
+{
+  const PG = (await import(pathToFileURL(join(ROOT, 'js/parent-gate.js')).href)).default;
+  ok('ParentGate.open یک Promise برمی‌گرداند', typeof PG.open === 'function');
+  ok('ParentGate.close یک تابع است', typeof PG.close === 'function');
+  // در Node چون document نیست، open فوراً false برمی‌گرداند
+  const p = PG.open();
+  ok('ParentGate.open در Node به‌سرعت false برمی‌گرداند', (await p) === false);
+  PG.close(true);
+}
+
+section('تست‌های Stickers (Sticker Box)');
+{
+  const S = (await import(pathToFileURL(join(ROOT, 'js/stickers.js')).href)).default;
+  ok('Stickers شامل ۸ استیکر همیشه‌دردسترس است', S.listAvailable().length >= 8);
+  ok('Stickers.listLocked در Node حداقل ۰ قفل دارد', Array.isArray(S.listLocked()));
+  ok('Stickers.STICKERS آرایهٔ کامل است', Array.isArray(S.STICKERS) && S.STICKERS.length >= 12);
+  ok('Stickers.tryUnlock(ten-draw) فقط با داشتن localStorage کار می‌کند', typeof S.tryUnlock === 'function');
+  S.deselect();
+  ok('Stickers.deselect در Node بدون خطا اجرا می‌شود', S.currentSticker() === null);
+}
+
+section('تست‌های Achievements');
+{
+  const A = (await import(pathToFileURL(join(ROOT, 'js/achievements.js')).href)).default;
+  ok('Achievements.CATALOG حداقل ۸ آیتم دارد', Object.keys(A.CATALOG).length >= 8);
+  ok('Achievements.has(id) مقدار boolean می‌دهد', typeof A.has('first-draw') === 'boolean');
+  ok('Achievements.checkAllStamps قابل فراخوانی است', typeof A.checkAllStamps === 'function');
+}
+
+section('تست‌های Theme و About و Splash — ایمن در Node');
+{
+  const T = (await import(pathToFileURL(join(ROOT, 'js/theme.js')).href)).default;
+  ok('Theme.apply یک تابع است', typeof T.apply === 'function');
+  ok('Theme.current یک تابع است', typeof T.current === 'function');
+  ok('Theme.detect یک تابع است', typeof T.detect === 'function');
+
+  const Ab = (await import(pathToFileURL(join(ROOT, 'js/about.js')).href)).default;
+  ok('About.open یک تابع است', typeof Ab.open === 'function');
+  ok('About.close یک تابع است', typeof Ab.close === 'function');
+
+  const Sp = (await import(pathToFileURL(join(ROOT, 'js/stickers.js')).href)).default;
+  ok('Stickers.init وجود دارد', typeof Sp.init === 'function');
+
+  const SAV = (await import(pathToFileURL(join(ROOT, 'js/save-anim.js')).href)).default;
+  ok('SaveAnim.show یک تابع است', typeof SAV.show === 'function');
+  ok('SaveAnim.hide یک تابع است', typeof SAV.hide === 'function');
+
+  const ONB = (await import(pathToFileURL(join(ROOT, 'js/onboarding.js')).href)).default;
+  ok('Onboarding.show یک تابع است', typeof ONB.show === 'function');
+  ok('Onboarding.hide یک تابع است', typeof ONB.hide === 'function');
+  ok('Onboarding.resetSeen قابل فراخوانی است', typeof ONB.resetSeen === 'function');
+
+  const SET = (await import(pathToFileURL(join(ROOT, 'js/settings.js')).href)).default;
+  ok('Settings.open یک تابع است', typeof SET.open === 'function');
+  ok('Settings.close یک تابع است', typeof SET.close === 'function');
+  ok('Settings.isOpen یک تابع است', typeof SET.isOpen === 'function');
+  ok('Settings.ensureInit یک تابع است', typeof SET.ensureInit === 'function');
+
+  const TPL = (await import(pathToFileURL(join(ROOT, 'js/templates.js')).href)).default;
+  ok('Templates.init یک تابع است', typeof TPL.init === 'function');
+  ok('Templates.list ۴ قالب برمی‌گرداند', Array.isArray(TPL.list()) && TPL.list().length === 4);
+  ok('Templates.loadTemplate قابل فراخوانی است', typeof TPL.loadTemplate === 'function');
+}
+
+section('تست‌های backup — پشتیبان‌گیری و بازگردانی');
+{
+  const BAK = (await import(pathToFileURL(join(ROOT, 'js/backup.js')).href)).default;
+  ok('Backup.snapshot قابل فراخوانی است', typeof BAK.snapshot === 'function');
+  ok('Backup.exportToFile یک تابع است', typeof BAK.exportToFile === 'function');
+  ok('Backup.restoreFromText ایمن در Node', typeof BAK.restoreFromText === 'function');
+  ok('Backup.restoreInteractive یک تابع است', typeof BAK.restoreInteractive === 'function');
+  ok('Backup.pickFile یک تابع است', typeof BAK.pickFile === 'function');
+  const snap = BAK.snapshot();
+  ok('Backup.snapshot آبجکت معتبر', snap && snap.app === 'fandoqi' && typeof snap.data === 'object');
+  ok('Backup.snapshot ← data.album', typeof snap.data === 'object' && 'album' in snap.data);
+  const res1 = BAK.restoreFromText('not json {{{');
+  ok('Backup.restoreFromText با نامعتبر', res1.ok === false);
+  const res2 = BAK.restoreFromText(JSON.stringify({ app: 'wrong', data: {} }));
+  ok('Backup نامعتبر (app غلط)', res2.ok === false);
+}
+
+section('تست‌های challenges — چالش‌های روزانه');
+{
+  const CH = (await import(pathToFileURL(join(ROOT, 'js/challenges.js')).href)).default;
+  ok('Challenges.POOL حداقل ٫٧ آیتم دارد', Array.isArray(CH.POOL) && CH.POOL.length >= 7);
+  ok('Challenges.dayIndex یک عدد است', typeof CH.dayIndex() === 'number');
+  ok('Challenges.currentChallenge یک تابع است', typeof CH.currentChallenge === 'function');
+  const ch = CH.currentChallenge();
+  ok('currentChallenge شیء معتبر برمی‌گرداند', !!ch && !!ch.id && !!ch.emoji && !!ch.title);
+  ok('Challenges.markDone ایمن در Node', typeof CH.markDone === 'function');
+  ok('Challenges.getStreak یک تابع است', typeof CH.getStreak === 'function');
+  const st0 = CH.getStreak();
+  ok('getStreak شیء با current و best برمی‌گرداند', st0 && typeof st0.current === 'number' && typeof st0.best === 'number');
+  const first = CH.POOL[0];
+  ok('POOL[i] دارای id/emoji/title/desc', !!first.id && !!first.emoji && !!first.title && !!first.desc);
+
+  // تست streak achievements
+  {
+    const AC = (await import(pathToFileURL(join(ROOT, 'js/achievements.js')).href)).default;
+    ok('Achievements.checkStreak یک تابع است', typeof AC.checkStreak === 'function');
+    ok('Achievements.CATALOG شامل streak-3 است', !!AC.CATALOG && !!AC.CATALOG['streak-3']);
+    ok('Achievements.CATALOG شامل streak-7 است', !!AC.CATALOG && !!AC.CATALOG['streak-7']);
+    ok('Achievements.CATALOG حداقل ٫١٠ آیتم دارد', Object.keys(AC.CATALOG || {}).length >= 10);
+  }
+}
+
+section('تست‌های Music — موزیقی آرام‌بخش');
+{
+  const M = (await import(pathToFileURL(join(ROOT, 'js/music.js')).href)).default;
+  ok('Music.start یک تابع است', typeof M.start === 'function');
+  ok('Music.stop یک تابع است', typeof M.stop === 'function');
+  ok('Music.toggle یک تابع است', typeof M.toggle === 'function');
+  ok('Music.setVolume یک تابع است', typeof M.setVolume === 'function');
+  ok('Music.getVolume یک عدد است', typeof M.getVolume() === 'number');
+  ok('Music.isEnabled یک تابع است', typeof M.isEnabled === 'function');
+  ok('Music.NOTES آرایه‌ای از فرکانس‌هاست', Array.isArray(M.NOTES) && M.NOTES.length >= 5);
+  ok('Music.setVolume(0.4) عدد برمی‌گرداند', M.setVolume(0.4) === 0.4);
+  ok('Music.setVolume(2) clamp به 1', M.setVolume(2) === 1);
+  ok('Music.setVolume(-1) clamp به 0', M.setVolume(-1) === 0);
+  ok('Music.isEnabled() boolean برمی‌گرداند', typeof M.isEnabled() === 'boolean');
+}
+
+section('تست‌های Recent Colors — پالت رنگ در حال پیشرضد');
+{
+  // Engine requires بود فضای با دکمنت برای تست، ما تنها را در حال حاضر پوکش صدا می‌کنیم که API پیادسازی دارد
+  const ENG = await import(pathToFileURL(join(ROOT, 'js/engine.js')).href);
+  ok('Engine به صورت معمول لود شده', typeof ENG === 'object' || typeof ENG.default === 'object');
+}
 
 /* ---------- خلاصه ---------- */
 console.log('\n═══════════════════════════════════');

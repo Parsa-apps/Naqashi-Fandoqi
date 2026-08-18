@@ -81,13 +81,57 @@
     a.remove();
   }
 
+  /* ---------- اشتراك‌گذاري (Web Share API) ---------- */
+
+  function blobFromDataUrl(dataUrl) {
+    try {
+      const parts = String(dataUrl).split(',');
+      const mime = (parts[0].match(/:(.*?);/) || [, 'image/png'])[1];
+      const bin = atob(parts[1]);
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return new Blob([arr], { type: mime });
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function dataUrlToFile(dataUrl, filename) {
+    const blob = blobFromDataUrl(dataUrl);
+    return blob ? new File([blob], filename, { type: blob.type }) : null;
+  }
+
+  async function share(opts) {
+    if (typeof navigator === 'undefined' || !navigator.share) return false;
+    const o = opts || {};
+    try {
+      let payload = { title: o.title || 'شاهکار فندوقی', text: o.text || '', url: o.url || undefined };
+      if (o.file || o.dataUrl) {
+        const file = o.file || dataUrlToFile(o.dataUrl, o.filename || 'fandoqi.png');
+        if (file && typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] })) {
+          payload.files = [file];
+          delete payload.url;
+        }
+      }
+      await navigator.share(payload);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function canShare() {
+    return typeof navigator !== 'undefined' && !!navigator.share;
+  }
+
   const api = {
-    $, $$, clamp, debounce, hexToRgb, rgba, formatDateFa, toFaDigits, toast, download
+    $, $$, clamp, debounce, hexToRgb, rgba, formatDateFa, toFaDigits, toast, download, share, canShare
   };
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
-      clamp, debounce, hexToRgb, rgba, formatDateFa, toFaDigits
+      clamp, debounce, hexToRgb, rgba, formatDateFa, toFaDigits, canShare,
+      share, blobFromDataUrl, dataUrlToFile
     };
   }
   g.Utils = api;

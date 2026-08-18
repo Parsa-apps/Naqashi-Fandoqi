@@ -33,6 +33,7 @@
   let shapeStart = null;
   let shapeSnap = null;
   let hasDrawing = false;
+  const recentColors = [];
 
   let history = [];
   let hIndex = -1;
@@ -572,6 +573,28 @@
     endStroke();
   }
 
+  /* ---------- موتور استیکر ---------- */
+  let stickerActive = null;
+  const STICKER_BASE = 56;
+  function setStickerMode(s) { stickerActive = (s && typeof s === 'object') ? s : null; }
+  function currentSticker() { return stickerActive; }
+  function placeSticker(sticker, x, y) {
+    if (!sticker) return false;
+    const size = STICKER_BASE + Math.min(60, (size || 12) * 1.4);
+    pushHistory();
+    ctx.save();
+    ctx.font = size + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla","Android Emoji",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (sticker.color) { ctx.shadowColor = sticker.color; ctx.shadowBlur = Math.max(6, size * 0.1); }
+    ctx.fillText(String(sticker.ico || ''), x, y);
+    ctx.restore();
+    hasDrawing = true;
+    pushHistory();
+    if (typeof saveDraftDebounced === 'function') saveDraftDebounced();
+    return true;
+  }
+
   /* ---------- صادرات ---------- */
 
   function exportDataUrl(maxDim) {
@@ -619,6 +642,21 @@
       pushHistory();
     };
     img.src = dataUrl;
+  }
+
+  /* ---------- بارگذاری قالب از SVG ---------- */
+  function loadSvgTemplate(svgString, fit) {
+    if (typeof TextEncoder === 'undefined' || typeof btoa === 'undefined') return false;
+    try {
+      const bytes = new TextEncoder().encode(svgString);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      const dataUrl = 'data:image/svg+xml;base64,' + btoa(bin);
+      loadImage(dataUrl, fit !== false);
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   /* ---------- پیش‌نویس ---------- */
@@ -671,12 +709,29 @@
   const api = {
     init: init,
     setTool: function (t) { tool = t; },
-    setColor: function (c) { color = c; },
+    setColor: function (c) {
+      color = c;
+      if (c) {
+        if (!recentColors.includes(c)) recentColors.unshift(c);
+        else recentColors.splice(recentColors.indexOf(c), 1);
+        if (recentColors.length > 8) recentColors.length = 8;
+      }
+    },
+    addRecentColor: function (c) {
+      if (!c) return;
+      if (!recentColors.includes(c)) recentColors.unshift(c);
+      else recentColors.splice(recentColors.indexOf(c), 1);
+      if (recentColors.length > 8) recentColors.length = 8;
+    },
+    getRecentColors: function () { return recentColors.slice(); },
     setSize: function (s) { size = g.Utils.clamp(Number(s) || 12, 2, 64); },
     getTool: function () { return tool; },
     getColor: function () { return color; },
     getSize: function () { return size; },
     isMagicTool: function (t) { return MAGIC_TOOLS.indexOf(t || tool) !== -1; },
+    setStickerMode: setStickerMode,
+    currentSticker: currentSticker,
+    placeSticker: placeSticker,
     undo: undo,
     redo: redo,
     canUndo: function () { return hIndex > 0; },
@@ -689,6 +744,7 @@
     exportDataUrl: exportDataUrl,
     exportThumb: exportThumb,
     loadImage: loadImage,
+    loadSvgTemplate: loadSvgTemplate,
     saveDraftNow: saveDraftNow,
     saveDraftDebounced: saveDraftDebounced,
     tryRestoreDraft: tryRestoreDraft,

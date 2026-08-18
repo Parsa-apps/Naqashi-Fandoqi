@@ -1,0 +1,108 @@
+/* ============================================================
+   parent-gate.css — استایل مودال دروازهٔ والدین
+   ============================================================ */
+
+.parent-gate-modal {
+  background: linear-gradient(160deg, #fff7e6 0%, #ffe9cc 50%, #ffd9a8 100%);
+  border-radius: 22px;
+  padding: 26px 22px 20px;
+  max-width: 480px;
+  width: calc(100% - 32px);
+  text-align: center;
+  position: relative;
+  box-shadow: 0 22px 60px rgba(255, 167, 38, 0.35);
+  border: 2px solid #f7c97a;
+}
+
+.parent-gate-modal .pg-pre-title {
+  font-size: 0.78rem;
+  color: #8a5c2b;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.parent-gate-modal h3 {
+  margin: 0 0 14px;
+  font-size: 1.3rem;
+  color: #5d3a1a;
+  font-weight: 900;
+}
+
+.pg-question {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #b8860b;
+  margin-bottom: 12px;
+  padding: 6px 22px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 2px dashed rgba(184, 134, 11, 0.45);
+  border-radius: 14px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1.5px;
+  direction: ltr;
+}
+
+.pg-input {
+  width: 100%;
+  max-width: 200px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px 12px;
+  border: 2px solid #f6c84d;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #5d3a1a;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+  direction: ltr;
+  margin: 6px 0 4px;
+}
+.pg-input:focus {
+  outline: none;
+  border-color: #ff8a00;
+  box-shadow: 0 0 0 3px rgba(255, 167, 38, 0.3);
+}
+
+.pg-hint {
+  margin: 8px 0 0;
+  font-size: 0.84rem;
+  color: #8a5c2b;
+}
+
+.pg-error {
+  height: 22px;
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #c62828;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.pg-error.is-show { opacity: 1; }
+
+.pg-locked {
+  display: none;
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(198, 40, 40, 0.12);
+  border: 2px solid rgba(198, 40, 40, 0.3);
+  color: #a01822;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.pg-locked:not(.is-hidden) { display: block; }
+
+.parent-gate-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.pg-icon {
+  font-size: 2.4rem;
+  margin-bottom: 4px;
+}

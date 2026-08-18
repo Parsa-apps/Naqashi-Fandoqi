@@ -7,6 +7,7 @@
 
   let ctx = null;
   let enabled = true;
+  let volume = 0.85;
 
   function ensure() {
     if (!ctx) {
@@ -28,8 +29,9 @@
     osc.type = type || 'sine';
     osc.frequency.setValueAtTime(freq, t0);
     if (slideTo) osc.frequency.exponentialRampToValueAtTime(Math.max(slideTo, 40), t0 + dur);
+    const peak = (vol || 0.12) * volume;
     gain.gain.setValueAtTime(0.0001, t0);
-    gain.gain.exponentialRampToValueAtTime(vol || 0.12, t0 + 0.015);
+    gain.gain.exponentialRampToValueAtTime(peak, t0 + 0.015);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
     osc.connect(gain).connect(ctx.destination);
     osc.start(t0);
@@ -46,6 +48,8 @@
   const api = {
     setEnabled(v) { enabled = !!v; return enabled; },
     isEnabled() { return enabled; },
+    setVolume(v) { volume = Math.max(0, Math.min(1, Number(v) || 0)); return volume; },
+    getVolume() { return volume; },
     unlock() { ensure(); },
 
     click() { play([[660, 0.05, 'square', 0.05]]); },
@@ -64,8 +68,29 @@
         [880, 0.16, 'triangle', 0.12, 0.09]
       ]);
     },
+    chime() {
+      // جشن سه‌نتی بالارونده برای لحظه‌های موفقیت (دستاورد، اتمام آموزش)
+      play([
+        [523, 0.14, 'sine',     0.12, 0],
+        [784, 0.14, 'sine',     0.14, 0.10],
+        [1047, 0.22, 'triangle', 0.16, 0.20]
+      ]);
+    },
     error() { play([[130, 0.18, 'sawtooth', 0.08]]); }
   };
 
   g.Sound = api;
+  if (typeof module !== 'undefined' && module.exports) {
+    // برای تست در Node — همه متدها به‌جز ctx به‌دردبخور نیستند
+    const nodeSafe = {
+      setEnabled: api.setEnabled,
+      isEnabled: api.isEnabled,
+      setVolume: api.setVolume,
+      getVolume: api.getVolume,
+      click: api.click, tool: api.tool, magic: api.magic,
+      save: api.save, chime: api.chime, error: api.error,
+      unlock: api.unlock
+    };
+    module.exports = nodeSafe;
+  }
 })(typeof window !== 'undefined' ? window : globalThis);
