@@ -56,18 +56,12 @@ cd android
 
 **برای چه کسی؟** کسی که نمی‌خواهد Android Studio نصب کند — GitHub خودش APK می‌سازد!
 
-1. فایل ورک‌فلو را فعال کن:
-```bash
-mkdir -p .github/workflows
-cp workflows/build-apk.yml.example .github/workflows/build-apk.yml
-git add .github/workflows/build-apk.yml
-git commit -m "Add APK workflow"
-git push
-```
+1. ورک‌فلو از قبل فعال است: `.github/workflows/Apk.yml`
+   در هر پوش به `main` خودکار اجرا می‌شود و `fandoqi.apk` و `apk/fandoqi-debug.apk` را در ریپو به‌روز می‌کند.
 
 2. برو به گیت‌هاب:
-   - تب `Actions` → آخرین Workflow `Build Fandoqi APK` → صبر کن سبز شود (۳-۵ دقیقه)
-   - پایین صفحه بخش `Artifacts` → `fandoqi-debug-apk` را دانلود کن
+   - تب `Actions` → آخرین Workflow `📱 Build Fandoqi APK` → صبر کن سبز شود (۳-۵ دقیقه)
+   - `fandoqi.apk` از ریشه ریپو (یا artifact آخرین اجرا) دانلود کن
    - داخلش `app-debug.apk` است!
 
 3. اگر روی `main` پوش کنی، حتی یک Release خودکار هم ساخته می‌شود با APK!

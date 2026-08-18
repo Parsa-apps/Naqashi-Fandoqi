@@ -53,9 +53,8 @@ cd android
 
 ### راه ۳ — GitHub Actions (خودکار، بدون نیاز به SDK روی کامپیوتر شخصی)
 
-1. فایل `.github/workflows/build-apk.yml` را به `.github/workflows/` اضافه کن (نمونه در `workflows/build-apk.yml.example`)
-2. Push کن به GitHub
-3. برو به تب Actions → آخرین Workflow → Artifacts → `fandoqi-debug-apk` را دانلود کن
+1. ورک‌فلو از قبل فعال است: `.github/workflows/Apk.yml` — در هر پوش خودکار اجرا می‌شود، APK می‌سازد و `fandoqi.apk` و `apk/fandoqi-debug.apk` را در ریپو به‌روز می‌کند
+2. وضعیت را از تب Actions ببین؛ APKهای خام هم در Artifacts هر اجرا هستند
 4. APK آماده نصب!
 
 ## 📲 نصب روی گوشی

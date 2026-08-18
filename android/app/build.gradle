@@ -10,8 +10,8 @@ android {
         applicationId "com.fandoqi.app"
         minSdk 21
         targetSdk 34
-        versionCode 200
-        versionName "2.0.0-offline"
+        versionCode 210
+        versionName "2.1.0"
 
         // برای کودکان — پشتیبانی از همه دستگاه‌ها
         multiDexEnabled false

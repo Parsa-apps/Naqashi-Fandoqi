@@ -51,6 +51,16 @@ if ./gradlew assembleDebug --stacktrace; then
     echo "📦 فایل APK: $APK"
     echo "📏 حجم: $SIZE"
     echo ""
+
+    # به‌روزرسانی فایل‌های APK داخل ریپو تا همیشه تازه باشند
+    cp "$APK" "$ROOT/apk/fandoqi-debug.apk"
+    if [ -f "$ANDROID/app/build/outputs/apk/release/app-release.apk" ]; then
+      cp "$ANDROID/app/build/outputs/apk/release/app-release.apk" "$ROOT/fandoqi.apk"
+    else
+      cp "$APK" "$ROOT/fandoqi.apk"
+    fi
+    echo "  ✅ fandoqi.apk و apk/fandoqi-debug.apk به‌روز شدند"
+    echo ""
     echo "📲 نصب روی گوشی:"
     echo "   1. فایل را به گوشی انتقال بده (تلگرام / کابل)"
     echo "   2. روی فایل بزن → تایید نصب از منابع ناشناس"
