@@ -79,7 +79,10 @@ jobs:
             echo "APK تغییری نکرده — چیزی برای commit نیست"
           else
             git commit -m "📦 apk: auto-rebuild from ${GITHUB_SHA::7}"
-            git pull --rebase origin "$GITHUB_REF_NAME"
+            echo "--- وضعیت git قبل از pull (برای دیباگ):"
+            git status --porcelain || true
+            # --autostash: تغییرات unstage‌شدهٔ اتفاقی (مثلاً از gradle) را موقتاً stash می‌کند
+            git pull --rebase --autostash origin "$GITHUB_REF_NAME"
             git push origin HEAD:"$GITHUB_REF_NAME"
             echo "✅ APK تازه در ریپو commit شد"
           fi
