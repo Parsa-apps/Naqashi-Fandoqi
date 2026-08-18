@@ -522,6 +522,15 @@
         if (g.Achievements && g.Achievements.checkStreak && e.detail && typeof e.detail.streak === 'number') {
           g.Achievements.checkStreak(e.detail.streak);
         }
+        var ch = (g.Challenges && g.Challenges.currentChallenge) ? g.Challenges.currentChallenge() : null;
+        var card = U.$('#challenge-card');
+        if (ch && card) {
+          card.classList.add('is-pulse');
+          setTimeout(function () { card.classList.remove('is-pulse'); }, 800);
+        }
+        if (ch && g.Stickers && typeof g.Stickers.showTray === 'function') {
+          setTimeout(function () { g.Stickers.showTray(); }, 600);
+        }
       });
     }
     if (g.Templates && g.Templates.init) {

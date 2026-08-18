@@ -68,3 +68,13 @@
 @media (prefers-reduced-motion: reduce) {
   .challenge-card { transition: none !important; }
 }
+
+
+.challenge-card.is-pulse {
+  animation: ch-pulse 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes ch-pulse {
+  0%   { transform: scale(1);    box-shadow: 0 4px 14px rgba(255, 167, 38, 0.2); }
+  50%  { transform: scale(1.06); box-shadow: 0 10px 28px rgba(255, 215, 0, 0.55); }
+  100% { transform: scale(1);    box-shadow: 0 4px 14px rgba(255, 167, 38, 0.2); }
+}
