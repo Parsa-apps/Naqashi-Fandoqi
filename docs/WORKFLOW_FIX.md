@@ -35,6 +35,11 @@
 
 ## راه ۲ — کپی دستی با وب (۲ دقیقه) ⭐
 
+> ⚠️ **مواظب جابه‌جا نشدن فایل‌ها:** هر فایل خام فقط باید داخل فایل هم‌نام خودش در `.github/workflows/` پیست شود.
+> `workflows/Apk.yml` (ساخت APK، ~۸۵ خط) → `.github/workflows/Apk.yml`
+> `workflows/main.yml` (تست‌ها، ~۲۷ خط) → `.github/workflows/main.yml`
+> بعد از paste چک کن: خط اول باید `name: 📱 Build Fandoqi APK` (برای Apk.yml) یا `name: 🧪 Fandoqi Tests` (برای main.yml) باشد.
+
 لینک‌های زیر مستقیم صفحهٔ ویرایش هر فایل را روی برنچ `arena/01a013ac-naqashi-fandoqi` باز می‌کنند:
 
 1. این لینک را باز کن (ویرایش Apk.yml):
