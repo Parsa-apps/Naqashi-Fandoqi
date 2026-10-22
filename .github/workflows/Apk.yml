@@ -69,3 +69,39 @@ jobs:
           name: fandoqi-release-apk
           path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30
+
+  deliver-apk:
+    name: 📦 Save APK to current branch
+    if: github.event_name == 'workflow_dispatch' && github.ref_name != 'main'
+    needs: build-apk
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: 📥 Download Release APK
+        uses: actions/download-artifact@v4
+        with:
+          name: fandoqi-release-apk
+          path: apk
+
+      - name: 📦 Update latest APK
+        run: mv apk/app-release.apk apk/fandoqi-latest.apk
+
+      - name: 💾 Commit APK
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- apk/fandoqi-latest.apk)" ]; then
+            echo "APK is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apk/fandoqi-latest.apk
+          git commit -m "chore: update latest APK [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
